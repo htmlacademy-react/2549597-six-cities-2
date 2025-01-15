@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Илья](https://up.htmlacademy.ru/react-individual/2/user/2549597).
-* Наставник: `Неизвестно`.
+- Студент: [Илья](https://up.htmlacademy.ru/react-individual/2/user/2549597).
+- Наставник: `Олег Петров`.
 
 ---
 
