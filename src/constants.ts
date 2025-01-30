@@ -1,49 +1,44 @@
-export const headerFavoriteCount = 3;
-export const foundedPlaces = 312;
-export const hotelsData = {
-  first: {
+export const HEADER_FAVORITE_COUNT = 3;
+export const FOUNDED_PLACES = 312;
+export const hotelsData = [
+  {
     imageSource: 'img/apartment-01.jpg',
-    priceValue: 120,
-    bookmarkButtonActiveClass: '',
-    bookmarks: 'To bookmarks',
-    cardRating: '80%',
-    hotelName: 'Beautiful & luxurious apartment at great location',
+    price: 120,
+    isBookmarked: false,
+    cardRating: 80,
+    name: 'Beautiful & luxurious apartment at great location',
     placeCardType: 'Apartment',
   },
-  second: {
+  {
     imageSource: 'img/room.jpg',
-    priceValue: 80,
-    bookmarkButtonActiveClass: 'place-card__bookmark-button--active',
-    bookmarks: 'Is bookmarks',
-    cardRating: '80%',
-    hotelName: 'Wood and stone place',
+    price: 80,
+    isBookmarked: true,
+    cardRating: 80,
+    name: 'Wood and stone place',
     placeCardType: 'Private room',
   },
-  third: {
+  {
     imageSource: 'img/apartment-02.jpg',
-    priceValue: 120,
-    bookmarkButtonActiveClass: '',
-    bookmarks: 'To bookmarks',
-    cardRating: '80%',
-    hotelName: 'Canal View Prinsengracht',
+    price: 120,
+    isBookmarked: false,
+    cardRating: 80,
+    name: 'Canal View Prinsengracht',
     placeCardType: 'Apartment',
   },
-  fourth: {
+  {
     imageSource: 'img/apartment-03.jpg',
-    priceValue: 180,
-    bookmarkButtonActiveClass: '',
-    bookmarks: 'To bookmarks',
-    cardRating: '100%',
-    hotelName: 'Nice, cozy, warm big bed apartment',
+    price: 180,
+    isBookmarked: false,
+    cardRating: 100,
+    name: 'Nice, cozy, warm big bed apartment',
     placeCardType: 'Apartment',
   },
-  fifth: {
+  {
     imageSource: 'img/room.jpg',
-    priceValue: 80,
-    bookmarkButtonActiveClass: 'place-card__bookmark-button--active',
-    bookmarks: 'Is bookmarks',
-    cardRating: '80%',
-    hotelName: 'Wood and stone place',
+    price: 80,
+    isBookmarked: true,
+    cardRating: 80,
+    name: 'Wood and stone place',
     placeCardType: 'Private room',
   }
-};
+];

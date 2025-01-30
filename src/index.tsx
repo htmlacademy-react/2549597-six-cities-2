@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app';
-import {headerFavoriteCount, foundedPlaces, hotelsData} from './constants';
+import {HEADER_FAVORITE_COUNT, FOUNDED_PLACES, hotelsData} from './constants';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App headerFavoriteCount = {headerFavoriteCount} foundedPlaces = {foundedPlaces} hotelsData = {hotelsData}/>
+    <App headerFavoriteCount = {HEADER_FAVORITE_COUNT} foundedPlaces = {FOUNDED_PLACES} hotelsData = {hotelsData}/>
   </React.StrictMode>
 );

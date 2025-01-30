@@ -1,68 +1,7 @@
-type MainScreenProps = {
-  headerFavoriteCount: number;
-  foundedPlaces: number;
-  hotelsData: HotelsData;
-}
-
-type Hotel = {
-  imageSource: string;
-  priceValue: number;
-  bookmarkButtonActiveClass: string;
-  bookmarks: string;
-  cardRating: string;
-  hotelName: string;
-  placeCardType: string;
-}
-
-type HotelsData = {
-  first: Hotel;
-  second: Hotel;
-  third: Hotel;
-  fourth: Hotel;
-  fifth: Hotel;
-}
-
-function Card ({imageSource, priceValue, bookmarkButtonActiveClass, bookmarks, cardRating, hotelName, placeCardType}: Hotel): JSX.Element {
-  return (
-    <article className="cities__card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={imageSource} width="260" height="200" alt="Place image"/>
-        </a>
-      </div>
-      <div className="place-card__info">
-        <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{priceValue}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
-          <button className={`place-card__bookmark-button button ${bookmarkButtonActiveClass}`} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">{bookmarks}</span>
-          </button>
-        </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: cardRating}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <h2 className="place-card__name">
-          <a href="#">{hotelName}</a>
-        </h2>
-        <p className="place-card__type">{placeCardType}</p>
-      </div>
-    </article>
-  );
-}
+import {MainScreenProps} from '../types.ts';
+import HotelCard from '../pages/hotel-card.tsx';
 
 export default function MainScreen ({headerFavoriteCount, foundedPlaces, hotelsData}: MainScreenProps): JSX.Element {
-  const hotelKeys = Object.keys(hotelsData) as (keyof HotelsData)[];
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -153,7 +92,7 @@ export default function MainScreen ({headerFavoriteCount, foundedPlaces, hotelsD
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {hotelKeys.map((key) => Card(hotelsData[key]))}
+                {hotelsData.map((hotel) => HotelCard(hotel))}
               </div>
             </section>
             <div className="cities__right-section">
