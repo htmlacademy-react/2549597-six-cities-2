@@ -1,5 +1,4 @@
 export type MainScreenProps = {
-  headerFavoriteCount: number;
   foundedPlaces: number;
   hotelsData: HotelsData;
 };
