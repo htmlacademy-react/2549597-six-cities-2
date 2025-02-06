@@ -13,3 +13,5 @@ export type Hotel = {
 };
 
 export type HotelsData = Hotel[];
+
+export type Result = string | number | null | JSX.Element;

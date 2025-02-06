@@ -14,7 +14,7 @@ export default function App({foundedPlaces, hotelsData}: MainScreenProps): JSX.E
       <Routes>
         <Route
           path={AppRoute.Main}
-          element= {<MainScreen foundedPlaces={foundedPlaces} hotelsData= {hotelsData} />}
+          element= {<MainScreen foundedPlaces={foundedPlaces} hotelsData={hotelsData} />}
         />
         <Route
           path={AppRoute.Login}

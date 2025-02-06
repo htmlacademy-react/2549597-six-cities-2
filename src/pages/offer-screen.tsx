@@ -1,6 +1,6 @@
 import Header from './header';
 import { AuthorizationStatus } from '../constants';
-import Offers from './offers';
+import FormReview from './form-review';
 
 type Auth = {
   auth: AuthorizationStatus;
@@ -156,7 +156,7 @@ export default function OfferScreen ({auth} : Auth): JSX.Element {
                     </div>
                   </li>
                 </ul>
-                {auth === AuthorizationStatus.Auth ? <Offers/> : ''}
+                {auth === AuthorizationStatus.Auth ? <FormReview/> : ''}
               </section>
             </div>
           </div>

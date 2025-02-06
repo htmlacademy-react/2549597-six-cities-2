@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { HEADER_FAVORITE_COUNT, AuthorizationStatus } from '../constants';
+import { authorization } from '../utils';
 
 type Auth = {
   auth?: AuthorizationStatus;
@@ -21,13 +22,13 @@ export default function Header ({auth = AuthorizationStatus.NoAuth}: Auth): JSX.
                 <a className="header__nav-link header__nav-link--profile" href="#">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
-                  <span className="header__user-name user__name">{auth === AuthorizationStatus.Auth ? 'Oliver.conner@gmail.com' : ''}</span>
-                  <span className="header__favorite-count">{auth === AuthorizationStatus.Auth ? HEADER_FAVORITE_COUNT : null}</span>
+                  <span className="header__user-name user__name">{authorization(auth, 'Oliver.conner@gmail.com', '')}</span>
+                  <span className="header__favorite-count">{authorization(auth, HEADER_FAVORITE_COUNT, null)}</span>
                 </a>
               </li>
               <li className="header__nav-item">
                 <Link className="header__nav-link" to="#">
-                  <span className="header__signout">{auth === AuthorizationStatus.Auth ? 'Sign out' : 'Sign in'}</span>
+                  <span className="header__signout">{authorization(auth, 'Sign out', 'Sign in')}</span>
                 </Link>
               </li>
             </ul>
