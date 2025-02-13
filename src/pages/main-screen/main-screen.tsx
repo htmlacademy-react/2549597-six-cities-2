@@ -1,8 +1,8 @@
-import {MainScreenProps} from '../types.ts';
-import HotelCard from '../pages/hotel-card.tsx';
-import Header from './header.tsx';
+import {MainScreenProps} from '../../types.ts';
+import Header from '../header/header.tsx';
+import HotelCardList from '../hotel-card/hotel-card-list.tsx';
 
-export default function MainScreen ({foundedPlaces, hotelsData}: MainScreenProps): JSX.Element {
+export default function MainScreen ({foundedPlaces, offerData}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header/>
@@ -65,9 +65,7 @@ export default function MainScreen ({foundedPlaces, hotelsData}: MainScreenProps
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {hotelsData.map((hotel) => HotelCard(hotel))}
-              </div>
+              <HotelCardList offerData={offerData}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
