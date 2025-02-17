@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import {Offer, IsCurrentCard, SetCurrentCard} from '../../types.ts';
+import {Offer, SetCurrentCard} from '../../types.ts';
+import classnames from 'classnames';
 
-export default function HotelCard (offer: Offer, currentCard: IsCurrentCard, setCurrentCard: SetCurrentCard): JSX.Element {
+export default function HotelCard (offer: Offer, currentCard: boolean, setCurrentCard: SetCurrentCard): JSX.Element {
   const {imageSource, price, isBookmarks, rating, name, placeType, isPremium} = offer;
-  const buttonActiveClass = isBookmarks ? 'place-card__bookmark-button--active' : '';
   const bookmarked = isBookmarks ? 'Is bookmarks' : 'To bookmarks';
   const premiumCard = isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '';
 
@@ -27,7 +27,7 @@ export default function HotelCard (offer: Offer, currentCard: IsCurrentCard, set
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${buttonActiveClass}`} type="button">
+          <button className={classnames('place-card__bookmark-button', 'button', {'place-card__bookmark-button--active': isBookmarks})} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

@@ -1,6 +1,6 @@
 export type MainScreenProps = {
-  foundedPlaces?: number;
-  offerData: Offers;
+  foundPlace?: number;
+  offersData: Offers;
 };
 
 export type Result = string | number | null | JSX.Element;
@@ -21,17 +21,32 @@ export type Review = {
 
 export type Reviews = Review[];
 
+export type Image = {
+  id?: number;
+  image: string;
+}
+
+export type Feauture = {
+  id?: number;
+  feauture: string;
+}
+
+export type Inside = {
+  id?: number;
+  inside: string;
+}
+
 export type Offer = {
-  images: string[];
+  images: Image[];
   imageSource: string;
   isPremium: boolean;
   name: string;
   isBookmarks: boolean;
   rating: number;
   ratingValue: number;
-  feautures: string[];
+  feautures: Feauture[];
   price: number;
-  insideList: string[];
+  insideList: Inside[];
   id: string;
   placeType: string;
   host: Host;
@@ -41,7 +56,5 @@ export type Offer = {
 
 export type Offers = Offer[];
 
-export type IsCurrentCard = boolean;
-
-export type SetCurrentCard = React.Dispatch<React.SetStateAction<boolean>>;
+export type SetCurrentCard = (value: boolean) => void;
 

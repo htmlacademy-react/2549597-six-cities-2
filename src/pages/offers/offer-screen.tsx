@@ -7,6 +7,7 @@ import OfferInside from './offer-inside';
 import OfferImage from './offer-image';
 import OfferHost from './offer-host';
 import OfferReviewList from './offer-review-list';
+import OfferFeautures from './offer-feautures';
 
 type Auth = {
   auth?: AuthorizationStatus;
@@ -15,6 +16,7 @@ type Auth = {
 export default function OfferScreen ({auth} : Auth): JSX.Element {
   const location = useLocation();
   const {images, isPremium, name, isBookmarks, rating, ratingValue, feautures, price, insideList, host, review} = location.state as Offer;
+  const bookmarked = isBookmarks ? 'Is bookmarks' : 'To bookmarks';
 
   return (
     <div className="page">
@@ -24,7 +26,7 @@ export default function OfferScreen ({auth} : Auth): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images.map((image) => OfferImage(image))}
+              {images.map((image) => <OfferImage key={image.id} image={image.image}/>)}
             </div>
           </div>
           <div className="offer__container container">
@@ -38,7 +40,7 @@ export default function OfferScreen ({auth} : Auth): JSX.Element {
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">{isBookmarks}</span>
+                  <span className="visually-hidden">{bookmarked}</span>
                 </button>
               </div>
               <div className="offer__rating rating">
@@ -49,15 +51,7 @@ export default function OfferScreen ({auth} : Auth): JSX.Element {
                 <span className="offer__rating-value rating__value">{ratingValue}</span>
               </div>
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">
-                  {feautures[0]}
-                </li>
-                <li className="offer__feature offer__feature--bedrooms">
-                  {feautures[1]}
-                </li>
-                <li className="offer__feature offer__feature--adults">
-                  {feautures[2]}
-                </li>
+                {feautures.map((feauture, index) => <OfferFeautures feauture={feauture.feauture} key={feauture.id} id={index}/>)}
               </ul>
               <div className="offer__price">
                 <b className="offer__price-value">&euro;{price}</b>
@@ -66,13 +60,13 @@ export default function OfferScreen ({auth} : Auth): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {insideList.map((inside) => OfferInside(inside))}
+                  {insideList.map((inside) => <OfferInside key={inside.id} inside={inside.inside}/>)}
                 </ul>
               </div>
               {host ? OfferHost(host) : ''}
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{review.length}</span></h2>
-                {review ? OfferReviewList(review) : ''}
+                {review ? <OfferReviewList review={review}/> : ''}
                 {auth === AuthorizationStatus.Auth ? <FormReview/> : ''}
               </section>
             </div>

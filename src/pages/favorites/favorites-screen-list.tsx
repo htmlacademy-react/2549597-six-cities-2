@@ -2,7 +2,7 @@ import { MainScreenProps } from '../../types.ts';
 import FavoritesScreenItem from './favorites-screen-item.tsx';
 import Header from '../header/header.tsx';
 
-export default function FavoritesScreenList ({offerData}: MainScreenProps):JSX.Element {
+export default function FavoritesScreenList ({offersData}: MainScreenProps):JSX.Element {
   return (
     <div className="page">
       <Header/>
@@ -12,7 +12,7 @@ export default function FavoritesScreenList ({offerData}: MainScreenProps):JSX.E
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {offerData.map((offer) => offer.isBookmarks ? FavoritesScreenItem(offer) : '')}
+              {offersData.map((offer) => offer.isBookmarks ? FavoritesScreenItem(offer) : '')}
             </ul>
           </section>
         </div>

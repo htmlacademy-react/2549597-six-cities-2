@@ -8,13 +8,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../constants.ts';
 import PrivateRoute from '../pages/private-route.tsx';
 
-export default function App({foundedPlaces, offerData}: MainScreenProps): JSX.Element {
+export default function App({foundPlace, offersData}: MainScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element= {<MainScreen foundedPlaces={foundedPlaces} offerData={offerData}/>}
+          element= {<MainScreen foundPlace={foundPlace} offersData={offersData}/>}
         />
         <Route
           path={AppRoute.Login}
@@ -26,7 +26,7 @@ export default function App({foundedPlaces, offerData}: MainScreenProps): JSX.El
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.NoAuth}
             >
-              <FavoritesScreenList offerData={offerData}/>
+              <FavoritesScreenList offersData={offersData}/>
             </PrivateRoute>
           }
         />

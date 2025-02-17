@@ -2,7 +2,7 @@ import {MainScreenProps} from '../../types.ts';
 import Header from '../header/header.tsx';
 import HotelCardList from '../hotel-card/hotel-card-list.tsx';
 
-export default function MainScreen ({foundedPlaces, offerData}: MainScreenProps): JSX.Element {
+export default function MainScreen ({foundPlace, offersData}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header/>
@@ -49,7 +49,7 @@ export default function MainScreen ({foundedPlaces, offerData}: MainScreenProps)
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{foundedPlaces} places to stay in Amsterdam</b>
+              <b className="places__found">{foundPlace} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-capti`on">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -65,7 +65,7 @@ export default function MainScreen ({foundedPlaces, offerData}: MainScreenProps)
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <HotelCardList offerData={offerData}/>
+              <HotelCardList offersData={offersData}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

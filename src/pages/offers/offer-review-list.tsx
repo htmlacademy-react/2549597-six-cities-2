@@ -1,8 +1,12 @@
 import { Reviews } from '../../types';
 import OfferReview from './offer-review';
 
-export default function OfferReviewList (reviews: Reviews): JSX.Element {
+type ReviewProps = {
+  review: Reviews;
+};
+
+export default function OfferReviewList ({review}: ReviewProps): JSX.Element {
   return (
-    <ul className="reviews__list">{reviews.map((review) => OfferReview(review))}</ul>
+    <ul className="reviews__list">{review.map((currentReview) => OfferReview(currentReview))}</ul>
   );
 }

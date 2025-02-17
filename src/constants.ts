@@ -1,5 +1,5 @@
 export const HEADER_FAVORITE_COUNT = 3;
-export const FOUNDED_PLACES = 312;
+export const FOUND_PLACE = 312;
 
 export enum AppRoute {
   Main = '/',
