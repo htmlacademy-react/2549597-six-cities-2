@@ -1,6 +1,6 @@
-export type MainScreenProps = {
+export type AppProps = {
   foundPlace?: number;
-  offersData: Offers;
+  offers: Offers;
 };
 
 export type Result = string | number | null | JSX.Element;
@@ -13,6 +13,7 @@ export type Host = {
 }
 
 export type Review = {
+  id: number;
   avatar: string;
   name: string;
   date: Date;
@@ -28,12 +29,13 @@ export type Image = {
 
 export type Feauture = {
   id?: number;
+  type: string;
   feauture: string;
 }
 
-export type Inside = {
+export type Option = {
   id?: number;
-  inside: string;
+  option: string;
 }
 
 export type Offer = {
@@ -46,15 +48,12 @@ export type Offer = {
   ratingValue: number;
   feautures: Feauture[];
   price: number;
-  insideList: Inside[];
+  options: Option[];
   id: string;
   placeType: string;
   host: Host;
-  review: Reviews;
+  reviews: Reviews;
   town: string;
 };
 
 export type Offers = Offer[];
-
-export type SetCurrentCard = (value: boolean) => void;
-

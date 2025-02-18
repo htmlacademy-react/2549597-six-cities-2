@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 
-export default function FormReview (): JSX.Element {
+export default function OfferFormReview () {
   const [ratingReview, setRating] = useState('');
   const [text, setText] = useState('');
 
@@ -51,7 +51,7 @@ export default function FormReview (): JSX.Element {
           </svg>
         </label>
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" value={text} onChange={(e) => setText(e.target.value)}></textarea>
+      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" value={text} onChange={(evt) => setText(evt.target.value)}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
                       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.

@@ -6,7 +6,7 @@ type Auth = {
   auth?: AuthorizationStatus;
 }
 
-export default function Header ({auth = AuthorizationStatus.NoAuth}: Auth): JSX.Element {
+export default function Header ({auth = AuthorizationStatus.NoAuth}: Auth) {
   return (
     <header className="header">
       <div className="container">

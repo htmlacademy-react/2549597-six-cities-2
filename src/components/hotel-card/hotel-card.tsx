@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom';
-import {Offer, SetCurrentCard} from '../../types.ts';
+import {Offer} from '../../types.ts';
 import classnames from 'classnames';
 
-export default function HotelCard (offer: Offer, currentCard: boolean, setCurrentCard: SetCurrentCard): JSX.Element {
+type HotelCardProps = {
+  offer: Offer;
+  setCurrentCard: (value: string) => void;
+}
+
+export default function HotelCard ({offer, setCurrentCard}: HotelCardProps) {
   const {imageSource, price, isBookmarks, rating, name, placeType, isPremium} = offer;
   const bookmarked = isBookmarks ? 'Is bookmarks' : 'To bookmarks';
   const premiumCard = isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '';
@@ -11,15 +16,15 @@ export default function HotelCard (offer: Offer, currentCard: boolean, setCurren
     <article className="cities__card place-card"
       onMouseOver={
         () => {
-          setCurrentCard(currentCard);
+          setCurrentCard(offer.id);
         }
       }
     >
       {premiumCard}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={{pathname: `/offer/${offer.id}`}} state={offer}>
           <img className="place-card__image" src={imageSource} width="260" height="200" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">

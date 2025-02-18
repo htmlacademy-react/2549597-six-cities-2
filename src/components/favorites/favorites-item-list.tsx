@@ -1,18 +1,24 @@
-import { MainScreenProps } from '../../types.ts';
-import FavoritesScreenItem from './favorites-screen-item.tsx';
+import {Offers } from '../../types.ts';
+import FavoritesItem from './favorites-item.tsx';
 import Header from '../header/header.tsx';
+import { AuthorizationStatus } from '../../constants.ts';
 
-export default function FavoritesScreenList ({offersData}: MainScreenProps):JSX.Element {
+type FavoritesItemListProps = {
+  offers: Offers;
+  auth: AuthorizationStatus;
+}
+
+export default function FavoritesItemList ({offers, auth}: FavoritesItemListProps) {
   return (
     <div className="page">
-      <Header/>
+      <Header auth={auth}/>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {offersData.map((offer) => offer.isBookmarks ? FavoritesScreenItem(offer) : '')}
+              {offers.map((offer) => offer.isBookmarks ? <FavoritesItem offer={offer} key={offer.id}/> : '')}
             </ul>
           </section>
         </div>

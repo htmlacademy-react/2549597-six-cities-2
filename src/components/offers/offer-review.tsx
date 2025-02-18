@@ -1,6 +1,12 @@
 import { Review } from '../../types';
 
-export default function OfferReview ({avatar, name, date, text}: Review): JSX.Element {
+type OfferReviewProps = {
+  currentReview: Review;
+}
+
+export default function OfferReview ({currentReview}: OfferReviewProps) {
+  const {avatar, name, text, date} = currentReview;
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import '../css/no-found-screen.css';
-import Image from '../img/ezhik_processed.png';
+import '../../css/no-found-screen.css';
+import Image from '../../img/ezhik_processed.png';
 
-export default function NotFoundScreen (): JSX.Element {
+export default function NotFoundScreen () {
   return (
     <div className='outer_container'>
       <div className='inner_div'>

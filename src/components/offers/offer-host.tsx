@@ -1,6 +1,11 @@
 import { Host } from '../../types';
 
-export default function OfferHost ({avatar, username, userStatus, text}: Host): JSX.Element {
+type OfferHostProps = {
+  host: Host;
+}
+
+export default function OfferHost ({host}: OfferHostProps) {
+  const {userStatus, avatar, text, username} = host;
   const statusMarkup = userStatus === 'Pro' ? <span className="offer__user-status">Pro</span> : '';
 
   return (

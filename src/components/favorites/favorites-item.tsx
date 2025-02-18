@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types';
 
-export default function FavoritesScreenItem (offer: Offer): JSX.Element {
+type FavoritesItemProps = {
+  offer: Offer;
+}
+
+export default function FavoritesItem ({offer}: FavoritesItemProps) {
   const {town, imageSource, price, rating, placeType, name} = offer;
 
   return (
@@ -16,9 +20,9 @@ export default function FavoritesScreenItem (offer: Offer): JSX.Element {
       <div className="favorites__places">
         <article className="favorites__card place-card">
           <div className="favorites__image-wrapper place-card__image-wrapper">
-            <a href="#">
+            <Link to={{pathname: `/offer/${offer.id}`}} state={offer}>
               <img className="place-card__image" src={imageSource} width="150" height="110" alt="Place image"/>
-            </a>
+            </Link>
           </div>
           <div className="favorites__card-info place-card__info">
             <div className="place-card__price-wrapper">

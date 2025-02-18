@@ -1,21 +1,22 @@
-import Header from '../header/header';
-import { AuthorizationStatus } from '../../constants';
-import FormReview from './form-review';
-import { useLocation } from 'react-router-dom';
-import { Offer } from '../../types';
-import OfferInside from './offer-inside';
-import OfferImage from './offer-image';
-import OfferHost from './offer-host';
-import OfferReviewList from './offer-review-list';
-import OfferFeautures from './offer-feautures';
+import Header from '../../components/header/header';
+import {AuthorizationStatus } from '../../constants';
+import OfferFormReview from '../../components/offers/offer-form-review';
+import {Offer, Offers } from '../../types';
+import OfferImage from '../../components/offers/offer-image';
+import OfferHost from '../../components/offers/offer-host';
+import OfferReviewList from '../../components/offers/offer-review-list';
+import OfferFeautures from '../../components/offers/offer-feautures';
+import OfferOption from '../../components/offers/offer-option';
 
-type Auth = {
+type OfferScreenProps = {
   auth?: AuthorizationStatus;
+  offers: Offers;
 }
 
-export default function OfferScreen ({auth} : Auth): JSX.Element {
-  const location = useLocation();
-  const {images, isPremium, name, isBookmarks, rating, ratingValue, feautures, price, insideList, host, review} = location.state as Offer;
+export default function OfferScreen ({auth, offers} : OfferScreenProps) {
+  const id = window.location.pathname.slice(7);
+  const currentOffer = offers.find((offer) => offer.id === id) as Offer;
+  const {images, isPremium, name, isBookmarks, rating, ratingValue, feautures, price, options, host, reviews} = currentOffer;
   const bookmarked = isBookmarks ? 'Is bookmarks' : 'To bookmarks';
 
   return (
@@ -51,7 +52,7 @@ export default function OfferScreen ({auth} : Auth): JSX.Element {
                 <span className="offer__rating-value rating__value">{ratingValue}</span>
               </div>
               <ul className="offer__features">
-                {feautures.map((feauture, index) => <OfferFeautures feauture={feauture.feauture} key={feauture.id} id={index}/>)}
+                {feautures.map((feauture) => <OfferFeautures feauture={feauture.feauture} key={feauture.id} type={feauture.type}/>)}
               </ul>
               <div className="offer__price">
                 <b className="offer__price-value">&euro;{price}</b>
@@ -60,14 +61,14 @@ export default function OfferScreen ({auth} : Auth): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {insideList.map((inside) => <OfferInside key={inside.id} inside={inside.inside}/>)}
+                  {options.map((option) => <OfferOption key={option.id} option={option.option}/>)}
                 </ul>
               </div>
-              {host ? OfferHost(host) : ''}
+              {host ? <OfferHost host={host}/> : ''}
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{review.length}</span></h2>
-                {review ? <OfferReviewList review={review}/> : ''}
-                {auth === AuthorizationStatus.Auth ? <FormReview/> : ''}
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                {reviews ? <OfferReviewList reviews={reviews}/> : ''}
+                {auth === AuthorizationStatus.Auth ? <OfferFormReview/> : ''}
               </section>
             </div>
           </div>
