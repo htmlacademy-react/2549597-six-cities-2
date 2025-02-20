@@ -1,4 +1,4 @@
-import {Navigate} from 'react-router-dom';
+import {Navigate, useParams} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 import { Offers } from '../../types';
 
@@ -9,8 +9,9 @@ type PrivateOfferRouteProps = {
 
 export default function PrivateOfferRoute(props: PrivateOfferRouteProps) {
   const {offers, children} = props;
-  const id = window.location.pathname.slice(7);
-  const currentOffer = offers.find((offer) => offer.id === id);
+  const id = useParams<{id: string}>();
+
+  const currentOffer = offers.find((offer) => offer.id === id.id);
 
   if (!currentOffer) {
     return <Navigate to={AppRoute.Error} />;
