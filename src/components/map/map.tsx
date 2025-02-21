@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { City, Offers } from '../../types';
+import { City, Offers, IconUrl, IconProperties} from '../../types';
 import useMap from '../../hooks/useMap';
 import L from 'leaflet';
 
@@ -7,24 +7,27 @@ type MapProps = {
   offers: Offers;
   city: City;
   selectedCard: string;
+  iconUrl: IconUrl;
+  iconProperties: IconProperties;
+  mapTitleLayer: string;
+  mapAttribution: string;
 }
 
-export default function Map ({city, offers, selectedCard}: MapProps) {
+export default function Map ({city, offers, selectedCard, iconUrl, iconProperties, mapTitleLayer, mapAttribution}: MapProps) {
   const mapRef = useRef(null);
-  const map = useMap({mapRef, city});
-  const defaultIconUrl = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
-  const currentIconUrl = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+  const map = useMap({mapRef, city, mapTitleLayer, mapAttribution});
+
 
   const defaultCustomIcon = L.icon({
-    iconUrl: defaultIconUrl,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconUrl: iconUrl.defaultUrl,
+    iconSize: iconProperties.iconSize,
+    iconAnchor: iconProperties.iconAnchor,
   });
 
   const currentCustomIcon = L.icon({
-    iconUrl: currentIconUrl,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconUrl: iconUrl.currentUrl,
+    iconSize: iconProperties.iconSize,
+    iconAnchor: iconProperties.iconAnchor,
   });
 
   useEffect(() => {
@@ -34,11 +37,11 @@ export default function Map ({city, offers, selectedCard}: MapProps) {
           lat: offer.coordinates.latitude,
           lng: offer.coordinates.longitude
         }, {
-          icon: offer.id === selectedCard ? currentCustomIcon : defaultCustomIcon,
+          icon: (offer.id === selectedCard) ? currentCustomIcon : defaultCustomIcon,
         }).addTo(map);
       });
     }
-  });
+  }, [currentCustomIcon, defaultCustomIcon, map, offers, selectedCard]);
 
   return (
     <section

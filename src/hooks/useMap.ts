@@ -6,13 +6,13 @@ import { City } from '../types';
 type useMapProps = {
   mapRef: React.RefObject<HTMLDivElement>;
   city: City;
+  mapTitleLayer: string;
+  mapAttribution: string;
 }
 
-export default function useMap({mapRef, city}: useMapProps) {
+export default function useMap({mapRef, city, mapTitleLayer, mapAttribution}: useMapProps) {
   const [map, setMap] = useState<L.Map | null>(null);
   const isRenderedRef = useRef(false);
-  const titleLayer = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-  const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
@@ -25,9 +25,9 @@ export default function useMap({mapRef, city}: useMapProps) {
       });
 
       L.tileLayer(
-        titleLayer,
+        mapTitleLayer,
         {
-          attribution: attribution,
+          attribution: mapAttribution,
         },
       ).addTo(instance);
 
@@ -35,7 +35,7 @@ export default function useMap({mapRef, city}: useMapProps) {
 
       isRenderedRef.current = true;
     }
-  }, [mapRef, city]);
+  }, [mapRef, city, mapTitleLayer, mapAttribution]);
 
   return map;
 }
