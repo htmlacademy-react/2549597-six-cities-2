@@ -3,14 +3,15 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { City } from '../types';
 
+const MAP_TITLE_LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+const MAP_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
 type useMapProps = {
   mapRef: React.RefObject<HTMLDivElement>;
   city: City;
-  mapTitleLayer: string;
-  mapAttribution: string;
 }
 
-export default function useMap({mapRef, city, mapTitleLayer, mapAttribution}: useMapProps) {
+export default function useMap({mapRef, city}: useMapProps) {
   const [map, setMap] = useState<L.Map | null>(null);
   const isRenderedRef = useRef(false);
 
@@ -25,9 +26,9 @@ export default function useMap({mapRef, city, mapTitleLayer, mapAttribution}: us
       });
 
       L.tileLayer(
-        mapTitleLayer,
+        MAP_TITLE_LAYER,
         {
-          attribution: mapAttribution,
+          attribution: MAP_ATTRIBUTION,
         },
       ).addTo(instance);
 
@@ -35,7 +36,7 @@ export default function useMap({mapRef, city, mapTitleLayer, mapAttribution}: us
 
       isRenderedRef.current = true;
     }
-  }, [mapRef, city, mapTitleLayer, mapAttribution]);
+  }, [mapRef, city]);
 
   return map;
 }

@@ -1,4 +1,4 @@
-import { Offers, City, IconUrl, IconProperties } from '../../types.ts';
+import { Offers, City} from '../../types.ts';
 import Header from '../../components/header/header.tsx';
 import HotelCardList from '../../components/hotel-card/hotel-card-list.tsx';
 import Map from '../../components/map/map.tsx';
@@ -8,13 +8,9 @@ type MainScreenProps = {
   foundPlace: number;
   offers: Offers;
   city: City;
-  iconUrl: IconUrl;
-  iconProperties: IconProperties;
-  mapTitleLayer: string;
-  mapAttribution: string;
 }
 
-export default function MainScreen ({foundPlace, offers, city, iconUrl, iconProperties, mapTitleLayer, mapAttribution}: MainScreenProps) {
+export default function MainScreen ({foundPlace, offers, city}: MainScreenProps) {
   const [currentCard, setCurrentCard] = useState('');
 
   return (
@@ -82,7 +78,7 @@ export default function MainScreen ({foundPlace, offers, city, iconUrl, iconProp
               <HotelCardList offers={offers} setCurrentCard={setCurrentCard}/>
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={offers} selectedCard={currentCard} iconUrl={iconUrl} iconProperties={iconProperties} mapTitleLayer={mapTitleLayer} mapAttribution={mapAttribution}/>
+              <Map city={city} offers={offers} selectedCard={currentCard}/>
             </div>
           </div>
         </div>

@@ -19,11 +19,6 @@ export type IconSize = L.PointExpression;
 
 export type IconAnchor = L.PointExpression;
 
-export type IconUrl = {
-  defaultUrl: string;
-  currentUrl: string;
-}
-
 export type Result = string | number | null | JSX.Element;
 
 export type Host = {
