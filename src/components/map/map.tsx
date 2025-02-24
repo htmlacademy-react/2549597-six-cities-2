@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef } from 'react';
 import { City, Offers, IconProperties} from '../../types';
 import useMap from '../../hooks/useMap';
 import L from 'leaflet';
@@ -13,13 +13,13 @@ const ICON_PROPERTIES: IconProperties = {
 type MapProps = {
   offers: Offers;
   city: City;
-  selectedCard: string;
+  selectedCard?: string;
 }
 
 export default function Map ({city, offers, selectedCard}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
-
+  const markersRef = useRef<L.Marker[]>([]);
 
   const defaultCustomIcon = L.icon({
     iconUrl: Pin,
@@ -35,23 +35,27 @@ export default function Map ({city, offers, selectedCard}: MapProps) {
 
   useEffect(() => {
     if (map) {
+      markersRef.current.forEach((marker) => marker.remove());
+      markersRef.current = [];
+
       offers.forEach((offer) => {
-        L.marker({
+        const offerMarker = L.marker({
           lat: offer.coordinates.latitude,
           lng: offer.coordinates.longitude
         }, {
           icon: (offer.id === selectedCard) ? currentCustomIcon : defaultCustomIcon,
         }).addTo(map);
+
+        markersRef.current.push(offerMarker);
       });
     }
   }, [currentCustomIcon, defaultCustomIcon, map, offers, selectedCard]);
 
   return (
-    <section
-      className="cities__map map"
+    <div
       ref={mapRef}
       style={{height: '600px', width: `${100}%`}}
     >
-    </section>
+    </div>
   );
 }

@@ -42,7 +42,7 @@ export default function App({foundPlace, offers, city}: AppProps) {
           path={AppRoute.Offer}
           element={
             <PrivateOfferRoute offers={offers}>
-              <OfferScreen auth={AuthorizationStatus.Auth} offers={offers}/>
+              <OfferScreen auth={AuthorizationStatus.Auth} offers={offers} city={city}/>
             </PrivateOfferRoute>
           }
         />
