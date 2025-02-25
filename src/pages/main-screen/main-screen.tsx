@@ -78,7 +78,9 @@ export default function MainScreen ({foundPlace, offers, city}: MainScreenProps)
               <HotelCardList offers={offers} setCurrentCard={setCurrentCard}/>
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={offers} selectedCard={currentCard}/>
+              <section className='cities__map map '>
+                <Map city={city} offers={offers} selectedCard={currentCard}/>
+              </section>
             </div>
           </div>
         </div>
