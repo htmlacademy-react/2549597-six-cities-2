@@ -1,15 +1,15 @@
 import {Navigate, useParams} from 'react-router-dom';
 import {AppRoute} from '../../constants';
-import { Offers } from '../../types';
+import { useAppSelector } from '../../hooks';
 
 type PrivateOfferRouteProps = {
-  offers: Offers;
   children: JSX.Element;
 }
 
 export default function PrivateOfferRoute(props: PrivateOfferRouteProps) {
-  const {offers, children} = props;
+  const {children} = props;
   const id = useParams<{id: string}>();
+  const offers = useAppSelector((state) => state.modifiedOffers);
 
   const currentOffer = offers.find((offer) => offer.id === id.id);
 

@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import {AuthorizationStatus } from '../../constants';
 import OfferFormReview from '../../components/offers/offer-form-review';
-import {Offer, Offers, City } from '../../types';
+import {Offer} from '../../types/types';
 import OfferImage from '../../components/offers/offer-image';
 import OfferHost from '../../components/offers/offer-host';
 import OfferReviewList from '../../components/offers/offer-review-list';
@@ -11,19 +11,21 @@ import OfferOption from '../../components/offers/offer-option';
 import { Link, useParams } from 'react-router-dom';
 import HotelCard from '../../components/hotel-card/hotel-card';
 import { useState } from 'react';
+import {useAppSelector} from '../../hooks';
 
 type OfferScreenProps = {
   auth?: AuthorizationStatus;
-  offers: Offers;
-  city: City;
 }
 
-export default function OfferScreen ({auth, offers, city} : OfferScreenProps) {
+export default function OfferScreen ({auth} : OfferScreenProps) {
   const id = useParams<{id: string}>();
+  const offers = useAppSelector((state) => state.modifiedOffers);
+
   const currentOffer = offers.find((offer) => offer.id === id.id) as Offer;
   const {images, isPremium, name, isBookmarks, rating, ratingValue, feautures, price, options, host, reviews} = currentOffer;
   const bookmarked = isBookmarks ? 'Is bookmarks' : 'To bookmarks';
   const anotherOffers = offers.filter((offer) => offer.id !== id.id);
+
   const [currentCard, setCurrentCard] = useState('');
 
   return (
@@ -80,7 +82,7 @@ export default function OfferScreen ({auth, offers, city} : OfferScreenProps) {
             </div>
           </div>
           <section className='offer__map map'>
-            <Map city={city} offers={anotherOffers} selectedCard={currentCard}/>
+            <Map offers={anotherOffers} selectedCard={currentCard}/>
           </section>
         </section>
         <div className="container">

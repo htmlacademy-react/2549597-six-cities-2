@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import {Feauture} from '../../types';
+import {Feauture} from '../../types/types';
 
 type OfferFeauturesProps = Feauture;
 

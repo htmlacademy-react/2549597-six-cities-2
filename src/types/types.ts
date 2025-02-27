@@ -7,7 +7,7 @@ export type City = {
   title: string;
   lat: number;
   lng: number;
-  zoom: number;
+  id: number;
 }
 
 export type IconProperties = {
@@ -32,7 +32,7 @@ export type Review = {
   id: number;
   avatar: string;
   name: string;
-  date: Date;
+  date: string;
   text: string;
 };
 

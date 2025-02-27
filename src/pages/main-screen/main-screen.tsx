@@ -1,17 +1,23 @@
-import { Offers, City} from '../../types.ts';
 import Header from '../../components/header/header.tsx';
 import HotelCardList from '../../components/hotel-card/hotel-card-list.tsx';
 import Map from '../../components/map/map.tsx';
 import { useState } from 'react';
+import TownList from '../../components/towns/town-list.tsx';
+import { useAppSelector } from '../../hooks/index.ts';
+import MainEmptyScreen from './main-empty-screen.tsx';
 
 type MainScreenProps = {
   foundPlace: number;
-  offers: Offers;
-  city: City;
+
 }
 
-export default function MainScreen ({foundPlace, offers, city}: MainScreenProps) {
+export default function MainScreen ({foundPlace}: MainScreenProps) {
   const [currentCard, setCurrentCard] = useState('');
+  const offers = useAppSelector((state) => state.modifiedOffers);
+
+  if (offers.length === 0) {
+    return <MainEmptyScreen/>;
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -21,38 +27,7 @@ export default function MainScreen ({foundPlace, offers, city}: MainScreenProps)
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <TownList/>
           </section>
         </div>
         <div className="cities">
@@ -75,11 +50,11 @@ export default function MainScreen ({foundPlace, offers, city}: MainScreenProps)
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <HotelCardList offers={offers} setCurrentCard={setCurrentCard}/>
+              <HotelCardList setCurrentCard={setCurrentCard}/>
             </section>
             <div className="cities__right-section">
               <section className='cities__map map '>
-                <Map city={city} offers={offers} selectedCard={currentCard}/>
+                <Map offers={offers} selectedCard={currentCard}/>
               </section>
             </div>
           </div>
