@@ -8,17 +8,14 @@ import { AppRoute, AuthorizationStatus } from '../../constants.ts';
 import PrivateRoute from '../private-route/private-route.tsx';
 import PrivateOfferRoute from '../private-route/private-offer-route.tsx';
 
-type AppProps = {
-  foundPlace: number;
-}
 
-export default function App({foundPlace}: AppProps) {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen foundPlace={foundPlace}/>}
+          element={<MainScreen/>}
         />
         <Route
           path={AppRoute.Login}

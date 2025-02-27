@@ -6,14 +6,10 @@ import TownList from '../../components/towns/town-list.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import MainEmptyScreen from './main-empty-screen.tsx';
 
-type MainScreenProps = {
-  foundPlace: number;
-
-}
-
-export default function MainScreen ({foundPlace}: MainScreenProps) {
+export default function MainScreen () {
   const [currentCard, setCurrentCard] = useState('');
   const offers = useAppSelector((state) => state.modifiedOffers);
+  const city = useAppSelector((state) => state.town.title);
 
   if (offers.length === 0) {
     return <MainEmptyScreen/>;
@@ -34,7 +30,7 @@ export default function MainScreen ({foundPlace}: MainScreenProps) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{foundPlace} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in {city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-capti`on">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
