@@ -40,3 +40,4 @@ const currentCity = (state: СommonSlice) => state.towns.currentCity;
 export const getCityName = createSelector([currentCityName], (name: string) => name);
 export const changeOffers = createSelector([currentCityName, allOffers], (name: string, offersData: Offers) => offersData.filter((offer) => offer.town === name));
 export const getCity = createSelector([currentCity], (city: City) => city);
+export const getAllOffers = createSelector([allOffers], (allCurrentOffers: Offers) => allCurrentOffers);
