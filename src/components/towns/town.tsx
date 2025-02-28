@@ -1,7 +1,8 @@
 import classnames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeOffers, changeTown } from '../../store/action';
-import { City } from '../../types/types';
+import { changeTown } from '../../store/action';
+import { City } from '../../types/models';
+import { getCityName } from '../../store/reduser';
 
 type TownProps = {
   town: City;
@@ -9,16 +10,16 @@ type TownProps = {
 
 export default function Town({town}: TownProps) {
   const dispatch = useAppDispatch();
-  const city = useAppSelector((state) => state.town.title);
+  const city = useAppSelector((state) => getCityName(state));
   const handleClick = () => {
     dispatch(changeTown(town));
-    dispatch(changeOffers(town.title));
+    // dispatch(changeOffers(town.name));
   };
 
   return (
     <li className="locations__item" onClick={handleClick}>
-      <a className={classnames('locations__item-link', 'tabs__item', {'tabs__item--active': city === town.title})} href="#">
-        <span>{town.title}</span>
+      <a className={classnames('locations__item-link', 'tabs__item', {'tabs__item--active': city === town.name})} href="#">
+        <span>{town.name}</span>
       </a>
     </li>
   );

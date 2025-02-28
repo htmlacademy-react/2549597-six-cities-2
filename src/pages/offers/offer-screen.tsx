@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import {AuthorizationStatus } from '../../constants';
 import OfferFormReview from '../../components/offers/offer-form-review';
-import {Offer} from '../../types/types';
+import {Offer} from '../../types/models';
 import OfferImage from '../../components/offers/offer-image';
 import OfferHost from '../../components/offers/offer-host';
 import OfferReviewList from '../../components/offers/offer-review-list';
@@ -12,6 +12,7 @@ import { Link, useParams } from 'react-router-dom';
 import HotelCard from '../../components/hotel-card/hotel-card';
 import { useState } from 'react';
 import {useAppSelector} from '../../hooks';
+import { changeOffers } from '../../store/reduser';
 
 type OfferScreenProps = {
   auth?: AuthorizationStatus;
@@ -19,7 +20,7 @@ type OfferScreenProps = {
 
 export default function OfferScreen ({auth} : OfferScreenProps) {
   const id = useParams<{id: string}>();
-  const offers = useAppSelector((state) => state.modifiedOffers);
+  const offers = useAppSelector((state) => changeOffers(state));
 
   const currentOffer = offers.find((offer) => offer.id === id.id) as Offer;
   const {images, isPremium, name, isBookmarks, rating, ratingValue, feautures, price, options, host, reviews} = currentOffer;
@@ -82,7 +83,7 @@ export default function OfferScreen ({auth} : OfferScreenProps) {
             </div>
           </div>
           <section className='offer__map map'>
-            <Map offers={anotherOffers} selectedCard={currentCard}/>
+            <Map offers={anotherOffers} selectedCard={currentCard} />
           </section>
         </section>
         <div className="container">

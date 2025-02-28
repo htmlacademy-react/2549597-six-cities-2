@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import {Offer} from '../../types/types.ts';
+import {Offer} from '../../types/models.ts';
 import classnames from 'classnames';
 
 type HotelCardProps = {

@@ -4,7 +4,7 @@ export type AppProps = {
 };
 
 export type City = {
-  title: string;
+  name: string;
   lat: number;
   lng: number;
   id: number;
@@ -79,3 +79,16 @@ export type Offer = {
 };
 
 export type Offers = Offer[];
+
+export type TownsSlice = {
+  currentCity: City;
+}
+
+export type OffersSlice = {
+  offers: Offers;
+}
+
+export type СommonSlice = {
+  towns: TownsSlice;
+  offers: OffersSlice;
+}

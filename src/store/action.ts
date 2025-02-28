@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { City } from '../types/types';
+import { City } from '../types/models';
 
 export const changeTown = createAction('/changeTown', (value: City) => ({
   payload: value,
@@ -7,6 +7,6 @@ export const changeTown = createAction('/changeTown', (value: City) => ({
 
 export const offers = createAction('/offers');
 
-export const changeOffers = createAction('/changeOffers', (value: string) => ({
-  payload: value,
-}));
+// export const changeOffers = createAction('/changeOffers', (value: string) => ({
+//   payload: value,
+// }));

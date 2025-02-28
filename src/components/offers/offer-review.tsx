@@ -1,4 +1,5 @@
-import { Review } from '../../types/types';
+import { Review } from '../../types/models';
+import { getCurrentDate, getMonthAndYear } from '../../utils';
 
 type OfferReviewProps = {
   currentReview: Review;
@@ -28,7 +29,7 @@ export default function OfferReview ({currentReview}: OfferReviewProps) {
         <p className="reviews__text">
           {text}
         </p>
-        <time className="reviews__time" dateTime={`${convertData.getFullYear()}-${convertData.getMonth() + 1}-${convertData.getDate()}`}>{`${convertData.toLocaleString('default', {month: 'long'})}-${convertData.getFullYear()}`}</time>
+        <time className="reviews__time" dateTime={getCurrentDate(convertData)}>{getMonthAndYear(convertData)}</time>
       </div>
     </li>
   );
