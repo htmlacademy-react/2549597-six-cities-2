@@ -1,8 +1,8 @@
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
-import {AuthorizationStatus } from '../../constants';
+import {AuthorizationStatus, CITIES } from '../../constants';
 import OfferFormReview from '../../components/offers/offer-form-review';
-import {Offer} from '../../types/models';
+import {City, Offer} from '../../types/models';
 import OfferImage from '../../components/offers/offer-image';
 import OfferHost from '../../components/offers/offer-host';
 import OfferReviewList from '../../components/offers/offer-review-list';
@@ -11,8 +11,9 @@ import OfferOption from '../../components/offers/offer-option';
 import { Link, useParams } from 'react-router-dom';
 import HotelCard from '../../components/hotel-card/hotel-card';
 import { useState } from 'react';
-import {useAppSelector} from '../../hooks';
-import { changeOffers } from '../../store/reduser';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import { changeOffers, getAllOffers } from '../../store/reduser';
+import { changeTown } from '../../store/action';
 
 type OfferScreenProps = {
   auth?: AuthorizationStatus;
@@ -20,9 +21,14 @@ type OfferScreenProps = {
 
 export default function OfferScreen ({auth} : OfferScreenProps) {
   const id = useParams<{id: string}>();
-  const offers = useAppSelector((state) => changeOffers(state));
+  const allOffers = useAppSelector((state) => getAllOffers(state));
 
-  const currentOffer = offers.find((offer) => offer.id === id.id) as Offer;
+  const currentOffer = allOffers.find((offer) => offer.id === id.id) as Offer;
+  const town = CITIES.find((city) => city.name === currentOffer.town) as City;
+  const dispatch = useAppDispatch();
+  dispatch(changeTown(town));
+
+  const offers = useAppSelector((state) => changeOffers(state));
   const {images, isPremium, name, isBookmarks, rating, ratingValue, feautures, price, options, host, reviews} = currentOffer;
   const bookmarked = isBookmarks ? 'Is bookmarks' : 'To bookmarks';
   const anotherOffers = offers.filter((offer) => offer.id !== id.id);

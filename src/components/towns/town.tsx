@@ -13,7 +13,6 @@ export default function Town({town}: TownProps) {
   const city = useAppSelector((state) => getCityName(state));
   const handleClick = () => {
     dispatch(changeTown(town));
-    // dispatch(changeOffers(town.name));
   };
 
   return (

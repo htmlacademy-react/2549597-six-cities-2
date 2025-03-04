@@ -2,14 +2,14 @@ import FavoritesItem from './favorites-item.tsx';
 import Header from '../header/header.tsx';
 import { AuthorizationStatus } from '../../constants.ts';
 import { useAppSelector } from '../../hooks/index.ts';
-import { getAllOffers } from '../../store/reduser.ts';
+import { favoriteOffers } from '../../store/reduser.ts';
 
 type FavoritesItemListProps = {
   auth: AuthorizationStatus;
 }
 
 export default function FavoritesItemList ({auth}: FavoritesItemListProps) {
-  const offers = useAppSelector((state) => getAllOffers(state));
+  const offers = useAppSelector(favoriteOffers);
 
   return (
     <div className="page">
@@ -20,7 +20,7 @@ export default function FavoritesItemList ({auth}: FavoritesItemListProps) {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {offers.map((offer) => offer.isBookmarks ? <FavoritesItem offer={offer} key={offer.id}/> : '')}
+              {offers.map((offer) => <FavoritesItem offer={offer} key={offer.id}/>)}
             </ul>
           </section>
         </div>

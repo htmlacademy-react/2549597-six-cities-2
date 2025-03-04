@@ -1,8 +1,9 @@
 import {createSelector, createSlice } from '@reduxjs/toolkit';
-import {offers, changeTown} from './action';
+import {offers, changeTown, setSorting} from './action';
 import { OFFERS_DATA } from '../mocks/offers';
-import { CITIES } from '../constants';
-import { City, Offers, СommonSlice } from '../types/models';
+import { CITIES, SORT_TYPES } from '../constants';
+import { City, Offers, CommonSlice, Sort } from '../types/models';
+import { getPopularOffers, getPriceHighToLowOffers, getPriceLowToHighOffers, getTopRatingOffers } from '../utils';
 
 
 export const townsSlice = createSlice({
@@ -33,11 +34,42 @@ export const offersSlice = createSlice({
   },
 });
 
-const currentCityName = (state: СommonSlice) => state.towns.currentCity.name;
-const allOffers = (state: СommonSlice) => state.offers.offers;
-const currentCity = (state: СommonSlice) => state.towns.currentCity;
+export const sortingSlice = createSlice({
+  name: 'sorting',
+  initialState: {
+    sorting: SORT_TYPES[0],
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(setSorting, (state, action) => {
+        state.sorting = action.payload;
+      });
+  },
+});
+
+const currentCityName = (state: CommonSlice) => state.towns.currentCity.name;
+const allOffers = (state: CommonSlice) => state.offers.offers;
+const currentCity = (state: CommonSlice) => state.towns.currentCity;
+const currentSort = (state: CommonSlice) => state.sorting.sorting;
 
 export const getCityName = createSelector([currentCityName], (name: string) => name);
-export const changeOffers = createSelector([currentCityName, allOffers], (name: string, offersData: Offers) => offersData.filter((offer) => offer.town === name));
+export const changeOffers = createSelector([currentCityName, allOffers, currentSort], (name: string, offersData: Offers, sort: Sort) => {
+  switch (sort.name) {
+    case 'Popular':
+      return getPopularOffers(offersData, name);
+    case 'Price: low to high':
+      return getPriceLowToHighOffers(getPopularOffers(offersData, name));
+    case 'Price: high to low':
+      return getPriceHighToLowOffers(getPopularOffers(offersData, name));
+    case 'Top rated first':
+      return getTopRatingOffers(getPopularOffers(offersData, name));
+    default:
+      return getPopularOffers(offersData, name);
+  }
+});
 export const getCity = createSelector([currentCity], (city: City) => city);
 export const getAllOffers = createSelector([allOffers], (allCurrentOffers: Offers) => allCurrentOffers);
+export const favoriteOffers = createSelector([allOffers], (offersData: Offers) => offersData.filter((offer) => offer.isBookmarks));
+export const getCurrentSort = createSelector([currentSort], (sort: Sort) => sort);
+

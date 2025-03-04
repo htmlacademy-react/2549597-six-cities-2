@@ -88,7 +88,19 @@ export type OffersSlice = {
   offers: Offers;
 }
 
-export type СommonSlice = {
+export type SortingSlice = {
+  sorting: Sort;
+}
+
+export type CommonSlice = {
   towns: TownsSlice;
   offers: OffersSlice;
+  sorting: SortingSlice;
+}
+
+export type Sorting = Sort[];
+
+export type Sort = {
+  id: number;
+  name: string;
 }
