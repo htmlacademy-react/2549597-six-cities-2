@@ -15,7 +15,7 @@ export default function App() {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen/>}
+          element={<MainScreen auth={AuthorizationStatus.NoAuth}/>}
         />
         <Route
           path={AppRoute.Login}
@@ -25,9 +25,9 @@ export default function App() {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={AuthorizationStatus.NoAuth}
             >
-              <FavoritesItemList auth={AuthorizationStatus.Auth}/>
+              <FavoritesItemList/>
             </PrivateRoute>
           }
         />
@@ -35,7 +35,7 @@ export default function App() {
           path={AppRoute.Offer}
           element={
             <PrivateOfferRoute>
-              <OfferScreen auth={AuthorizationStatus.Auth}/>
+              <OfferScreen auth={AuthorizationStatus.NoAuth}/>
             </PrivateOfferRoute>
           }
         />

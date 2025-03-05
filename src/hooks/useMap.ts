@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '.';
-import { getCity } from '../store/reduser';
+import { getCity } from '../store/reducer';
 
 
 const MAP_TITLE_LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
@@ -13,7 +13,7 @@ type useMapProps = {
 }
 
 export default function useMap({mapRef}: useMapProps) {
-  const city = useAppSelector((state) => getCity(state));
+  const city = useAppSelector(getCity);
   const [map, setMap] = useState<L.Map | null>(null);
   const isRenderedRef = useRef(false);
 

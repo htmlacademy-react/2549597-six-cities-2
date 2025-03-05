@@ -1,4 +1,4 @@
-import {AuthorizationStatus} from './constants';
+import { AuthorizationStatus } from './constants';
 import { Offer, Offers, Result } from './types/models';
 
 export const authorization = (auth: AuthorizationStatus, trueResult: Result, falseResult: Result) => {
@@ -13,16 +13,15 @@ export const getCurrentDate = (convertData: Date) => `${convertData.getFullYear(
 
 export const getMonthAndYear = (convertData: Date) => `${convertData.toLocaleString('default', {month: 'long'})}-${convertData.getFullYear()}`;
 
-export const getPopularOffers = (offers: Offers, name: string) => offers.filter((offer) => offer.town === name);
+const sortingMethods = {
+  lowToHighPriceSorting: (first: Offer, second: Offer) => first.price - second.price,
+  highToLowPriceSorting: (first: Offer, second: Offer) => second.price - first.price,
+  highToLowRatingSorting: (first: Offer, second: Offer) => second.ratingValue - first.ratingValue,
+};
 
-const lowToHighSorting = (first: Offer, second: Offer) => first.price - second.price;
-
-const highToLowSorting = (first: Offer, second: Offer) => second.price - first.price;
-
-const topRating = (first: Offer, second: Offer) => second.ratingValue - first.ratingValue;
-
-export const getPriceLowToHighOffers = (offers: Offers) => offers.sort(lowToHighSorting);
-
-export const getPriceHighToLowOffers = (offers: Offers) => offers.sort(highToLowSorting);
-
-export const getTopRatingOffers = (offers: Offers) => offers.sort(topRating);
+export const sortingTypes = {
+  popularOffers: (offers: Offers, name: string) => offers.filter((offer) => offer.town === name),
+  priceLowToHighOffers: (offers: Offers) => offers.sort(sortingMethods.lowToHighPriceSorting),
+  priceHighToLowOffers: (offers: Offers) => offers.sort(sortingMethods.highToLowPriceSorting),
+  topRatingOffers: (offers: Offers) => offers.sort(sortingMethods.highToLowRatingSorting),
+};

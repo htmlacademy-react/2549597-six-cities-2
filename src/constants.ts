@@ -15,22 +15,10 @@ export enum AuthorizationStatus {
 }
 
 export const SORT_TYPES = [
-  {
-    id: 0,
-    name: 'Popular',
-  },
-  {
-    id: 1,
-    name: 'Price: low to high',
-  },
-  {
-    id: 2,
-    name: 'Price: high to low',
-  },
-  {
-    id: 3,
-    name: 'Top rated first',
-  },
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first'
 ];
 
 export const CITIES = [

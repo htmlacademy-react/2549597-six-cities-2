@@ -6,12 +6,18 @@ import { useState } from 'react';
 import TownList from '../../components/towns/town-list.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import MainEmptyScreen from './main-empty-screen.tsx';
-import { changeOffers, getCityName } from '../../store/reduser.ts';
+import { changeOffers, getCityName } from '../../store/reducer.ts';
+import '../../css/main-screen-map.css';
+import { AuthorizationStatus } from '../../constants.ts';
 
-export default function MainScreen () {
+type MainScreenProps = {
+  auth: AuthorizationStatus;
+}
+
+export default function MainScreen ({auth}: MainScreenProps) {
   const [currentCard, setCurrentCard] = useState('');
-  const offers = useAppSelector((state) => changeOffers(state));
-  const cityName = useAppSelector((state) => getCityName(state));
+  const offers = useAppSelector(changeOffers);
+  const cityName = useAppSelector(getCityName);
 
   if (offers.length === 0) {
     return <MainEmptyScreen/>;
@@ -19,7 +25,7 @@ export default function MainScreen () {
 
   return (
     <div className="page page--gray page--main">
-      <Header/>
+      <Header auth={auth}/>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -33,11 +39,11 @@ export default function MainScreen () {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in {cityName}</b>
-              <Sorting/>
+              <Sorting />
               <HotelCardList setCurrentCard={setCurrentCard}/>
             </section>
             <div className="cities__right-section">
-              <section className='cities__map map '>
+              <section className='leaflet__map map '>
                 <Map offers={offers} selectedCard={currentCard}/>
               </section>
             </div>
