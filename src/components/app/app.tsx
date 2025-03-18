@@ -7,9 +7,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants.ts';
 import PrivateRoute from '../private-route/private-route.tsx';
 import PrivateOfferRoute from '../private-route/private-offer-route.tsx';
+// import { useAppSelector } from '../../hooks/index.ts';
+// import { getCurrentAuth } from '../../store/reducer.ts';
 
 
 export default function App() {
+  // const authorizationStatus = useAppSelector(getCurrentAuth);
+
   return (
     <BrowserRouter>
       <Routes>

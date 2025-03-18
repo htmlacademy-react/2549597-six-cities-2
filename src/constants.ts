@@ -60,3 +60,8 @@ export const CITIES = [
   }
 ];
 
+export enum ApiRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}

@@ -14,7 +14,6 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeOffers, getAllOffers } from '../../store/reducer';
 import { changeTown } from '../../store/action';
-import '../../css/offer-screen-map.css';
 
 type OfferScreenProps = {
   auth?: AuthorizationStatus;
@@ -89,7 +88,7 @@ export default function OfferScreen ({auth} : OfferScreenProps) {
               </section>
             </div>
           </div>
-          <section className='leaflet_offer__map map'>
+          <section className='map' style={{width: '100%'}}>
             <Map offers={anotherOffers} selectedCard={currentCard} />
           </section>
         </section>

@@ -80,20 +80,34 @@ export type Offer = {
 
 export type Offers = Offer[];
 
-export type TownsSlice = {
-  currentCity: City;
-}
+// export type TownsSlice = {
+//   currentCity: City;
+// }
 
-export type OffersSlice = {
-  offers: Offers;
-}
+// export type OffersSlice = {
+//   offers: Offers;
+// }
 
-export type SortingSlice = {
-  sorting: string;
-}
+export type SortingSlice = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
 
 export type CommonSlice = {
-  towns: TownsSlice;
-  offers: OffersSlice;
+  towns: City;
+  offers: Offers;
   sorting: SortingSlice;
+  auth: AuthStatus;
+}
+
+export type AuthStatus = 'UNKNOWN' | 'AUTH' | 'NO_AUTH';
+
+export type AuthData = {
+  email: string;
+  password: string;
+}
+
+export type UserData = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+  email: string;
+  token: string;
 }
