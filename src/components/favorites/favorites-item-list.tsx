@@ -1,6 +1,5 @@
 import FavoritesItem from './favorites-item.tsx';
 import Header from '../header/header.tsx';
-import { AuthorizationStatus } from '../../constants.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import { favoriteOffers } from '../../store/reducer.ts';
 
@@ -9,7 +8,7 @@ export default function FavoritesItemList () {
 
   return (
     <div className="page">
-      <Header auth={AuthorizationStatus.Auth}/>
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

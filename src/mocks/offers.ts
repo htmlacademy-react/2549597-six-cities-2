@@ -64,7 +64,10 @@ export const OFFERS_DATA = [
     isBookmarks: true,
     rating: 70,
     ratingValue: 3.5,
-    feautures: [{id:0,type:'dwelling',feauture:'Private room'}, {id:1,type:'bedrooms',feauture:'1 Bedroom'}, {id:2,type:'adults',feauture:'Max 1 adult'}],
+    feautures: [
+      {id:0,type:'dwelling',feauture:'Private room'},
+      {id:1,type:'bedrooms',feauture:'1 Bedroom'},
+      {id:2,type:'adults',feauture:'Max 1 adult'}],
     price: 115,
     options: [{id:0,option:'Wi-Fi'}, {id:1,option:'Washing machine'}, {id:2,option:'Towels'}, {id:3,option:'Heating'}, {id:4,option:'Coffee machine'}, {id:5,option:'Baby seat'}, {id:6,option:'Kitchen'}, {id:7,option:'Dishwasher'}],
     id: '3',

@@ -1,13 +1,17 @@
 import { Link } from 'react-router-dom';
 import { HEADER_FAVORITE_COUNT, AuthorizationStatus } from '../../constants';
 import { authorization } from '../../utils';
+// import { AuthStatus } from '../../types/models';
+import { useAppSelector } from '../../hooks';
+import { getCurrentAuth } from '../../store/reducer';
 
-type Auth = {
-  auth?: AuthorizationStatus;
-}
+// type Auth = {
+//   auth?: AuthStatus;
+// }
 
-export default function Header ({auth = AuthorizationStatus.NoAuth}: Auth) {
-  const loginMarkup = auth === AuthorizationStatus.Auth ?
+export default function Header () {
+  const loggedStatus = useAppSelector(getCurrentAuth);
+  const loginMarkup = loggedStatus === AuthorizationStatus.Auth ?
     (
       <a className="header__nav-link header__nav-link--profile" href="#">
         <div className="header__avatar-wrapper user__avatar-wrapper"></div>
@@ -32,8 +36,8 @@ export default function Header ({auth = AuthorizationStatus.NoAuth}: Auth) {
                 {loginMarkup}
               </li>
               <li className="header__nav-item">
-                <Link className="header__nav-link" to="#">
-                  <span className="header__signout">{authorization(auth, 'Sign out', 'Sign in')}</span>
+                <Link className="header__nav-link" to="/login">
+                  <span className="header__signout">{authorization(loggedStatus, 'Sign out', 'Sign in')}</span>
                 </Link>
               </li>
             </ul>

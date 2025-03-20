@@ -5,9 +5,7 @@ export type AppProps = {
 
 export type City = {
   name: string;
-  lat: number;
-  lng: number;
-  id: number;
+  location: Coordinates;
 }
 
 export type IconProperties = {
@@ -22,10 +20,9 @@ export type IconAnchor = L.PointExpression;
 export type Result = string | number | null | JSX.Element;
 
 export type Host = {
-  avatar: string;
-  username: string;
-  userStatus: string;
-  text: string;
+  avatarUrl: string;
+  name: string;
+  isPro: boolean;
 }
 
 export type Review = {
@@ -44,9 +41,9 @@ export type Image = {
 }
 
 export type Feauture = {
-  id?: number;
   type: string;
-  feauture: string;
+  bedrooms: number;
+  maxAdults: number;
 }
 
 export type Option = {
@@ -57,51 +54,85 @@ export type Option = {
 export type Coordinates = {
   latitude: number;
   longitude: number;
+  zoom: number;
 }
 
 export type Offer = {
-  images: Image[];
-  imageSource: string;
-  isPremium: boolean;
-  name: string;
-  isBookmarks: boolean;
-  rating: number;
-  ratingValue: number;
-  feautures: Feauture[];
-  price: number;
-  options: Option[];
   id: string;
-  placeType: string;
-  host: Host;
-  reviews: Reviews;
-  town: string;
-  coordinates: Coordinates;
+  title: string;
+  type: string;
+  price: number;
+  city: City;
+  location: Coordinates;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
 };
+
+export type CurrentOffer = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: City;
+  location: Coordinates;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  images: string[];
+  maxAdults: number;
+} | null;
 
 export type Offers = Offer[];
 
-// export type TownsSlice = {
-//   currentCity: City;
-// }
+export type TownsSlice = {
+  currentCity: City;
+}
 
-// export type OffersSlice = {
-//   offers: Offers;
-// }
+export type OffersSlice = {
+  offers: Offers;
+}
 
 export type SortingSlice = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
 
 export type CommonSlice = {
-  towns: City;
-  offers: Offers;
-  sorting: SortingSlice;
-  auth: AuthStatus;
+  towns: {
+    currentCity: City;
+  };
+  offers: {
+    offers: Offers;
+    isOffersLoaded: boolean;
+    currentOffer: CurrentOffer;
+  };
+  sorting: {
+    sorting: SortingSlice;
+  };
+  auth: {
+    authStatus: AuthStatus;
+  };
+  error: {
+    error: ErrorSlice;
+  };
 }
+
+export type ErrorSlice = string | null;
+
+export type CurrentOfferId = string | undefined;
 
 export type AuthStatus = 'UNKNOWN' | 'AUTH' | 'NO_AUTH';
 
 export type AuthData = {
-  email: string;
-  password: string;
+  login: string | null;
+  password: string | null;
 }
 
 export type UserData = {

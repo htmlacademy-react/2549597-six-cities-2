@@ -1,49 +1,54 @@
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
-import { AuthorizationStatus, CITIES } from '../../constants';
+import { AuthorizationStatus } from '../../constants';
 import OfferFormReview from '../../components/offers/offer-form-review';
-import { City, Offer } from '../../types/models';
+import { City } from '../../types/models';
 import OfferImage from '../../components/offers/offer-image';
 import OfferHost from '../../components/offers/offer-host';
-import OfferReviewList from '../../components/offers/offer-review-list';
+// import OfferReviewList from '../../components/offers/offer-review-list';
 import OfferFeautures from '../../components/offers/offer-feautures';
 import OfferOption from '../../components/offers/offer-option';
 import { Link, useParams } from 'react-router-dom';
 import HotelCard from '../../components/hotel-card/hotel-card';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeOffers, getAllOffers } from '../../store/reducer';
+import { changeOffers, getCurrentAuth, getCurrentOffer } from '../../store/reducer';
 import { changeTown } from '../../store/action';
+import { getDataCurrentOffer } from '../../store/api-actions';
 
-type OfferScreenProps = {
-  auth?: AuthorizationStatus;
-}
-
-export default function OfferScreen ({auth} : OfferScreenProps) {
+export default function OfferScreen () {
+  const [currentCard, setCurrentCard] = useState<string>('');
+  const loggedStatus = useAppSelector(getCurrentAuth);
   const { id } = useParams<{id: string}>();
-  const allOffers = useAppSelector(getAllOffers);
-
-  const currentOffer = allOffers.find((offer) => offer.id === id) as Offer;
-  const town = CITIES.find((city) => city.name === currentOffer.town) as City;
   const dispatch = useAppDispatch();
+  dispatch(getDataCurrentOffer(id));
+  // const allOffers = useAppSelector(getAllOffers);
+
+  // const currentOffer = allOffers.find((offer) => offer.id === id) as Offer;
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const town = currentOffer?.city as City;
+
   dispatch(changeTown(town));
 
   const offers = useAppSelector(changeOffers);
-  const {images, isPremium, name, isBookmarks, rating, ratingValue, feautures, price, options, host, reviews} = currentOffer;
-  const bookmarked = isBookmarks ? 'Is bookmarks' : 'To bookmarks';
-  const anotherOffers = offers.filter((offer) => offer.id !== id);
 
-  const [currentCard, setCurrentCard] = useState('');
+  if (currentOffer === null) {
+    return;
+  }
+  const {images, isPremium, title, isFavorite, rating, bedrooms, type, maxAdults, price, goods, host, description} = currentOffer;//reviews!!
+  const bookmarked = isFavorite ? 'Is bookmarks' : 'To bookmarks';
+  const anotherOffers = offers.filter((offer) => offer.id !== id);
+  const ratingValue = rating * 20;
 
   return (
     <div className="page">
-      <Header auth={auth}/>
+      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images.map((image) => <OfferImage key={image.id} image={image.image}/>)}
+              {images.map((image) => <OfferImage key={image} image={image}/>)}
             </div>
           </div>
           <div className="offer__container container">
@@ -51,7 +56,7 @@ export default function OfferScreen ({auth} : OfferScreenProps) {
               {isPremium ? <div className="offer__mark"><span>Premium</span></div> : ''}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {name}
+                  {title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -62,14 +67,12 @@ export default function OfferScreen ({auth} : OfferScreenProps) {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${rating}%`}}></span>
+                  <span style={{width: `${ratingValue}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{ratingValue}</span>
+                <span className="offer__rating-value rating__value">{rating}</span>
               </div>
-              <ul className="offer__features">
-                {feautures.map((feauture) => <OfferFeautures feauture={feauture.feauture} key={feauture.id} type={feauture.type}/>)}
-              </ul>
+              <OfferFeautures type={type} bedrooms={bedrooms} maxAdults={maxAdults}/>
               <div className="offer__price">
                 <b className="offer__price-value">&euro;{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
@@ -77,14 +80,14 @@ export default function OfferScreen ({auth} : OfferScreenProps) {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {options.map((option) => <OfferOption key={option.id} option={option.option}/>)}
+                  {goods.map((option) => <OfferOption key={option} option={option}/>)}
                 </ul>
               </div>
-              {host ? <OfferHost host={host}/> : ''}
+              {host ? <OfferHost host={host} description={description}/> : ''}
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                {reviews ? <OfferReviewList reviews={reviews}/> : ''}
-                {auth === AuthorizationStatus.Auth ? <OfferFormReview/> : ''}
+                {/* <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2> */}
+                {/* {reviews ? <OfferReviewList reviews={reviews}/> : ''} */}
+                {loggedStatus === AuthorizationStatus.Auth ? <OfferFormReview/> : ''}
               </section>
             </div>
           </div>
@@ -111,7 +114,7 @@ export default function OfferScreen ({auth} : OfferScreenProps) {
                 >
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <Link to={{pathname: `/offer/${offer.id}`}} state={offer}>
-                      <img className="place-card__image" src={offer.imageSource} width="260" height="200" alt="Place image"/>
+                      <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
                     </Link>
                   </div>
                   {offer.isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}

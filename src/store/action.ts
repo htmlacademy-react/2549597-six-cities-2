@@ -1,6 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { City, Offers, SortingSlice } from '../types/models';
-import { AuthorizationStatus } from '../constants';
+import { AuthStatus, City, CurrentOffer, Offers, SortingSlice } from '../types/models';
 
 export const changeTown = createAction('/changeTown', (value: City) => ({
   payload: value,
@@ -14,8 +13,12 @@ export const setSorting = createAction('/sorting', (value: SortingSlice) => ({
 
 export const loadData = createAction<Offers>('data/loadData');
 
-export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization');
 
-// export const changeAuthStatus = createAction('/auth', (value: AuthorizationStatus) => ({
-//   payload: value
-// }));
+export const setError = createAction<string | null>('/setError');
+
+export const setDataLoadingStatus = createAction<boolean>('data/setDataLoadingStatus');
+
+export const setCurrentOfferId = createAction<string | undefined>('offer/id');
+
+export const setCurrentOffer = createAction<CurrentOffer | null>('offers/offer');

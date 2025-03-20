@@ -2,9 +2,10 @@ import classnames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSorting } from '../../store/action';
 import { getCurrentSort } from '../../store/reducer';
+import { SortingSlice } from '../../types/models';
 
 type SortingTypesProps = {
-  sort: string;
+  sort: SortingSlice;
 }
 
 export default function SortingTypes({sort}: SortingTypesProps) {

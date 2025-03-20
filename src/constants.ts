@@ -1,3 +1,5 @@
+import { City, SortingSlice } from './types/models';
+
 export const HEADER_FAVORITE_COUNT = 3;
 
 export enum AppRoute {
@@ -14,49 +16,61 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const SORT_TYPES = [
+export const SORT_TYPES: SortingSlice[] = [
   'Popular',
   'Price: low to high',
   'Price: high to low',
   'Top rated first'
 ];
 
-export const CITIES = [
+export const CITIES: City[] = [
   {
     name: 'Amsterdam',
-    lat: 52.374,
-    lng: 4.88969,
-    id: 0,
+    location: {
+      latitude: 52.374,
+      longitude: 4.88969,
+      zoom: 12,
+    },
   },
   {
     name: 'Paris',
-    lat: 48.8566,
-    lng:  2.3522,
-    id: 1,
+    location: {
+      latitude: 48.8566,
+      longitude:  2.3522,
+      zoom: 12,
+    },
   },
   {
     name: 'Cologne',
-    lat: 50.9375,
-    lng: 6.9603,
-    id: 2,
+    location: {
+      latitude: 50.9375,
+      longitude: 6.9603,
+      zoom: 12,
+    },
   },
   {
     name: 'Brussels',
-    lat: 50.8503,
-    lng: 4.3517,
-    id: 3,
+    location: {
+      latitude: 50.8503,
+      longitude: 4.3517,
+      zoom: 12,
+    }
   },
   {
     name: 'Hamburg',
-    lat: 53.5511,
-    lng: 9.9937,
-    id: 4,
+    location: {
+      latitude: 53.5511,
+      longitude: 9.9937,
+      zoom: 12,
+    }
   },
   {
     name: 'Dusseldorf',
-    lat: 51.2260,
-    lng: 6.7762,
-    id: 5,
+    location: {
+      latitude: 51.2260,
+      longitude: 6.7762,
+      zoom: 12,
+    }
   }
 ];
 
@@ -65,3 +79,5 @@ export enum ApiRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export const TIMEOUT_SHOW_ERROR = 2000;

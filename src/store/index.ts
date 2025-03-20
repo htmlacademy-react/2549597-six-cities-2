@@ -4,6 +4,7 @@ import { townsSlice } from './town-slice';
 import { sortingSlice } from './sorting-slice';
 import { createAPI } from '../services/api';
 import { authSlice } from './auth-slice';
+import { errorSlice } from './error-slice';
 
 
 const api = createAPI();
@@ -14,6 +15,7 @@ export const store = configureStore({
     towns: townsSlice.reducer,
     sorting: sortingSlice.reducer,
     auth: authSlice.reducer,
+    error: errorSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

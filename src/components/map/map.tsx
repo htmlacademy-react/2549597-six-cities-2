@@ -39,11 +39,11 @@ export default function Map ({selectedCard, offers}: MapProps) {
     if (map) {
       markersRef.current.forEach((marker) => marker.remove());
       markersRef.current = [];
-      map.setView({lat: city.lat, lng: city.lng}, 12);
+      map.setView({lat: city.location.latitude, lng: city.location.longitude}, 12);
       offers.forEach((offer) => {
         const offerMarker = L.marker({
-          lat: offer.coordinates.latitude,
-          lng: offer.coordinates.longitude
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
         }, {
           icon: (offer.id === selectedCard) ? currentCustomIcon : defaultCustomIcon,
         }).addTo(map);
@@ -51,7 +51,7 @@ export default function Map ({selectedCard, offers}: MapProps) {
         markersRef.current.push(offerMarker);
       });
     }
-  }, [city.lat, city.lng, currentCustomIcon, defaultCustomIcon, map, offers, selectedCard]);
+  }, [city.location.longitude, city.location.latitude, currentCustomIcon, defaultCustomIcon, map, offers, selectedCard]);
 
   return (
     <div

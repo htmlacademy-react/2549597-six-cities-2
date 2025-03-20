@@ -1,18 +1,20 @@
-import classnames from 'classnames';
 import { Feauture } from '../../types/models';
 
 type OfferFeauturesProps = Feauture;
 
-export default function OfferFeautures ({feauture, type}: OfferFeauturesProps) {
+export default function OfferFeautures ({bedrooms, type, maxAdults}: OfferFeauturesProps) {
 
   return (
-    <li className={classnames('offer__feature', {
-      'offer__feature--entire' : type === 'dwelling',
-      'offer__feature--bedrooms' : type === 'bedrooms',
-      'offer__feature--adults' : type === 'adults',
-    })}
-    >
-      {feauture}
-    </li>
+    <ul className="offer__features">
+      <li className="offer__feature offer__feature--entire">
+        {type}
+      </li>
+      <li className="offer__feature offer__feature--bedrooms">
+        {bedrooms}
+      </li>
+      <li className="offer__feature offer__feature--adults">
+        {maxAdults}
+      </li>
+    </ul>
   );
 }

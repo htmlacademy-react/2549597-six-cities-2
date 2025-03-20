@@ -7,19 +7,27 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants.ts';
 import PrivateRoute from '../private-route/private-route.tsx';
 import PrivateOfferRoute from '../private-route/private-offer-route.tsx';
-// import { useAppSelector } from '../../hooks/index.ts';
-// import { getCurrentAuth } from '../../store/reducer.ts';
+import { useAppSelector } from '../../hooks/index.ts';
+import { getCurrentAuth, getCurrentLoadingStatus } from '../../store/reducer.ts';
+import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
 
 
 export default function App() {
-  // const authorizationStatus = useAppSelector(getCurrentAuth);
+  const authorizationStatus = useAppSelector(getCurrentAuth);
+  const isDataLoading = useAppSelector(getCurrentLoadingStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen auth={AuthorizationStatus.NoAuth}/>}
+          element={<MainScreen />}
         />
         <Route
           path={AppRoute.Login}
@@ -28,9 +36,7 @@ export default function App() {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
-            >
+            <PrivateRoute>
               <FavoritesItemList/>
             </PrivateRoute>
           }
@@ -39,7 +45,7 @@ export default function App() {
           path={AppRoute.Offer}
           element={
             <PrivateOfferRoute>
-              <OfferScreen auth={AuthorizationStatus.NoAuth}/>
+              <OfferScreen />
             </PrivateOfferRoute>
           }
         />
