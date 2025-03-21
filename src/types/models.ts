@@ -1,8 +1,3 @@
-export type AppProps = {
-  foundPlace?: number;
-  offers: Offers;
-};
-
 export type City = {
   name: string;
   location: Coordinates;
@@ -16,40 +11,6 @@ export type IconProperties = {
 export type IconSize = L.PointExpression;
 
 export type IconAnchor = L.PointExpression;
-
-export type Result = string | number | null | JSX.Element;
-
-export type Host = {
-  avatarUrl: string;
-  name: string;
-  isPro: boolean;
-}
-
-export type Review = {
-  id: number;
-  avatar: string;
-  name: string;
-  date: string;
-  text: string;
-};
-
-export type Reviews = Review[];
-
-export type Image = {
-  id?: number;
-  image: string;
-}
-
-export type Feauture = {
-  type: string;
-  bedrooms: number;
-  maxAdults: number;
-}
-
-export type Option = {
-  id?: number;
-  option: string;
-}
 
 export type Coordinates = {
   latitude: number;
@@ -112,6 +73,7 @@ export type CommonSlice = {
     offers: Offers;
     isOffersLoaded: boolean;
     currentOffer: CurrentOffer;
+    reviews: Reviews;
   };
   sorting: {
     sorting: SortingSlice;
@@ -142,3 +104,17 @@ export type UserData = {
   email: string;
   token: string;
 }
+
+export type Review = {
+  id: string;
+  date: string;
+  user: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+}
+
+export type Reviews = Review[];

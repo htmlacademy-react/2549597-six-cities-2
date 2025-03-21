@@ -1,13 +1,8 @@
 import { Link } from 'react-router-dom';
 import { HEADER_FAVORITE_COUNT, AuthorizationStatus } from '../../constants';
 import { authorization } from '../../utils';
-// import { AuthStatus } from '../../types/models';
 import { useAppSelector } from '../../hooks';
 import { getCurrentAuth } from '../../store/reducer';
-
-// type Auth = {
-//   auth?: AuthStatus;
-// }
 
 export default function Header () {
   const loggedStatus = useAppSelector(getCurrentAuth);

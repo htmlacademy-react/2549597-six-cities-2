@@ -21,8 +21,8 @@ export default function useMap({mapRef}: useMapProps) {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = L.map(mapRef.current, {
         center: {
-          lat: city.lat,
-          lng: city.lng,
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
       });
 

@@ -1,12 +1,14 @@
-import { Host } from '../../types/models';
-
-type OfferHostProps = {
-  host: Host;
+type UserHost = {
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
   description: string;
-}
+};
 
-export default function OfferHost ({host, description}: OfferHostProps) {
-  const {avatarUrl, isPro, name} = host;
+export default function OfferHost ({host, description}: UserHost) {
+  const {name, avatarUrl, isPro} = host;
   const statusMarkup = isPro ? <span className="offer__user-status">Pro</span> : '';
 
   return (

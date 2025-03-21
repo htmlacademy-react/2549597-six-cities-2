@@ -1,9 +1,9 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { AuthData, CurrentOffer, CurrentOfferId, Offers, UserData } from '../types/models';
+import { AuthData, CurrentOffer, CurrentOfferId, Offers, Reviews, UserData } from '../types/models';
 import { ApiRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../constants';
-import { loadData, requireAuthorization, setCurrentOffer, setDataLoadingStatus, setError } from './action';
+import { loadData, requireAuthorization, setCurrentOffer, setDataLoadingStatus, setError, setReviews } from './action';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
 
@@ -43,10 +43,28 @@ export const getDataCurrentOffer = createAsyncThunk<void, CurrentOfferId, {
     if (!id) {
       return;
     }
-    // dispatch(setDataLoadingStatus(true));
+    dispatch(setDataLoadingStatus(true));
     const {data} = await api.get<CurrentOffer>(`/offers/${id}`);
-    // dispatch(setDataLoadingStatus(false));
+    dispatch(setDataLoadingStatus(false));
     dispatch(setCurrentOffer(data));
+  },
+);
+
+export const getReviews = createAsyncThunk<void, CurrentOfferId, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(
+  'data/getDataCurrentOffer',
+  async (id, {dispatch, extra: api}) => {
+    if (!id) {
+      return;
+    }
+    dispatch(setDataLoadingStatus(true));
+    const {data} = await api.get<Reviews>(`/comments/${id}`);
+    dispatch(setDataLoadingStatus(false));
+    dispatch(setReviews(data));
   },
 );
 

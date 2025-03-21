@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { City, Offers, CommonSlice, AuthStatus, SortingSlice, ErrorSlice, CurrentOffer } from '../types/models';
+import { City, Offers, CommonSlice, AuthStatus, SortingSlice, ErrorSlice, CurrentOffer, Reviews } from '../types/models';
 import { sortingTypes } from '../utils';
 
 const currentError = (state: CommonSlice) => state.error.error;
@@ -10,6 +10,7 @@ const currentSort = (state: CommonSlice) => state.sorting.sorting;
 const currentAuth = (state: CommonSlice) => state.auth.authStatus;
 const currentLoadingStatus = (state: CommonSlice) => state.offers.isOffersLoaded;
 const currentOffer = (state: CommonSlice) => state.offers.currentOffer;
+const reviews = (state: CommonSlice) => state.offers.reviews;
 
 export const getCityName = createSelector([currentCityName], (name: string) => name);
 export const changeOffers = createSelector([currentCityName, allOffers, currentSort], (name: string, offersData: Offers, sort: SortingSlice) => {
@@ -36,3 +37,4 @@ export const getCurrentAuth = createSelector([currentAuth], (auth : AuthStatus) 
 export const getCurrentError = createSelector([currentError], (error: ErrorSlice) => error);
 export const getCurrentLoadingStatus = createSelector([currentLoadingStatus], (loadingStatus: boolean) => loadingStatus);
 export const getCurrentOffer = createSelector([currentOffer], (offer: CurrentOffer) => offer);
+export const getReviewsData = createSelector([reviews], (reviewsData: Reviews) => reviewsData);

@@ -2,40 +2,35 @@ import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import { AuthorizationStatus } from '../../constants';
 import OfferFormReview from '../../components/offers/offer-form-review';
-import { City } from '../../types/models';
+import { CurrentOffer, Reviews } from '../../types/models';
 import OfferImage from '../../components/offers/offer-image';
 import OfferHost from '../../components/offers/offer-host';
-// import OfferReviewList from '../../components/offers/offer-review-list';
 import OfferFeautures from '../../components/offers/offer-feautures';
 import OfferOption from '../../components/offers/offer-option';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import HotelCard from '../../components/hotel-card/hotel-card';
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeOffers, getCurrentAuth, getCurrentOffer } from '../../store/reducer';
-import { changeTown } from '../../store/action';
-import { getDataCurrentOffer } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
+import { changeOffers, getCurrentAuth } from '../../store/reducer';
+import OfferReviewList from '../../components/offers/offer-review-list';
 
-export default function OfferScreen () {
-  const [currentCard, setCurrentCard] = useState<string>('');
+
+type OfferScreenProps = {
+  id: string | undefined;
+  currentOffer: CurrentOffer;
+  reviews: Reviews;
+}
+
+export default function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
   const loggedStatus = useAppSelector(getCurrentAuth);
-  const { id } = useParams<{id: string}>();
-  const dispatch = useAppDispatch();
-  dispatch(getDataCurrentOffer(id));
-  // const allOffers = useAppSelector(getAllOffers);
-
-  // const currentOffer = allOffers.find((offer) => offer.id === id) as Offer;
-  const currentOffer = useAppSelector(getCurrentOffer);
-  const town = currentOffer?.city as City;
-
-  dispatch(changeTown(town));
-
   const offers = useAppSelector(changeOffers);
+  const [currentCard, setCurrentCard] = useState<string>('');
 
   if (currentOffer === null) {
     return;
   }
-  const {images, isPremium, title, isFavorite, rating, bedrooms, type, maxAdults, price, goods, host, description} = currentOffer;//reviews!!
+
+  const {images, isPremium, title, isFavorite, rating, bedrooms, type, maxAdults, price, goods, host, description} = currentOffer;
   const bookmarked = isFavorite ? 'Is bookmarks' : 'To bookmarks';
   const anotherOffers = offers.filter((offer) => offer.id !== id);
   const ratingValue = rating * 20;
@@ -85,8 +80,8 @@ export default function OfferScreen () {
               </div>
               {host ? <OfferHost host={host} description={description}/> : ''}
               <section className="offer__reviews reviews">
-                {/* <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2> */}
-                {/* {reviews ? <OfferReviewList reviews={reviews}/> : ''} */}
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                {reviews ? <OfferReviewList reviews={reviews}/> : ''}
                 {loggedStatus === AuthorizationStatus.Auth ? <OfferFormReview/> : ''}
               </section>
             </div>

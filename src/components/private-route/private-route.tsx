@@ -1,6 +1,5 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants';
-// import { AuthStatus } from '../../types/models';
 import { useAppSelector } from '../../hooks';
 import { getCurrentAuth } from '../../store/reducer';
 

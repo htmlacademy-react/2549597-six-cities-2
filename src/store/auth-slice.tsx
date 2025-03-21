@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { AuthorizationStatus } from '../constants';
 import { requireAuthorization } from './action';
 import { AuthStatus } from '../types/models';
 

@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthStatus, City, CurrentOffer, Offers, SortingSlice } from '../types/models';
+import { AuthStatus, City, CurrentOffer, Offers, Reviews, SortingSlice } from '../types/models';
 
 export const changeTown = createAction('/changeTown', (value: City) => ({
   payload: value,
@@ -22,3 +22,5 @@ export const setDataLoadingStatus = createAction<boolean>('data/setDataLoadingSt
 export const setCurrentOfferId = createAction<string | undefined>('offer/id');
 
 export const setCurrentOffer = createAction<CurrentOffer | null>('offers/offer');
+
+export const setReviews = createAction<Reviews>('offers/reviews');

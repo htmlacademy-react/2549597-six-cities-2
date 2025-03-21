@@ -10,11 +10,13 @@ import PrivateOfferRoute from '../private-route/private-offer-route.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import { getCurrentAuth, getCurrentLoadingStatus } from '../../store/reducer.ts';
 import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
+import { OfferScreenHOC } from '../../pages/offers/offer-screen-hoc.tsx';
 
 
 export default function App() {
   const authorizationStatus = useAppSelector(getCurrentAuth);
   const isDataLoading = useAppSelector(getCurrentLoadingStatus);
+  const OfferScreenWithData = OfferScreenHOC(OfferScreen);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
     return (
@@ -45,7 +47,7 @@ export default function App() {
           path={AppRoute.Offer}
           element={
             <PrivateOfferRoute>
-              <OfferScreen />
+              <OfferScreenWithData id={undefined} currentOffer={null} reviews={[]} />
             </PrivateOfferRoute>
           }
         />
