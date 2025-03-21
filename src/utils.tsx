@@ -1,7 +1,7 @@
 import { AuthorizationStatus } from './constants';
-import { AuthStatus, Offer, Offers, Result } from './types/models';
+import { AuthStatus, Offer, Offers } from './types/models';
 
-export const authorization = (auth: AuthStatus, trueResult: Result, falseResult: Result) => {
+export const authorization = (auth: AuthStatus, trueResult: string, falseResult: string) => {
   if (auth === AuthorizationStatus.Auth) {
     return trueResult;
   }
