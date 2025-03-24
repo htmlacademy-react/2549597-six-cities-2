@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setError } from './action';
-import { ErrorSlice } from '../types/models';
+import { setError } from '../../action';
+import { ErrorSlice } from '../../../types/models';
 
 
 export const errorSlice = createSlice({

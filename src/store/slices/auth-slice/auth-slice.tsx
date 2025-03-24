@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { requireAuthorization } from './action';
-import { AuthStatus } from '../types/models';
+import { requireAuthorization } from '../../action';
+import { AuthorizationStatus } from '../../../constants';
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    authStatus: 'UNKNOWN' as AuthStatus,
+    authStatus: AuthorizationStatus.Unknown,
   },
   reducers: {},
   extraReducers: (builder) => {

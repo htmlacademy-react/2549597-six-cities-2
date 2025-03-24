@@ -6,7 +6,8 @@ import { useState } from 'react';
 import TownList from '../../components/towns/town-list.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import MainEmptyScreen from './main-empty-screen.tsx';
-import { changeOffers, getCityName } from '../../store/reducer.ts';
+import { changeOffers } from '../../store/reducer.ts';
+import { getCityName } from '../../store/slices/town-slice/town-reducer.ts';
 
 export default function MainScreen () {
   const [currentCard, setCurrentCard] = useState('');

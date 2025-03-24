@@ -1,7 +1,8 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute } from '../../constants';
 import { useAppSelector } from '../../hooks';
-import { getAllOffers } from '../../store/reducer';
+import { getAllOffers } from '../../store/slices/offers-slice/offers-reducer';
+
 
 type PrivateOfferRouteProps = {
   children: JSX.Element;

@@ -11,17 +11,19 @@ import { Link } from 'react-router-dom';
 import HotelCard from '../../components/hotel-card/hotel-card';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import { changeOffers, getCurrentAuth } from '../../store/reducer';
+import { changeOffers } from '../../store/reducer';
 import OfferReviewList from '../../components/offers/offer-review-list';
+import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer';
+import { OfferScreenHOC } from './offer-screen-hoc';
 
 
 type OfferScreenProps = {
-  id: string | undefined;
+  id?: string;
   currentOffer: CurrentOffer;
   reviews: Reviews;
 }
 
-export default function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
+export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
   const loggedStatus = useAppSelector(getCurrentAuth);
   const offers = useAppSelector(changeOffers);
   const [currentCard, setCurrentCard] = useState<string>('');
@@ -123,3 +125,5 @@ export default function OfferScreen ({id, currentOffer, reviews}: OfferScreenPro
     </div>
   );
 }
+
+export const OfferScreenWithHOC = OfferScreenHOC(OfferScreen);

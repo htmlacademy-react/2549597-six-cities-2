@@ -1,4 +1,4 @@
-import { City, SortingSlice } from './types/models';
+import { City, SortTypes } from './types/models';
 
 export const HEADER_FAVORITE_COUNT = 3;
 
@@ -16,7 +16,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const SORT_TYPES: SortingSlice[] = [
+export const SORT_TYPES: SortTypes[] = [
   'Popular',
   'Price: low to high',
   'Price: high to low',

@@ -1,7 +1,8 @@
 import FavoritesItem from './favorites-item.tsx';
 import Header from '../header/header.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
-import { favoriteOffers } from '../../store/reducer.ts';
+import { favoriteOffers } from '../../store/slices/offers-slice/offers-reducer.ts';
+
 
 export default function FavoritesItemList () {
   const offers = useAppSelector(favoriteOffers);

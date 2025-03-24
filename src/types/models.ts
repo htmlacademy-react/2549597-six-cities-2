@@ -51,7 +51,7 @@ export type CurrentOffer = {
   };
   images: string[];
   maxAdults: number;
-} | null;
+};
 
 export type Offers = Offer[];
 
@@ -63,7 +63,7 @@ export type OffersSlice = {
   offers: Offers;
 }
 
-export type SortingSlice = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
+export type SortTypes = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
 
 export type CommonSlice = {
   towns: {
@@ -76,7 +76,7 @@ export type CommonSlice = {
     reviews: Reviews;
   };
   sorting: {
-    sorting: SortingSlice;
+    sorting: SortTypes;
   };
   auth: {
     authStatus: AuthStatus;

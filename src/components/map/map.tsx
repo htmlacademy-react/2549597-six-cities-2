@@ -5,7 +5,8 @@ import L from 'leaflet';
 import PinActive from'/img/pin-active.svg';
 import Pin from '/img/pin.svg';
 import { useAppSelector } from '../../hooks';
-import { getCity } from '../../store/reducer';
+import { getCity } from '../../store/slices/town-slice/town-reducer';
+
 
 const ICON_PROPERTIES: IconProperties = {
   iconAnchor: [20, 40],

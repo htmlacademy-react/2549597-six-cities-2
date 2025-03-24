@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '.';
-import { getCity } from '../store/reducer';
-
+import { getCity } from '../store/slices/town-slice/town-reducer';
 
 const MAP_TITLE_LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const MAP_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';

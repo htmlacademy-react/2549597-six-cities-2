@@ -8,7 +8,7 @@ import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
 
 export const clearErrorAction = createAsyncThunk(
-  'game/clearError',
+  'six-cities/clearError',
   () => {
     setTimeout(
       () => store.dispatch(setError(null)),
@@ -56,7 +56,7 @@ export const getReviews = createAsyncThunk<void, CurrentOfferId, {
   extra: AxiosInstance;
 }
 >(
-  'data/getDataCurrentOffer',
+  'data/getReviews',
   async (id, {dispatch, extra: api}) => {
     if (!id) {
       return;
