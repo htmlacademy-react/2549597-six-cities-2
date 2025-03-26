@@ -1,19 +1,30 @@
 import { Link } from 'react-router-dom';
-import { HEADER_FAVORITE_COUNT, AuthorizationStatus } from '../../constants';
+import { AuthorizationStatus } from '../../constants';
 import { authorization } from '../../utils';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer';
+import { getUserData } from '../../store/slices/user-slice/user-reducer';
+import { favoriteOffers } from '../../store/slices/offers-slice/offers-reducer';
+import { logoutAction } from '../../store/api-actions';
 
 
 export default function Header () {
+  const dispatch = useAppDispatch();
   const loggedStatus = useAppSelector(getCurrentAuth);
+  const user = useAppSelector(getUserData);
+  const currentFavoriteOffers = useAppSelector(favoriteOffers);
+  const handleClick = loggedStatus === AuthorizationStatus.Auth ? () => {
+    dispatch(logoutAction());
+  } : undefined;
   const loginMarkup = loggedStatus === AuthorizationStatus.Auth ?
     (
-      <a className="header__nav-link header__nav-link--profile" href="#">
-        <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-        <span className="header__user-name user__name">{'Oliver.conner@gmail.com'}</span>
-        <span className="header__favorite-count">{HEADER_FAVORITE_COUNT}</span>
-      </a>
+      <Link className="header__nav-link header__nav-link--profile" to={'/favorites'}>
+        <div className="header__avatar-wrapper user__avatar-wrapper">
+          <img src={user.avatarUrl}></img>
+        </div>
+        <span className="header__user-name user__name">{user.email}</span>
+        <span className="header__favorite-count">{currentFavoriteOffers.length}</span>
+      </Link>
     )
     : '';
 
@@ -33,7 +44,7 @@ export default function Header () {
               </li>
               <li className="header__nav-item">
                 <Link className="header__nav-link" to="/login">
-                  <span className="header__signout">{authorization(loggedStatus, 'Sign out', 'Sign in')}</span>
+                  <span className="header__signout" onClick={handleClick}>{authorization(loggedStatus, 'Sign out', 'Sign in')}</span>
                 </Link>
               </li>
             </ul>

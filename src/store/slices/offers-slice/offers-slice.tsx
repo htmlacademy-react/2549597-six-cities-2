@@ -8,7 +8,7 @@ export const offersSlice = createSlice({
   initialState: {
     offers: [] as Offers,
     isOffersLoaded: false,
-    currentOffer: null as unknown as CurrentOffer,
+    currentOffer: {} as CurrentOffer,
     reviews: [] as Reviews,
   },
   reducers: {},

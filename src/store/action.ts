@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { City, CurrentOffer, Offers, Reviews, SortTypes } from '../types/models';
-import { AuthorizationStatus } from '../constants';
+import { City, CurrentOffer, Offers, Reviews, SortTypes, UserData } from '../types/models';
+import { AppRoute, AuthorizationStatus } from '../constants';
 
 export const changeTown = createAction<City>('/changeTown');
 
@@ -19,3 +19,9 @@ export const setCurrentOfferId = createAction<string | undefined>('offer/id');
 export const setCurrentOffer = createAction<CurrentOffer>('offers/offer');
 
 export const setReviews = createAction<Reviews>('offers/reviews');
+
+export const setUserData = createAction<UserData>('user/setData');
+
+export const dropUserData = createAction('user/dropData');
+
+export const redirectToRoute = createAction<AppRoute>('data/redirectToRoute');
