@@ -3,9 +3,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AuthData, CurrentOffer, CurrentOfferId, Offers, Reviews, UserData } from '../types/models';
 import { ApiRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../constants';
-import { dropUserData, loadData, redirectToRoute, requireAuthorization, setCurrentOffer, setDataLoadingStatus, setError, setReviews, setUserData } from './action';
+import { redirectToRoute } from './action';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
+import { setError } from './slices/error-slice/error-action';
+import { loadData, setCurrentOffer, setDataLoadingStatus, setReviews } from './slices/offers-slice/offers-action';
+import { requireAuthorization } from './slices/auth-slice/auth-action';
+import { dropUserData, setUserData } from './slices/user-slice/user-action';
 
 export const clearErrorAction = createAsyncThunk(
   'six-cities/clearError',
@@ -85,6 +89,19 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   },
 );
 
+export const getUserData = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(
+  'user/checkAuth',
+  async (_arg, {dispatch, extra: api}) => {
+    const data = (await api.get(ApiRoute.Login));
+    dispatch(setUserData(data.data as UserData));
+  },
+);
+
 export const loginAction = createAsyncThunk<void, AuthData, {
   dispatch: AppDispatch;
   state: State;
@@ -115,4 +132,3 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
-

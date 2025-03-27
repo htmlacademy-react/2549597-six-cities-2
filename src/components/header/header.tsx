@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { AuthorizationStatus } from '../../constants';
-import { authorization } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer';
 import { getUserData } from '../../store/slices/user-slice/user-reducer';
@@ -13,9 +12,9 @@ export default function Header () {
   const loggedStatus = useAppSelector(getCurrentAuth);
   const user = useAppSelector(getUserData);
   const currentFavoriteOffers = useAppSelector(favoriteOffers);
-  const handleClick = loggedStatus === AuthorizationStatus.Auth ? () => {
+  const handleClick = () => {
     dispatch(logoutAction());
-  } : undefined;
+  };
   const loginMarkup = loggedStatus === AuthorizationStatus.Auth ?
     (
       <Link className="header__nav-link header__nav-link--profile" to={'/favorites'}>
@@ -27,6 +26,16 @@ export default function Header () {
       </Link>
     )
     : '';
+
+  const signMarkup = loggedStatus === AuthorizationStatus.Auth ? (
+    <Link className="header__nav-link" to="/login" onClick={handleClick}>
+      <span className="header__signout">{'Sign out'}</span>
+    </Link>
+  ) : (
+    <Link className="header__nav-link" to="/login">
+      <span className="header__signin">{'Sign in'}</span>
+    </Link>
+  );
 
   return (
     <header className="header">
@@ -43,9 +52,7 @@ export default function Header () {
                 {loginMarkup}
               </li>
               <li className="header__nav-item">
-                <Link className="header__nav-link" to="/login">
-                  <span className="header__signout" onClick={handleClick}>{authorization(loggedStatus, 'Sign out', 'Sign in')}</span>
-                </Link>
+                {signMarkup}
               </li>
             </ul>
           </nav>

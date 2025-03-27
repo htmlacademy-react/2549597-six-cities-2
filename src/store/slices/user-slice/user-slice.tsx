@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UserData } from '../../../types/models';
-import { dropUserData, setUserData } from '../../action';
-
+import { dropUserData, setUserData } from './user-action';
 
 export const userSlice = createSlice({
   name: 'user',
