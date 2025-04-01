@@ -1,9 +1,25 @@
 import { useState } from 'react';
+import { sendUserReview } from '../../store/api-actions';
+import { CurrentOfferId } from '../../types/models';
+import { useAppDispatch } from '../../hooks';
 
+type OfferFormReviewProps = {
+  id: CurrentOfferId;
+}
 
-export default function OfferFormReview () {
+export default function OfferFormReview ({id}: OfferFormReviewProps) {
   const [ratingReview, setRating] = useState('');
   const [text, setText] = useState('');
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(sendUserReview({
+      offerId: id,
+      comment: text,
+      rating: Number(ratingReview),
+    }));
+    setText('');
+  };
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={
@@ -56,7 +72,7 @@ export default function OfferFormReview () {
         <p className="reviews__help">
                       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" >Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" onClick={handleClick}>Submit</button>
       </div>
     </form>
   );
