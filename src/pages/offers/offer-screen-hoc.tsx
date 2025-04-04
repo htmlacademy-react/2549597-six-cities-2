@@ -3,8 +3,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getDataCurrentOffer, getReviews } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { CurrentOffer, Reviews } from '../../types/models';
-import { getCurrentOffer, getReviewsData } from '../../store/slices/offers-slice/offers-reducer';
-import { changeTown } from '../../store/slices/town-slice/town-action';
+import { getCurrentOffer } from '../../store/slices/offers-slice/offers-reducer';
+import { changeTown } from '../../store/slices/town-slice/town-slice';
+import { getReviewsData } from '../../store/slices/review-slice/review-reducer';
 
 type OfferScreenProps = {
   id?: string;

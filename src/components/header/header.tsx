@@ -6,7 +6,6 @@ import { getUserData } from '../../store/slices/user-slice/user-reducer';
 import { favoriteOffers } from '../../store/slices/offers-slice/offers-reducer';
 import { logoutAction } from '../../store/api-actions';
 
-
 export default function Header () {
   const dispatch = useAppDispatch();
   const loggedStatus = useAppSelector(getCurrentAuth);

@@ -7,16 +7,19 @@ import { authSlice } from './slices/auth-slice/auth-slice';
 import { errorSlice } from './slices/error-slice/error-slice';
 import { userSlice } from './slices/user-slice/user-slice';
 import { redirect } from './middlewares/redirect';
+import { NameSpace } from '../constants';
+import { reviewSlice } from './slices/review-slice/review-slice';
 
 const api = createAPI();
 
 export const rootReducer = combineReducers({
-  offers: offersSlice.reducer,
-  towns: townsSlice.reducer,
-  sorting: sortingSlice.reducer,
-  auth: authSlice.reducer,
-  error: errorSlice.reducer,
-  user: userSlice.reducer,
+  [NameSpace.Offers]: offersSlice.reducer,
+  [NameSpace.Town]: townsSlice.reducer,
+  [NameSpace.Sorting]: sortingSlice.reducer,
+  [NameSpace.Auth]: authSlice.reducer,
+  [NameSpace.Error]: errorSlice.reducer,
+  [NameSpace.User]: userSlice.reducer,
+  [NameSpace.Review]: reviewSlice.reducer,
 });
 
 export const store = configureStore({

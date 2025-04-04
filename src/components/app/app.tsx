@@ -11,13 +11,19 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
 import { OfferScreenWithHOC } from '../../pages/offers/offer-screen.tsx';
 import { CurrentOffer } from '../../types/models.ts';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
-import { getCurrentLoadingStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
+import { getCurrentLoadingStatus, getErrorStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
+import ErrorScreen from '../../pages/error-screen/error-screen.tsx';
+import { changeOffers } from '../../store/reducer.ts';
+import { getCityName } from '../../store/slices/town-slice/town-reducer.ts';
 
 export default function App() {
   const authorizationStatus = useAppSelector(getCurrentAuth);
   const isDataLoading = useAppSelector(getCurrentLoadingStatus);
+  const hasError = useAppSelector(getErrorStatus);
+  const offers = useAppSelector(changeOffers);
+  const cityName = useAppSelector(getCityName);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
     return (
@@ -25,12 +31,16 @@ export default function App() {
     );
   }
 
+  if (hasError) {
+    return <ErrorScreen />;
+  }
+
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen />}
+          element={<MainScreen offers={offers} cityName={cityName} />}
         />
         <Route
           path={AppRoute.Login}
