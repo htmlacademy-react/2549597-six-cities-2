@@ -1,10 +1,12 @@
+import { memo } from 'react';
+
 type OfferFeauturesProps = {
   type: string;
   bedrooms: number;
   maxAdults: number;
 };
 
-export default function OfferFeautures ({bedrooms, type, maxAdults}: OfferFeauturesProps) {
+function OfferFeautures ({bedrooms, type, maxAdults}: OfferFeauturesProps) {
   const upperCaseType = type.charAt(0).toUpperCase() + type.slice(1);
   return (
     <ul className="offer__features">
@@ -20,3 +22,9 @@ export default function OfferFeautures ({bedrooms, type, maxAdults}: OfferFeautu
     </ul>
   );
 }
+
+export const OfferFeauturesMemo = memo(OfferFeautures, (prevProps, nextProps) =>
+  prevProps.bedrooms === nextProps.bedrooms &&
+  prevProps.maxAdults === nextProps.maxAdults &&
+  prevProps.type === nextProps.type
+);

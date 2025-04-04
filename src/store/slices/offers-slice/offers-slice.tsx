@@ -1,34 +1,53 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { CurrentOffer, Offers, Reviews } from '../../../types/models';
-import { addUserReview, loadData, setCurrentOffer, setDataLoadingStatus, setReviews } from './offers-action';
+import { CurrentOffer, Offers } from '../../../types/models';
+import { fetchOfferAction, getDataCurrentOffer } from '../../api-actions';
+import { NameSpace } from '../../../constants';
 
 
 export const offersSlice = createSlice({
-  name: 'offers',
+  name: NameSpace.Offers,
   initialState: {
     offers: [] as Offers,
     isOffersLoaded: false,
     currentOffer: {} as CurrentOffer,
-    reviews: null as unknown as Reviews,
+    hasError: false,
+    isCurrentOfferLoaded: false,
+    hasCurrentOfferError: false,
+    currentCard: '',
   },
-  reducers: {},
+  reducers: {
+    setCurrentCardId: (state, action: PayloadAction<string>) => {
+      state.currentCard = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(loadData, (state, action) => {
+      .addCase(fetchOfferAction.pending, (state) => {
+        state.isOffersLoaded = true;
+        state.hasError = false;
+      })
+      .addCase(fetchOfferAction.fulfilled, (state, action) => {
         state.offers = action.payload;
+        state.isOffersLoaded = false;
       })
-      .addCase(setDataLoadingStatus, (state, action) => {
-        state.isOffersLoaded = action.payload;
+      .addCase(fetchOfferAction.rejected, (state) => {
+        state.isOffersLoaded = false;
+        state.hasError = true;
       })
-      .addCase(setCurrentOffer, (state, action) => {
+      .addCase(getDataCurrentOffer.pending, (state) => {
+        state.isCurrentOfferLoaded = true;
+        state.hasCurrentOfferError = false;
+      })
+      .addCase(getDataCurrentOffer.fulfilled, (state, action) => {
         state.currentOffer = action.payload;
+        state.hasCurrentOfferError = false;
       })
-      .addCase(setReviews, (state, action) => {
-        state.reviews = action.payload;
-      })
-      .addCase(addUserReview, (state, action) => {
-        state.reviews.push(action.payload);
+      .addCase(getDataCurrentOffer.rejected, (state) => {
+        state.isCurrentOfferLoaded = false;
+        state.hasCurrentOfferError = true;
       });
   },
 });
+
+export const {setCurrentCardId} = offersSlice.actions;

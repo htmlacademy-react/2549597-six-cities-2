@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type UserHost = {
   host: {
     name: string;
@@ -7,7 +9,7 @@ type UserHost = {
   description: string;
 };
 
-export default function OfferHost ({host, description}: UserHost) {
+function OfferHost ({host, description}: UserHost) {
   const {name, avatarUrl, isPro} = host;
   const statusMarkup = isPro ? <span className="offer__user-status">Pro</span> : '';
 
@@ -31,3 +33,5 @@ export default function OfferHost ({host, description}: UserHost) {
     </div>
   );
 }
+
+export const OfferHostMemo = memo(OfferHost, (prevProps, nextProps) => prevProps.description === nextProps.description);
