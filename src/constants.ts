@@ -90,4 +90,6 @@ export enum NameSpace {
   Town = 'TOWN',
   User = 'USER',
   Review = 'REVIEW',
+  CurrentOffer = 'CURRENT_OFFER',
+  CurrentCard = 'CURRENT_CARD',
 }

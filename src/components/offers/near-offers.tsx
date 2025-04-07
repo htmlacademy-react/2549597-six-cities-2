@@ -1,16 +1,16 @@
-import { memo } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { setCurrentCardId } from '../../store/slices/offers-slice/offers-slice';
-import { Offers } from '../../types/models';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Link } from 'react-router-dom';
 import { HotelCardMemo } from '../hotel-card/hotel-card';
+import { setCurrentCardId } from '../../store/slices/current-card-slice/current-card-slice';
+import { changeOffers } from '../../store/reducer';
+import { getCurrentOffer } from '../../store/slices/current-offer/current-offer-reducer';
 
-type AnotherOffersProps = {
-  anotherOffers: Offers;
-}
 
-function AnotherOffers ({anotherOffers} : AnotherOffersProps) {
+export default function NearOffers () {
   const dispatch = useAppDispatch();
+  const offers = useAppSelector(changeOffers);
+  const id = useAppSelector(getCurrentOffer).id;
+  const anotherOffers = offers.filter((offer) => offer.id !== id);
 
   return(
     <div className="near-places__list places__list">
@@ -40,4 +40,3 @@ function AnotherOffers ({anotherOffers} : AnotherOffersProps) {
   );
 }
 
-export const AnotherOffersMemo = memo(AnotherOffers, (prevProps, nextProps) => prevProps.anotherOffers === nextProps.anotherOffers);

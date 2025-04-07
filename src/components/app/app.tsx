@@ -9,21 +9,17 @@ import PrivateOfferRoute from '../private-route/private-offer-route.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
 import { OfferScreenWithHOC } from '../../pages/offers/offer-screen.tsx';
-import { CurrentOffer } from '../../types/models.ts';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
 import { getCurrentLoadingStatus, getErrorStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
 import ErrorScreen from '../../pages/error-screen/error-screen.tsx';
-import { changeOffers } from '../../store/reducer.ts';
-import { getCityName } from '../../store/slices/town-slice/town-reducer.ts';
+import PrivateMainScreeRoute from '../private-route/private-main-screen-route.tsx';
 
 export default function App() {
   const authorizationStatus = useAppSelector(getCurrentAuth);
   const isDataLoading = useAppSelector(getCurrentLoadingStatus);
   const hasError = useAppSelector(getErrorStatus);
-  const offers = useAppSelector(changeOffers);
-  const cityName = useAppSelector(getCityName);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
     return (
@@ -40,7 +36,11 @@ export default function App() {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen offers={offers} cityName={cityName} />}
+          element={
+            <PrivateMainScreeRoute>
+              <MainScreen />
+            </PrivateMainScreeRoute>
+          }
         />
         <Route
           path={AppRoute.Login}
@@ -58,7 +58,7 @@ export default function App() {
           path={AppRoute.Offer}
           element={
             <PrivateOfferRoute>
-              <OfferScreenWithHOC id={undefined} currentOffer={null as unknown as CurrentOffer} reviews={[]}/>
+              <OfferScreenWithHOC />
             </PrivateOfferRoute>
           }
         />

@@ -9,6 +9,8 @@ import { userSlice } from './slices/user-slice/user-slice';
 import { redirect } from './middlewares/redirect';
 import { NameSpace } from '../constants';
 import { reviewSlice } from './slices/review-slice/review-slice';
+import { currentOfferSlice } from './slices/current-offer/current-offer-slice';
+import { currentCardSlice } from './slices/current-card-slice/current-card-slice';
 
 const api = createAPI();
 
@@ -20,6 +22,8 @@ export const rootReducer = combineReducers({
   [NameSpace.Error]: errorSlice.reducer,
   [NameSpace.User]: userSlice.reducer,
   [NameSpace.Review]: reviewSlice.reducer,
+  [NameSpace.CurrentOffer]: currentOfferSlice.reducer,
+  [NameSpace.CurrentCard]: currentCardSlice.reducer,
 });
 
 export const store = configureStore({

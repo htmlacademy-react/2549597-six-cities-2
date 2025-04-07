@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { useState } from 'react';
 import { sendUserReview } from '../../store/api-actions';
 import { CurrentOfferId } from '../../types/models';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -9,9 +9,8 @@ type OfferFormReviewProps = {
   id: CurrentOfferId;
 }
 
-function OfferFormReview ({id}: OfferFormReviewProps) {
+export default function OfferFormReview ({id}: OfferFormReviewProps) {
   const loggedStatus = useAppSelector(getCurrentAuth);
-
   const [ratingReview, setRating] = useState('');
   const [text, setText] = useState('');
   const dispatch = useAppDispatch();
@@ -85,5 +84,3 @@ function OfferFormReview ({id}: OfferFormReviewProps) {
     </form>
   );
 }
-
-export const OfferFormReviewMemo = memo(OfferFormReview, (prevProps, nextProps) => prevProps.id === nextProps.id);

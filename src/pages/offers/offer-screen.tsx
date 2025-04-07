@@ -1,17 +1,16 @@
 import Header from '../../components/header/header';
-import { OfferFormReviewMemo } from '../../components/offers/offer-form-review';
+import OfferFormReview from '../../components/offers/offer-form-review';
 import { CurrentOffer, Reviews } from '../../types/models';
-import { OfferHostMemo } from '../../components/offers/offer-host';
-import { OfferFeauturesMemo } from '../../components/offers/offer-feautures';
-import { useAppSelector } from '../../hooks';
-import { changeOffers } from '../../store/reducer';
-import { OfferReviewListMemo } from '../../components/offers/offer-review-list';
+import OfferHost from '../../components/offers/offer-host';
+import OfferFeautures from '../../components/offers/offer-feautures';
+import OfferReviewList from '../../components/offers/offer-review-list';
 import { OfferScreenHOC } from './offer-screen-hoc';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { AnotherOffersMemo } from '../../components/offers/another-offers';
+import NearOffers from '../../components/offers/near-offers';
 import Map from '../../components/map/map';
-import { OfferOptionListMemo } from '../../components/offers/offer-option-list';
-import { OfferImageListMemo } from '../../components/offers/offer-image-list';
+import OfferOptionList from '../../components/offers/offer-option-list';
+import OfferImageList from '../../components/offers/offer-image-list';
+
 
 type OfferScreenProps = {
   id?: string;
@@ -20,15 +19,14 @@ type OfferScreenProps = {
 }
 
 export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
-  const offers = useAppSelector(changeOffers);
 
   if (currentOffer === null) {
     return <LoadingScreen />;
   }
 
-  const {images, isPremium, title, isFavorite, rating, bedrooms, type, maxAdults, price, goods, host, description} = currentOffer;
+  const {isPremium, title, isFavorite, rating, bedrooms, type, maxAdults, price, goods, host, description, images} = currentOffer;
   const bookmarked = isFavorite ? 'Is bookmarks' : 'To bookmarks';
-  const anotherOffers = offers.filter((offer) => offer.id !== id);
+
   const ratingValue = rating * 20;
 
   return (
@@ -38,7 +36,7 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
-            {<OfferImageListMemo images={images}/>}
+            {<OfferImageList images={images}/>}
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
@@ -61,20 +59,20 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
                 </div>
                 <span className="offer__rating-value rating__value">{rating}</span>
               </div>
-              {maxAdults && bedrooms && <OfferFeauturesMemo type={type} bedrooms={bedrooms} maxAdults={maxAdults}/>}
+              {maxAdults && bedrooms && <OfferFeautures type={type} bedrooms={bedrooms} maxAdults={maxAdults}/>}
               <div className="offer__price">
                 <b className="offer__price-value">&euro;{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                {<OfferOptionListMemo goods={goods} />}
+                {<OfferOptionList goods={goods} />}
               </div>
-              {host && <OfferHostMemo host={host} description={description}/>}
+              {<OfferHost host={host} description={description}/>}
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews && reviews.length}</span></h2>
-                {reviews && <OfferReviewListMemo reviews={reviews}/>}
-                {<OfferFormReviewMemo id={id}/>}
+                {reviews && <OfferReviewList reviews={reviews}/>}
+                {<OfferFormReview id={id}/>}
               </section>
             </div>
           </div>
@@ -85,7 +83,7 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            {<AnotherOffersMemo anotherOffers={anotherOffers}/>}
+            {<NearOffers/>}
           </section>
         </div>
       </main>

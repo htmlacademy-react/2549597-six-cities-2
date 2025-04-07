@@ -2,8 +2,7 @@ import { HotelCardMemo } from './hotel-card.tsx';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/index.ts';
 import { changeOffers } from '../../store/reducer.ts';
-import { setCurrentCardId } from '../../store/slices/offers-slice/offers-slice.tsx';
-
+import { setCurrentCardId } from '../../store/slices/current-card-slice/current-card-slice.tsx';
 
 export default function HotelCardList() {
   const offers = useAppSelector(changeOffers);

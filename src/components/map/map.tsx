@@ -7,8 +7,7 @@ import Pin from '/img/pin.svg';
 import { useAppSelector } from '../../hooks';
 import { getCity } from '../../store/slices/town-slice/town-reducer';
 import { changeOffers } from '../../store/reducer';
-import { getCurrentCardId } from '../../store/slices/offers-slice/offers-reducer';
-
+import { getCurrentCardId } from '../../store/slices/current-card-slice/current-card-reducer';
 
 const ICON_PROPERTIES: IconProperties = {
   iconAnchor: [20, 40],
