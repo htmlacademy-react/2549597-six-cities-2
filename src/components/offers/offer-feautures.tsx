@@ -6,6 +6,7 @@ type OfferFeauturesProps = {
 
 export default function OfferFeautures ({bedrooms, type, maxAdults}: OfferFeauturesProps) {
   const upperCaseType = type.charAt(0).toUpperCase() + type.slice(1);
+
   return (
     <ul className="offer__features">
       <li className="offer__feature offer__feature--entire">
