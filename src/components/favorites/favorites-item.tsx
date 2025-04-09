@@ -8,6 +8,8 @@ type FavoritesItemProps = {
 export default function FavoritesItem ({offer}: FavoritesItemProps) {
   const {city: {name}, previewImage, price, rating, type, title} = offer;
 
+  const ratingValue = rating * 20;
+
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -39,7 +41,7 @@ export default function FavoritesItem ({offer}: FavoritesItemProps) {
             </div>
             <div className="place-card__rating rating">
               <div className="place-card__stars rating__stars">
-                <span style={{width: `${rating}%`}}></span>
+                <span style={{width: `${ratingValue}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
             </div>

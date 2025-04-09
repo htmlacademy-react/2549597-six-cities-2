@@ -3,8 +3,9 @@ import { AuthorizationStatus } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer';
 import { getUserData } from '../../store/slices/user-slice/user-reducer';
-import { favoriteOffers } from '../../store/slices/offers-slice/offers-reducer';
+
 import { logoutAction } from '../../store/api-actions';
+import { favoriteOffers } from '../../store/slices/offers-slice/offers-reducer';
 
 export default function Header () {
   const dispatch = useAppDispatch();

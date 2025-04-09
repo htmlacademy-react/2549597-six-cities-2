@@ -10,6 +10,7 @@ import NearOffers from '../../components/offers/near-offers';
 import Map from '../../components/map/map';
 import OfferOptionList from '../../components/offers/offer-option-list';
 import OfferImageList from '../../components/offers/offer-image-list';
+import classnames from 'classnames';
 
 
 type OfferScreenProps = {
@@ -45,7 +46,7 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button className={classnames('offer__bookmark-button', 'button', {'offer__bookmark-button--active': isFavorite})} type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -68,7 +69,7 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 {<OfferOptionList goods={goods} />}
               </div>
-              {<OfferHost host={host} description={description}/>}
+              {host && <OfferHost host={host} description={description}/>}
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews && reviews.length}</span></h2>
                 {reviews && <OfferReviewList reviews={reviews}/>}
