@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { CurrentOffer } from '../../../types/models';
 import { getDataCurrentOffer } from '../../api-actions';
 import { NameSpace } from '../../../constants';
+import { setCurrentOfferFavorite } from './current-offer-action';
 
 
 export const currentOfferSlice = createSlice({
@@ -26,6 +27,9 @@ export const currentOfferSlice = createSlice({
       .addCase(getDataCurrentOffer.rejected, (state) => {
         state.isCurrentOfferLoaded = false;
         state.hasCurrentOfferError = true;
+      })
+      .addCase(setCurrentOfferFavorite, (state, action) => {
+        state.currentOffer.isFavorite = action.payload;
       });
   },
 });

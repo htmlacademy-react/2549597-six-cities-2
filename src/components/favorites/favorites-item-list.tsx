@@ -1,13 +1,14 @@
 import FavoritesItem from './favorites-item.tsx';
-
-import { useAppSelector } from '../../hooks/index.ts';
-import { favoriteOffers } from '../../store/slices/offers-slice/offers-reducer.ts';
 import FavoritesEmptyScreen from '../../pages/favorites-screen/favorites-empty-screen.tsx';
 import Header from '../header/header.tsx';
+import { FavoriteItemListHOC } from './favorites-item-list-hoc.tsx';
+import { Offers } from '../../types/models.ts';
 
-export default function FavoritesItemList () {
-  const offers = useAppSelector(favoriteOffers);
+type FavoriteItemListProps = {
+  offers: Offers;
+}
 
+function FavoritesItemList ({offers}: FavoriteItemListProps) {
   if (offers.length === 0) {
     return <FavoritesEmptyScreen />;
   }
@@ -34,3 +35,5 @@ export default function FavoritesItemList () {
     </div>
   );
 }
+
+export const FavoritesItemListWithHOC = FavoriteItemListHOC(FavoritesItemList);

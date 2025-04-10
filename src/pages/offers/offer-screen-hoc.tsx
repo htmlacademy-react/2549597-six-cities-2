@@ -7,6 +7,7 @@ import { changeTown } from '../../store/slices/town-slice/town-slice';
 import { getReviewsData } from '../../store/slices/review-slice/review-reducer';
 import { getCurrentOffer } from '../../store/slices/current-offer/current-offer-reducer';
 
+
 type OfferScreenProps = {
   id?: string;
   currentOffer: CurrentOffer;
@@ -46,7 +47,7 @@ export const OfferScreenHOC = (Component: ComponentType<OfferScreenProps>) => {
       return;
     }
 
-    return <Component id={id} currentOffer={currentOffer} reviews={reviews}/>;
+    return <Component id={id} currentOffer={currentOffer} reviews={reviews} />;
   };
 
   return OfferScreenWrapper;
