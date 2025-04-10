@@ -10,8 +10,7 @@ import NearOffers from '../../components/offers/near-offers';
 import Map from '../../components/map/map';
 import OfferOptionList from '../../components/offers/offer-option-list';
 import OfferImageList from '../../components/offers/offer-image-list';
-import classnames from 'classnames';
-
+import OfferFavoriteButton from '../../components/offers/offer-favorite-button';
 
 type OfferScreenProps = {
   id?: string;
@@ -25,9 +24,7 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
     return <LoadingScreen />;
   }
 
-  const {isPremium, title, isFavorite, rating, bedrooms, type, maxAdults, price, goods, host, description, images} = currentOffer;
-  const bookmarked = isFavorite ? 'Is bookmarks' : 'To bookmarks';
-
+  const {isPremium, title, rating, bedrooms, type, maxAdults, price, goods, host, description, images} = currentOffer;
   const ratingValue = rating * 20;
 
   return (
@@ -46,12 +43,7 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <button className={classnames('offer__bookmark-button', 'button', {'offer__bookmark-button--active': isFavorite})} type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">{bookmarked}</span>
-                </button>
+                <OfferFavoriteButton />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

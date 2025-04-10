@@ -95,3 +95,5 @@ export enum NameSpace {
   CurrentCard = 'CURRENT_CARD',
   FavoriteOffers = 'FAVORITE_OFFERS',
 }
+
+export const RATING_MULTIPLIER = 20;

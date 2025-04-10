@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { AuthData, CurrentOffer, CurrentOfferId, Offers, Review, Reviews, SendReview, SendingOfferInfo, UserData } from '../types/models';
+import { AuthData, CurrentOffer, CurrentOfferId, Offer, Offers, Review, Reviews, SendReview, UserData } from '../types/models';
 import { ApiRoute, AppRoute, TIMEOUT_SHOW_ERROR } from '../constants';
 import { redirectToRoute } from './action';
 import { dropToken, saveToken } from '../services/token';
@@ -119,16 +119,16 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   },
 );
 
-export const addFavoriteOffer = createAsyncThunk<CurrentOffer, SendingOfferInfo, {
+export const addFavoriteOffer = createAsyncThunk<CurrentOffer, Offer, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }
 >(
   'favoriteOffers/add',
-  async ({offerId, status}, {extra: api, rejectWithValue}) => {
+  async ({id, isFavorite}, {extra: api, rejectWithValue}) => {
     try {
-      const {data} = await api.post<CurrentOffer>(`/favorite/${offerId}/${status}`);
+      const {data} = await api.post<CurrentOffer>(`/favorite/${id}/${Number(!isFavorite)}`);
 
       return data;
     } catch (error : unknown) {

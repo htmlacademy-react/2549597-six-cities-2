@@ -9,4 +9,3 @@ const currentLoadingStatus = (state: State) => state[NameSpace.Offers].isOffersL
 export const getAllOffers = createSelector([allOffers], (allCurrentOffers: Offers) => allCurrentOffers);
 export const favoriteOffers = createSelector([allOffers], (offersData: Offers) => offersData.filter((offer) => offer.isFavorite));
 export const getCurrentLoadingStatus = createSelector([currentLoadingStatus], (loadingStatus: boolean) => loadingStatus);
-
