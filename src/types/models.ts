@@ -107,4 +107,4 @@ export type Reviews = Review[];
 export type SendingOfferInfo = {
     offerId: string;
     status: number;
-  }
+}
