@@ -80,3 +80,13 @@ export const fakeUser = {
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
+
+export const fakeUserLogin = {
+  login: internet.email(),
+  password: datatype.string(),
+};
+
+export const fakeServerAnswer = {
+  token: datatype.string(),
+};
+
