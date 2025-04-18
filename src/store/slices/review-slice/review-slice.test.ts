@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { reviewSlice } from './review-slice';
 import { Reviews } from '../../../types/models';
 import { getReviews } from '../../api-actions';
@@ -121,7 +121,7 @@ describe('Review slice', () => {
     };
     const newReview = fakeReview();
     const expectedState = {
-      reviews: fakeReviews.push(newReview),
+      reviews: [...fakeReviews, newReview],
       isReviewLoaded: false,
       hasReviewError: false,
     };

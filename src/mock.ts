@@ -90,3 +90,11 @@ export const fakeServerAnswer = {
   token: datatype.string(),
 };
 
+export const fakeCurrentOfferId = datatype.string();
+
+export const fakeUserReview = {
+  offerId: fakeCurrentOfferId,
+  comment: datatype.string(),
+  rating: datatype.number(),
+};
+

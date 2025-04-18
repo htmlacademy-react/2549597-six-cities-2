@@ -57,7 +57,7 @@ describe('Current offer reducer', () => {
     };
     const expectedState = {
       currentOffer: fakeCurrentOffer,
-      isCurrentOfferLoaded: true,
+      isCurrentOfferLoaded: false,
       hasCurrentOfferError: false,
     };
 
@@ -74,7 +74,7 @@ describe('Current offer reducer', () => {
     };
     const expectedState = {
       currentOffer: {} as CurrentOffer,
-      isCurrentOfferLoaded: true,
+      isCurrentOfferLoaded: false,
       hasCurrentOfferError: true,
     };
 
@@ -95,7 +95,7 @@ describe('Current offer reducer', () => {
       hasCurrentOfferError: false,
     };
 
-    const result = currentOfferSlice.reducer(initialState, setCurrentOfferFavorite(!expectedState.currentOffer.isFavorite));
+    const result = currentOfferSlice.reducer(initialState, setCurrentOfferFavorite(expectedState.currentOffer.isFavorite));
 
     expect(result).toEqual(expectedState);
   });

@@ -1,17 +1,19 @@
-import { describe } from 'vitest';
+import { beforeEach, describe, it, expect, vi } from 'vitest';
 import { createAPI } from '../services/api';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { State } from '../types/state';
 import { Action } from '@reduxjs/toolkit';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { AppThunkDispatch, extractActionsTypes, fakeOffers, fakeServerAnswer, fakeUser, fakeUserLogin } from '../mock';
+import { AppThunkDispatch, extractActionsTypes, fakeCurrentOffer, fakeOffer, fakeOffers, fakeReview, fakeReviews, fakeServerAnswer, fakeUser, fakeUserLogin, fakeUserReview } from '../mock';
 import { ApiRoute, AuthorizationStatus, CITIES, SORT_TYPES } from '../constants';
-import { CurrentOffer, ErrorSlice, Offers, Reviews, UserData } from '../types/models';
-import { checkAuthAction, fetchOfferAction, getUserData, loginAction, logoutAction } from './api-actions';
+import { CurrentOffer, Offers, Reviews, UserData } from '../types/models';
+import { addFavoriteOffer, checkAuthAction, fetchOfferAction, getDataCurrentOffer, getFavoriteOffers, getReviews, getUserData, loginAction, logoutAction, sendUserReview } from './api-actions';
 import { redirectToRoute } from './action';
-import { setUserData } from './slices/user-slice/user-action';
+import { dropUserData, setUserData } from './slices/user-slice/user-action';
 import * as tokenStorage from '../services/token';
+import { setFavoriteOffers } from './slices/favorite-offers-slice/favorites-offers-action';
+import { addUserReview } from './slices/review-slice/review-action';
 
 describe('Async actions', () => {
   const axios = createAPI();
@@ -20,8 +22,8 @@ describe('Async actions', () => {
   const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
   let store: ReturnType<typeof mockStoreCreator>;
 
-  beforeAll(() => ({
-    store: mockStoreCreator({
+  beforeEach(() => {
+    store = mockStoreCreator({
       OFFERS: {
         offers: [] as Offers,
         isOffersLoaded: false,
@@ -29,7 +31,6 @@ describe('Async actions', () => {
       TOWN: { currentCity: CITIES[1] },
       SORTING: { sorting: SORT_TYPES[0] },
       AUTH: { authStatus: AuthorizationStatus.Unknown },
-      ERROR: { error: null as ErrorSlice },
       USER: { user: {} as UserData },
       REVIEW: {
         reviews: null as unknown as Reviews,
@@ -43,8 +44,8 @@ describe('Async actions', () => {
       },
       CURRENT_CARD: { currentCard: '' },
       FAVORITE_OFFERS: { favoriteOffers: [] as Offers }
-    })
-  }));
+    });
+  });
 
   describe('checkAuthAction', () => {
     it('should dispatch "checkAuthAction.pending" and "checkAuthAction.fulfilled" with thunk "checkAuthAction', async () => {
@@ -114,9 +115,9 @@ describe('Async actions', () => {
 
       expect(actions).toEqual([
         loginAction.pending.type,
+        setUserData.type,
         redirectToRoute.type,
         loginAction.fulfilled.type,
-        setUserData.type,//???????????????????????????????сюда ли
       ]);
     });
 
@@ -142,6 +143,7 @@ describe('Async actions', () => {
 
       expect(actions).toEqual([
         logoutAction.pending.type,
+        dropUserData.type,
         logoutAction.fulfilled.type,
       ]);
     });
@@ -168,6 +170,7 @@ describe('Async actions', () => {
 
       expect(extractedActionsTypes).toEqual([
         getUserData.pending.type,
+        setUserData.type,
         getUserData.fulfilled.type,
       ]);
 
@@ -188,4 +191,181 @@ describe('Async actions', () => {
     });
 
   });
+
+  describe('getFavoriteOffersAction', () => {
+    it('should dispatch "getFavoriteOffers.pending", "getFavoriteOffers.fulfilled", setFavoriteOffers when server response 200', async () => {
+      mockAxiosAdapter.onGet(ApiRoute.Favorite).reply(200, fakeOffers);
+
+      await store.dispatch(getFavoriteOffers());
+
+      const emittedActions = store.getActions();
+      const extractedActionsTypes = extractActionsTypes(emittedActions);
+      const userDataFulfilled = emittedActions.at(1) as ReturnType<typeof getFavoriteOffers.fulfilled>;
+
+      expect(extractedActionsTypes).toEqual([
+        getFavoriteOffers.pending.type,
+        setFavoriteOffers.type,
+        getFavoriteOffers.fulfilled.type,
+      ]);
+
+      expect(userDataFulfilled.payload)
+        .toEqual(fakeOffers);
+    });
+
+    it('should dispatch "getFavoriteOffers.pending", "getFavoriteOffers.rejected" when server response 401', async () => {
+      mockAxiosAdapter.onGet(ApiRoute.Favorite).reply(401, '');
+
+      await store.dispatch(getFavoriteOffers());
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        getFavoriteOffers.pending.type,
+        getFavoriteOffers.rejected.type,
+      ]);
+    });
+  });
+
+  describe('sendUserReviewAction', () => {
+    it('should dispatch "sendUserReview.pending", "sendUserReview.fulfilled", addUserReview when server response 201', async () => {
+      const review = fakeReview();
+      const userReview = {
+        offerId: review.id,
+        comment: review.comment,
+        rating: review.rating,
+      };
+
+      mockAxiosAdapter.onPost(`/comments/${userReview.offerId}`, { comment: userReview.comment, userReview: review.rating }).reply(201, review);
+
+      await store.dispatch(sendUserReview(userReview));
+
+      const emittedActions = store.getActions();
+      const extractedActionsTypes = extractActionsTypes(emittedActions);
+      const userDataFulfilled = emittedActions.at(1) as ReturnType<typeof sendUserReview.fulfilled>;
+
+      expect(extractedActionsTypes).toEqual([
+        sendUserReview.pending.type,
+        addUserReview.type,
+        sendUserReview.fulfilled.type,
+      ]);
+
+      expect(userDataFulfilled.payload)
+        .toEqual(review);
+    });
+
+    it('should dispatch "sendUserReview.pending", "sendUserReview.rejected" when server response 400', async () => {
+      const user = fakeUserReview;
+      mockAxiosAdapter.onPost(`/comments/${fakeUserReview.offerId}`).reply(400, '');
+
+      await store.dispatch(sendUserReview(user));
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        sendUserReview.pending.type,
+        sendUserReview.rejected.type,
+      ]);
+    });
+  });
+
+  describe('getReviewsAction', () => {
+    it('should dispatch "getReviews.pending", "getReviews.fulfilled" when server response 200', async () => {
+      const offer = fakeOffer();
+      mockAxiosAdapter.onGet(`/comments/${offer.id}`).reply(200, fakeReviews);
+
+      await store.dispatch(getReviews(offer.id));
+
+      const emittedActions = store.getActions();
+      const extractedActionsTypes = extractActionsTypes(emittedActions);
+      const userDataFulfilled = emittedActions.at(1) as ReturnType<typeof getReviews.fulfilled>;
+
+      expect(extractedActionsTypes).toEqual([
+        getReviews.pending.type,
+        getReviews.fulfilled.type,
+      ]);
+
+      expect(userDataFulfilled.payload)
+        .toEqual(fakeReviews);
+    });
+
+    it('should dispatch "getReviews.pending", "getReviews.rejected" when server response 404', async () => {
+      const offer = fakeOffer();
+      mockAxiosAdapter.onGet(`/comments/${offer.id}`).reply(404, '');
+
+      await store.dispatch(getReviews(offer.id));
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        getReviews.pending.type,
+        getReviews.rejected.type,
+      ]);
+    });
+  });
+
+  describe('getDataCurrentOfferAction', () => {
+    it('should dispatch "getDataCurrentOffer.pending", "getDataCurrentOffer.fulfilled" when server response 200', async () => {
+      const offer = fakeOffer();
+      mockAxiosAdapter.onGet(`/offers/${offer.id}`).reply(200, fakeCurrentOffer);
+
+      await store.dispatch(getDataCurrentOffer(offer.id));
+
+      const emittedActions = store.getActions();
+      const extractedActionsTypes = extractActionsTypes(emittedActions);
+      const userDataFulfilled = emittedActions.at(1) as ReturnType<typeof getDataCurrentOffer.fulfilled>;
+
+      expect(extractedActionsTypes).toEqual([
+        getDataCurrentOffer.pending.type,
+        getDataCurrentOffer.fulfilled.type,
+      ]);
+
+      expect(userDataFulfilled.payload)
+        .toEqual(fakeCurrentOffer);
+    });
+
+    it('should dispatch "getDataCurrentOffer.pending", "getDataCurrentOffer.rejected" when server response 404', async () => {
+      const offer = fakeOffer();
+      mockAxiosAdapter.onGet(`/offers/${offer.id}`).reply(404, '');
+
+      await store.dispatch(getDataCurrentOffer(offer.id));
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        getDataCurrentOffer.pending.type,
+        getDataCurrentOffer.rejected.type,
+      ]);
+    });
+  });
+
+  describe('addFavoriteOfferAction', () => {
+    it('should dispatch "addFavoriteOffer.pending", "addFavoriteOffer.fulfilled" when server response 200', async () => {
+      const offer = fakeOffer();
+      mockAxiosAdapter.onPost(`/favorite/${offer.id}/${Number(!offer.isFavorite)}`).reply(200, fakeCurrentOffer);
+
+      await store.dispatch(addFavoriteOffer(offer));
+
+      const emittedActions = store.getActions();
+      const extractedActionsTypes = extractActionsTypes(emittedActions);
+      const userDataFulfilled = emittedActions.at(1) as ReturnType<typeof addFavoriteOffer.fulfilled>;
+
+      expect(extractedActionsTypes).toEqual([
+        addFavoriteOffer.pending.type,
+        addFavoriteOffer.fulfilled.type,
+      ]);
+
+      expect(userDataFulfilled.payload)
+        .toEqual(fakeCurrentOffer);
+    });
+
+    it('should dispatch "addFavoriteOffer.pending", "addFavoriteOffer.rejected" when server response 404', async () => {
+      const offer = fakeOffer();
+      mockAxiosAdapter.onPost(`/favorite/${offer.id}/${Number(!offer.isFavorite)}`).reply(404, '');
+
+      await store.dispatch(addFavoriteOffer(offer));
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        addFavoriteOffer.pending.type,
+        addFavoriteOffer.rejected.type,
+      ]);
+    });
+  });
+
 });
