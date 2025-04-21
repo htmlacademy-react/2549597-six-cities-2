@@ -6,7 +6,7 @@ import OfferOptionList from './offer-option-list';
 describe('Component: OfferOptionList', () => {
   it('should return correct', () => {
     const expectedOptions = fakeGoods;
-    const offerOptionListContainerTestId = 'option-container';
+    const offerOptionListContainerTestId = 'option-list-container';
 
     render(<OfferOptionList goods={expectedOptions}/>);
     const offerOptionListContainer = screen.getByTestId(offerOptionListContainerTestId);

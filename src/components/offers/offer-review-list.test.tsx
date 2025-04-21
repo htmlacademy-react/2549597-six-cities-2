@@ -6,7 +6,7 @@ import OfferReviewList from './offer-review-list';
 describe('Component: OfferReviewList', () => {
   it('should return correct', () => {
     const expectedReviews = fakeReviews;
-    const offerReviewListContainerTestId = 'review-container';
+    const offerReviewListContainerTestId = 'review-list-container';
 
     render(<OfferReviewList reviews={expectedReviews}/>);
     const offerReviewListContainer = screen.getByTestId(offerReviewListContainerTestId);
