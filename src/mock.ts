@@ -16,6 +16,18 @@ export const fakeCity = {
   location: fakeLocation
 };
 
+export const fakeHost = {
+  name: name.firstName(),
+  avatarUrl: image.imageUrl(),
+  isPro: datatype.boolean(),
+};
+
+export const fakeDescription = datatype.string();
+
+export const fakeImages = Array.from({ length: 10 }, () => image.imageUrl());
+
+export const fakeGoods = Array.from({ length: 5 }, () => lorem.word());
+
 export const fakeCurrentOffer = {
   id: datatype.uuid(),
   title: name.title(),
@@ -26,15 +38,11 @@ export const fakeCurrentOffer = {
   isFavorite: datatype.boolean(),
   isPremium: datatype.boolean(),
   rating: datatype.number(),
-  description: datatype.string(),
+  description: fakeDescription,
   bedrooms: datatype.number(),
-  goods: Array.from({ length: datatype.number() }, () => lorem.word()),
-  host: {
-    name: name.firstName(),
-    avatarUrl: image.imageUrl(),
-    isPro: datatype.boolean(),
-  },
-  images: Array.from({ length: datatype.number() }, () => image.imageUrl()),
+  goods: fakeGoods,
+  host: fakeHost,
+  images: fakeImages,
   maxAdults: datatype.number(),
 };
 
@@ -58,11 +66,7 @@ export const fakeOffers = Array.from({length: 10}, () => fakeOffer());
 export const fakeReview = () => ({
   id: datatype.uuid(),
   date: datatype.datetime().toISOString(),
-  user: {
-    name: name.firstName(),
-    avatarUrl: image.avatar(),
-    isPro: datatype.boolean(),
-  },
+  user: fakeHost,
   comment: lorem.paragraph(),
   rating: datatype.number(),
 });
@@ -96,5 +100,11 @@ export const fakeUserReview = {
   offerId: fakeCurrentOfferId,
   comment: datatype.string(),
   rating: datatype.number(),
+};
+
+export const fakeFeautures = {
+  bedrooms: datatype.number(),
+  type: datatype.string(),
+  maxAdults: datatype.number(),
 };
 

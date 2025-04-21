@@ -234,7 +234,7 @@ describe('Async actions', () => {
         rating: review.rating,
       };
 
-      mockAxiosAdapter.onPost(`/comments/${userReview.offerId}`, { comment: userReview.comment, userReview: review.rating }).reply(201, review);
+      mockAxiosAdapter.onPost(`/comments/${userReview.offerId}`, { comment: userReview.comment, rating: userReview.rating }).reply(201, review);
 
       await store.dispatch(sendUserReview(userReview));
 
