@@ -12,7 +12,7 @@ import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
 import { getCurrentLoadingStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
-import PrivateMainScreeRoute from '../private-route/private-main-screen-route.tsx';
+import PrivateMainScreenRoute from '../private-route/private-main-screen-route.tsx';
 import { FavoritesItemListWithHOC } from '../favorites/favorites-item-list.tsx';
 
 export default function App() {
@@ -31,9 +31,9 @@ export default function App() {
         <Route
           path={AppRoute.Main}
           element={
-            <PrivateMainScreeRoute>
+            <PrivateMainScreenRoute>
               <MainScreen />
-            </PrivateMainScreeRoute>
+            </PrivateMainScreenRoute>
           }
         />
         <Route
@@ -43,7 +43,7 @@ export default function App() {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <FavoritesItemListWithHOC/>
             </PrivateRoute>
           }

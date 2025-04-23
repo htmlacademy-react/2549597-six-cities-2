@@ -6,7 +6,7 @@ type PrivateMainScreenRouteProps = {
   children: JSX.Element;
 }
 
-export default function PrivateMainScreeRoute(props: PrivateMainScreenRouteProps) {
+export default function PrivateMainScreenRoute(props: PrivateMainScreenRouteProps) {
   const {children} = props;
   const offers = useAppSelector(changeOffers);
 

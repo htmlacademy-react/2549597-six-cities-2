@@ -61,7 +61,7 @@ export const fakeOffer = () => ({
   previewImage: image.imageUrl(),
 });
 
-export const fakeOffers = Array.from({length: 10}, () => fakeOffer());
+export const fakeOffers = Array.from({length: 5}, () => fakeOffer());
 
 export const fakeReview = () => ({
   id: datatype.uuid(),
