@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { Offers } from '../../../types/models';
 import { offersSlice } from './offers-slice';
 import { fetchOfferAction } from '../../api-actions';

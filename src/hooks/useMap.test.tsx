@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import useMap from './useMap';
 import { CITIES } from '../constants';
 import { RefObject } from 'react';

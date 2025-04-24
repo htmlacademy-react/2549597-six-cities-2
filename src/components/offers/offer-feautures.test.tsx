@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import { fakeFeautures } from '../../mock';
 import OfferFeautures from './offer-feautures';

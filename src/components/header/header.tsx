@@ -4,7 +4,7 @@ import SignMarkup from './sign-markup';
 
 export default function Header () {
   return (
-    <header className="header">
+    <header className="header" data-testid='header-component'>
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">

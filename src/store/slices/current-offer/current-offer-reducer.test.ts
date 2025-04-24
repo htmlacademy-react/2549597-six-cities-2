@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { NameSpace } from '../../../constants';
 import { fakeCurrentOffer } from '../../../mock';
 import { getCurrentOffer } from './current-offer-reducer';

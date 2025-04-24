@@ -23,7 +23,7 @@ export default function FavoritesItem ({offer}: FavoritesItemProps) {
   };
 
   return (
-    <li className="favorites__locations-items">
+    <li className="favorites__locations-items" data-testid='favorites-item-container'>
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">

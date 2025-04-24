@@ -1,4 +1,3 @@
-import { describe, it, expect, vi, beforeAll, beforeEach } from 'vitest';
 import { MockStore, configureMockStore } from '@jedmao/redux-mock-store';
 import browserHistory from '../../browser-history';
 import { AnyAction } from '@reduxjs/toolkit';

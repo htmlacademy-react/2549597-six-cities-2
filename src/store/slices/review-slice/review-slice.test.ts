@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { reviewSlice } from './review-slice';
 import { Reviews } from '../../../types/models';
 import { getReviews } from '../../api-actions';

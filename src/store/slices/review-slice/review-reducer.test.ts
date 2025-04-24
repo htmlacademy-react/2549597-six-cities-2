@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { NameSpace } from '../../../constants';
 import { Reviews } from '../../../types/models';
 import { getReviewsData } from './review-reducer';

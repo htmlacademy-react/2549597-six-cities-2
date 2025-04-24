@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { Offer, Offers } from '../../../types/models';
 import { favoriteOffersSlice } from './favorite-offers-slice';
 import { fakeOffer, fakeOffers } from '../../../mock';

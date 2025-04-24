@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest';
-
 import { currentCardSlice, setCurrentCardId } from './current-card-slice';
 import { cardId } from '../../../mock';
 

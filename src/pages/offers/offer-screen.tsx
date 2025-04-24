@@ -28,7 +28,7 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
   const ratingValue = rating * 20;
 
   return (
-    <div className="page">
+    <div className="page" data-testid='offer-screen-container'>
       <Header />
 
       <main className="page__main page__main--offer">

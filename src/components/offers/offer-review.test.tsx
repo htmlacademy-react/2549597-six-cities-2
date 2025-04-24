@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { fakeReview } from '../../mock';
 import OfferReview from './offer-review';

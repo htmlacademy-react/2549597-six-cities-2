@@ -4,7 +4,6 @@ import PrivateRoute from './private-route';
 import { render, screen } from '@testing-library/react';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { withHistory } from '../../mock-component';
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest';
 
 describe('Component: PrivateRoute', () => {
   let mockHistory: MemoryHistory;
@@ -61,4 +60,4 @@ describe('Component: PrivateRoute', () => {
     expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
   });
 });
-//не понимаю, в чём разница между моим тестом и демо, почему там работает, а у меня нет
+

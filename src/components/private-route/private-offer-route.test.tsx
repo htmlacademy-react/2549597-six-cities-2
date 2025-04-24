@@ -3,21 +3,20 @@ import { Route, Routes } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { AppRoute } from '../../constants';
 import { withHistory, withStore } from '../../mock-component';
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest';
 import { Offers } from '../../types/models';
 import { fakeOffers } from '../../mock';
 import PrivateOfferRoute from './private-offer-route';
 
 describe('Component: PrivateOfferRoute', () => {
   let mockHistory: MemoryHistory;
-
+  const offers = fakeOffers;
 
   beforeAll(() => {
     mockHistory = createMemoryHistory();
   });
 
   beforeEach(() => {
-    mockHistory.push(AppRoute.Offer);
+    mockHistory.push(`/offer/${offers[0].id}`);
   });
 
   it('should render component for public route, when user not authorized', () => {
@@ -64,7 +63,7 @@ describe('Component: PrivateOfferRoute', () => {
       mockHistory
     );
 
-    const { withStoreComponent } = withStore(preparedComponent, {OFFERS: {offers: fakeOffers, isOffersLoaded: false}});
+    const { withStoreComponent } = withStore(preparedComponent, {OFFERS: {offers: offers, isOffersLoaded: false}});
 
     render(withStoreComponent);
 
@@ -72,8 +71,4 @@ describe('Component: PrivateOfferRoute', () => {
     expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
   });
 });
-/*Тут вообще застрял. Пробовал в первом тесте в стор засунуть массив офферов, так он всё равно
-его не отрисовал. Складывается ощущение, что мне нужно как-то получить id,
-чтобы работало(id в private-offer-route.tsx). Но как я его передам внутрь компонента,
-это же не пропс
-*/
+

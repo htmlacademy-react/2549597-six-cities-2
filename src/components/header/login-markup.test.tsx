@@ -1,12 +1,10 @@
 import { render, screen } from '@testing-library/react';
-
-import { describe, it, expect } from 'vitest';
 import LoginMarkup from './login -markup';
 import { withHistory, withStore } from '../../mock-component';
 import { AuthorizationStatus } from '../../constants';
 import { fakeOffers, fakeUser } from '../../mock';
 
-describe('Component: Loading screen', () => {
+describe('Component: LoginMarkup', () => {
   it('should render correct empty', () => {
     const loginMarkupContainerTestId = 'login-markup-container';
     const { withStoreComponent } = withStore(<LoginMarkup />, {
@@ -30,7 +28,7 @@ describe('Component: Loading screen', () => {
 
     expect(LoginMarkupContainer).not.toBeInTheDocument();
   });
-  //есть смысл такое писать?
+
   it('should render correct', () => {
     const loginMarkupContainerTestId = 'login-markup-container';
     const { withStoreComponent } = withStore(<LoginMarkup />, {

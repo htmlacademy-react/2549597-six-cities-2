@@ -7,7 +7,7 @@ import Places from '../../components/places/places.tsx';
 
 export default function MainScreen () {
   return (
-    <div className="page page--gray page--main">
+    <div className="page page--gray page--main" data-testid='main-screen-container'>
       <Header />
 
       <main className="page__main page__main--index">
