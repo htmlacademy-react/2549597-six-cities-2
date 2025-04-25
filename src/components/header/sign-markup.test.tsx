@@ -7,7 +7,7 @@ describe('Component: SignMarkup', () => {
   const signMarkupContainerTestId = 'auth-markup-container';
   const unsignMarkupContainerTestId = 'no-auth-markup-container';
 
-  it('should render correct no auth', () => {
+  it('should render correct when user not authorized', () => {
     const { withStoreComponent } = withStore(<SignMarkup />, {
       AUTH: {
         authStatus: AuthorizationStatus.NoAuth,
@@ -23,7 +23,7 @@ describe('Component: SignMarkup', () => {
     expect(UnsignMarkupContainer).toBeInTheDocument();
   });
 
-  it('should render correct auth', () => {
+  it('should render correct when user authorized', () => {
     const { withStoreComponent } = withStore(<SignMarkup />, {
       AUTH: {
         authStatus: AuthorizationStatus.Auth,

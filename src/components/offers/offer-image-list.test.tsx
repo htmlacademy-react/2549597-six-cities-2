@@ -3,7 +3,7 @@ import { fakeImages } from '../../mock';
 import OfferImageList from './offer-image-list';
 
 describe('Component: OfferImageList', () => {
-  it('should return correct', () => {
+  it('should render correct', () => {
     const expectedImages = fakeImages;
     const offerImageListContainerTestId = 'offer-image-list-container';
 

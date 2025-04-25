@@ -5,7 +5,7 @@ import { AuthorizationStatus } from '../../constants';
 import { fakeOffers, fakeUser } from '../../mock';
 
 describe('Component: LoginMarkup', () => {
-  it('should render correct empty', () => {
+  it('should render correct when user not authirized', () => {
     const loginMarkupContainerTestId = 'login-markup-container';
     const { withStoreComponent } = withStore(<LoginMarkup />, {
       AUTH: {
@@ -29,7 +29,7 @@ describe('Component: LoginMarkup', () => {
     expect(LoginMarkupContainer).not.toBeInTheDocument();
   });
 
-  it('should render correct', () => {
+  it('should render correct when user authorized', () => {
     const loginMarkupContainerTestId = 'login-markup-container';
     const { withStoreComponent } = withStore(<LoginMarkup />, {
       AUTH: {

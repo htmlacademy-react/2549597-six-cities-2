@@ -1,4 +1,3 @@
-import MainScreen from '../../pages/main-screen/main-screen.tsx';
 import LoginScreen from '../../pages/login-screen/login-screen.tsx';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen.tsx';
 import { Routes, Route } from 'react-router-dom';
@@ -12,8 +11,8 @@ import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
 import { getCurrentLoadingStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
-import MainScreenRoute from '../private-route/main-screen-route.tsx';
 import { FavoritesItemListWithHOC } from '../favorites/favorites-item-list.tsx';
+import { MainScreenWithHOC } from '../../pages/main-screen/main-screen.tsx';
 
 export default function App() {
   const authorizationStatus = useAppSelector(getCurrentAuth);
@@ -31,9 +30,7 @@ export default function App() {
         <Route
           path={AppRoute.Main}
           element={
-            <MainScreenRoute>
-              <MainScreen />
-            </MainScreenRoute>
+            <MainScreenWithHOC />
           }
         />
         <Route

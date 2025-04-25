@@ -24,7 +24,7 @@ describe('Component: HotelCard', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('should return dispatch types with AuthorizationStatus.Auth', () => {
+  it('should dispatch "addFavoriteOffer", "replaceOffer" when authorized user clicked on favorite button', () => {
     const { withStoreComponent, mockStore } = withStore(<HotelCard offer={offer}/>, {
       AUTH: {
         authStatus: AuthorizationStatus.Auth,

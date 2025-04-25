@@ -4,8 +4,9 @@ import Map from '../../components/map/map.tsx';
 import TownList from '../../components/towns/town-list.tsx';
 import Header from '../../components/header/header.tsx';
 import Places from '../../components/places/places.tsx';
+import { MainScreenHOC } from '../../components/main/main-screen-hoc.tsx';
 
-export default function MainScreen () {
+export function MainScreen () {
   return (
     <div className="page page--gray page--main" data-testid='main-screen-container'>
       <Header />
@@ -36,3 +37,5 @@ export default function MainScreen () {
     </div>
   );
 }
+
+export const MainScreenWithHOC = MainScreenHOC(MainScreen);

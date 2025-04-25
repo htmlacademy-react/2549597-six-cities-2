@@ -3,7 +3,7 @@ import { fakeReview } from '../../mock';
 import OfferReview from './offer-review';
 
 describe('Component: OfferReviewList', () => {
-  it('should return correct', () => {
+  it('should render correct', () => {
     const expectedReview = fakeReview();
     const offerReviewContainerTestId = 'review-container';
 

@@ -6,7 +6,7 @@ import { AuthorizationStatus, SORT_TYPES } from '../../constants';
 import { setCurrentCardId } from '../../store/slices/current-card-slice/current-card-slice';
 
 describe('Component: HotelCardList', () => {
-  it('should return correct', () => {
+  it('should render correct', () => {
     const hotelCrdListContainerTestId = 'hotel-card-list-container';
     const { withStoreComponent } = withStore(<HotelCardList />, {
       OFFERS: {
@@ -31,7 +31,7 @@ describe('Component: HotelCardList', () => {
     expect(hotelCardListContainer).toBeInTheDocument();
   });
 
-  it('should correct mouseOver on element and dispatch to store', () => {
+  it('should dispatch "setCurrentCardId" when the user hovered the mouse over the hotel card', () => {
     const articleContainer = 'hotel-card-list-article';
     const { withStoreComponent, mockStore } = withStore(<HotelCardList />, {
       OFFERS: {
@@ -59,7 +59,7 @@ describe('Component: HotelCardList', () => {
     expect(actions).toEqual([setCurrentCardId.type]);
   });
 
-  it('should correct moude leave from element and dispatch to store ', () => {
+  it('should dispatch "setCurrentCardId" when the user removed the mouse from the hotel card', () => {
     const articleContainer = 'hotel-card-list-article';
     const { withStoreComponent, mockStore } = withStore(<HotelCardList />, {
       OFFERS: {

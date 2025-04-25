@@ -3,7 +3,7 @@ import { fakeGoods } from '../../mock';
 import OfferOptionList from './offer-option-list';
 
 describe('Component: OfferOptionList', () => {
-  it('should return correct', () => {
+  it('should render correct', () => {
     const expectedOptions = fakeGoods;
     const offerOptionListContainerTestId = 'option-list-container';
 

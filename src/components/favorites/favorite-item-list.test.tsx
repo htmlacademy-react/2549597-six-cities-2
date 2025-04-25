@@ -35,7 +35,7 @@ describe('Component: FavoritesItemList', () => {
     expect(FavoritesItemContainer).toBeInTheDocument();
   });
 
-  it('should render correct with empty offers', () => {
+  it('should render correct without offers', () => {
     const favoritesItemListTestId = 'favorites-item-list-container';
     const { withStoreComponent } = withStore(<FavoritesItemList offers={[]}/>, store);
     const withHistoryComponent = withHistory(withStoreComponent);

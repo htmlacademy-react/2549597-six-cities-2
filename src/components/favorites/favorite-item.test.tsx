@@ -22,7 +22,7 @@ describe('Component: FavoritesItem', () => {
     expect(FavoritesItemContainer).toBeInTheDocument();
   });
 
-  it ('should set to store favoriteOffer, replaceOffer, setFavoriteOffer', () => {
+  it ('should dispatch "favoriteOffer", "replaceOffer", "setFavoriteOffer" when user clicked on favorite button' , () => {
     const { withStoreComponent, mockStore } = withStore(<FavoritesItem offer={offer}/>, {
       OFFERS: {
         offers: fakeOffers,

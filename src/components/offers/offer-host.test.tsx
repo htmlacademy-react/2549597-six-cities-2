@@ -3,7 +3,7 @@ import { fakeDescription, fakeHost } from '../../mock';
 import OfferHost from './offer-host';
 
 describe('Component: OfferHost', () => {
-  it('should return correct', () => {
+  it('should render correct', () => {
     const expectedHost = fakeHost;
     const expectedDescription = fakeDescription;
     const hostContainerTestId = 'host-container';
