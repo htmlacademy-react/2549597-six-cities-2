@@ -1,7 +1,7 @@
-// import { renderHook } from '@testing-library/react';
-// import useMap from './useMap';
-// import { CITIES } from '../constants';
-// import { RefObject } from 'react';
+import { renderHook } from '@testing-library/react';
+import useMap from './useMap';
+import leaflet from 'leaflet';
+import { CITIES } from '../constants';
 
 vi.mock('leaflet', () => {
   const mockMapInstance = {
@@ -19,19 +19,16 @@ vi.mock('leaflet', () => {
   };
 });
 
-// describe('Hook: useMap', () => {
-//   const city = CITIES[0];
+describe('Hook: useMap', () => {
+  const city = CITIES[0];
 
-//   it('should return Map', () => {
-//     const mapRef = <div></div> as unknown as RefObject<HTMLDivElement>;
-//     const { result } = renderHook(() => useMap({mapRef, city}));
-
-//     expect(result).toHaveBeenCalledWith(mapRef.current, {
-//       center: {
-//         lat: city.location.latitude,
-//         lng: city.location.longitude,
-//       }
-//     });
-//   });
-// });
+  it('should rerender Map 1 times', () => {
+    vi.spyOn(leaflet, 'map');
+    const mapRef = { current: document.createElement('div') };
+    const { rerender } = renderHook(() => useMap({mapRef, city}));
+    expect(leaflet.map).toHaveBeenCalledTimes(1);
+    rerender();
+    expect(leaflet.map).toHaveBeenCalledTimes(1);
+  });
+});
 

@@ -9,8 +9,6 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
 import { OfferScreenWithHOC } from '../../pages/offers/offer-screen.tsx';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
 import { getCurrentLoadingStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
-import HistoryRouter from '../history-route/history-route.tsx';
-import browserHistory from '../../browser-history.ts';
 import { FavoritesItemListWithHOC } from '../favorites/favorites-item-list.tsx';
 import { MainScreenWithHOC } from '../../pages/main-screen/main-screen.tsx';
 
@@ -25,39 +23,37 @@ export default function App() {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={
-            <MainScreenWithHOC />
-          }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<LoginScreen/>}
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute authorizationStatus={authorizationStatus}>
-              <FavoritesItemListWithHOC/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Offer}
-          element={
-            <PrivateOfferRoute>
-              <OfferScreenWithHOC />
-            </PrivateOfferRoute>
-          }
-        />
-        <Route
-          path= {AppRoute.Error}
-          element={<NotFoundScreen/>}
-        />
-      </Routes>
-    </HistoryRouter>
+    <Routes>
+      <Route
+        path={AppRoute.Main}
+        element={
+          <MainScreenWithHOC />
+        }
+      />
+      <Route
+        path={AppRoute.Login}
+        element={<LoginScreen/>}
+      />
+      <Route
+        path={AppRoute.Favorites}
+        element={
+          <PrivateRoute authorizationStatus={authorizationStatus}>
+            <FavoritesItemListWithHOC/>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.Offer}
+        element={
+          <PrivateOfferRoute>
+            <OfferScreenWithHOC />
+          </PrivateOfferRoute>
+        }
+      />
+      <Route
+        path= {AppRoute.Error}
+        element={<NotFoundScreen/>}
+      />
+    </Routes>
   );
 }

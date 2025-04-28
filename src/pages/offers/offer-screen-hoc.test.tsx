@@ -1,6 +1,6 @@
 import { fakeCurrentOffer, fakeReviews } from '../../mock';
 import { withHistory, withStore } from '../../mock-component';
-// import { CurrentOffer } from '../../types/models';
+import { CurrentOffer } from '../../types/models';
 import { OfferScreenHOC } from './offer-screen-hoc';
 import { render, screen } from '@testing-library/react';
 
@@ -33,22 +33,22 @@ describe('Pages: OfferScreenHOC', () => {
     expect(screen.getByText(expectedText)).toBeInTheDocument();
   });
 
-  // it('should not render component when curren offer is empty', () => {
-  //   const expectedText = 'WrappedComponent';
-  //   const component = () => <div>{expectedText}</div>;
-  //   const PreparedComponent = OfferScreenHOC(component);
-  //   const { withStoreComponent } = withStore(<PreparedComponent/>, {...store,
-  //     CURRENT_OFFER: {
-  //       currentOffer: {} as CurrentOffer,
-  //       isCurrentOfferLoaded: false,
-  //       hasCurrentOfferError: false,
-  //     }
-  //   });
-  //   const withHistoryComponent = withHistory(withStoreComponent);
+  it('should not render component when curren offer is empty', () => {
+    const expectedText = 'WrappedComponent';
+    const component = () => <div>{expectedText}</div>;
+    const PreparedComponent = OfferScreenHOC(component);
+    const { withStoreComponent } = withStore(<PreparedComponent/>, {...store,
+      CURRENT_OFFER: {
+        currentOffer: '' as unknown as CurrentOffer,
+        isCurrentOfferLoaded: false,
+        hasCurrentOfferError: false,
+      }
+    });
+    const withHistoryComponent = withHistory(withStoreComponent);
 
 
-  //   render(withHistoryComponent);
+    render(withHistoryComponent);
 
-  //   expect(screen.queryByText(expectedText)).not.toBeInTheDocument();
-  // });
+    expect(screen.queryByText(expectedText)).not.toBeInTheDocument();
+  });
 });
