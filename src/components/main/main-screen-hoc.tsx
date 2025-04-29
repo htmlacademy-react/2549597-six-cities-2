@@ -1,18 +1,15 @@
 import { useAppSelector } from '../../hooks';
 import { changeOffers } from '../../store/reducer';
 import MainEmptyScreen from '../../pages/main-screen/main-empty-screen';
-import { ComponentType } from 'react';
+import { MainScreen } from '../../pages/main-screen/main-screen';
 
-export const MainScreenHOC = (Component: ComponentType) => {
-  const MainScreenWrapper = () => {
-    const offers = useAppSelector(changeOffers);
 
-    if (offers.length === 0) {
-      return <MainEmptyScreen />;
-    }
+export const MainScreenHOC = () => {
+  const offers = useAppSelector(changeOffers);
 
-    return <Component/>;
-  };
+  if (offers.length === 0) {
+    return <MainEmptyScreen />;
+  }
 
-  return MainScreenWrapper;
+  return <MainScreen/>;
 };

@@ -7,6 +7,7 @@ import { UserData } from '../../types/models';
 
 describe('Component: MainScreenHOC', () => {
   const offers = fakeOffers;
+  const expectedText = 'main-screen-container';
   const store = {
     OFFERS: {
       offers: offers,
@@ -23,25 +24,23 @@ describe('Component: MainScreenHOC', () => {
     },
     USER: {
       user: {} as UserData,
+    },
+    CURRENT_CARD: {
+      currentCard: offers[0].id,
     }
   };
 
   it('should render correct', () => {
-    const expectedText = 'container';
-    const component = () => <div>{expectedText}</div>;
-    const ComponentWithHOC = MainScreenHOC(component);
-    const { withStoreComponent } = withStore(<ComponentWithHOC />, store);
+    const { withStoreComponent } = withStore(<MainScreenHOC />, store);
+    const withHistoryComponent = withHistory(withStoreComponent);
 
-    render(withStoreComponent);
+    render(withHistoryComponent);
 
-    expect(screen.getByText(expectedText)).toBeInTheDocument();
+    expect(screen.getByTestId(expectedText)).toBeInTheDocument();
   });
 
   it('should render incorrect', () => {
-    const notExpectedText = 'container';
-    const component = () => <div>{notExpectedText}</div>;
-    const ComponentWithHOC = MainScreenHOC(component);
-    const { withStoreComponent } = withStore(<ComponentWithHOC />, {...store,
+    const { withStoreComponent } = withStore(<MainScreenHOC />, {...store,
       OFFERS: {
         offers: [],
         isOffersLoaded: false,
@@ -50,6 +49,6 @@ describe('Component: MainScreenHOC', () => {
 
     render(withHistoryComponent);
 
-    expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(expectedText)).not.toBeInTheDocument();
   });
 });

@@ -1,12 +1,15 @@
-import { fakeCurrentOffer, fakeReviews } from '../../mock';
+import { AuthorizationStatus, SORT_TYPES } from '../../constants';
+import { fakeCurrentOffer, fakeOffers, fakeReviews } from '../../mock';
 import { withHistory, withStore } from '../../mock-component';
-import { CurrentOffer } from '../../types/models';
+import { CurrentOffer, UserData } from '../../types/models';
 import { OfferScreenHOC } from './offer-screen-hoc';
 import { render, screen } from '@testing-library/react';
 
 describe('Pages: OfferScreenHOC', () => {
-  const currentOffer = fakeCurrentOffer;
+  const offers = fakeOffers;
+  const currentOffer = {...fakeCurrentOffer, id: offers[0].id};
   const reviews = fakeReviews;
+  const expectedText = 'offer-screen-container';
   const store = {
     CURRENT_OFFER: {
       currentOffer: currentOffer,
@@ -17,27 +20,40 @@ describe('Pages: OfferScreenHOC', () => {
       reviews: reviews,
       isReviewLoaded: false,
       hasReviewError: false,
+    },
+    AUTH: {
+      authStatus: AuthorizationStatus.NoAuth,
+    },
+    USER: {
+      user: {} as UserData,
+    },
+    OFFERS: {
+      offers: offers,
+      isOffersLoaded: false,
+    },
+    TOWN: {
+      currentCity: currentOffer.city,
+    },
+    SORTING: {
+      sorting: SORT_TYPES[0],
+    },
+    CURRENT_CARD: {
+      currentCard: currentOffer.id,
     }
   };
 
   it('should render correct', () => {
-    const expectedText = 'WrappedComponent';
-    const component = () => <span>{expectedText}</span>;
-    const PreparedComponent = OfferScreenHOC(component);
-    const { withStoreComponent } = withStore(<PreparedComponent/>, store);
+    const { withStoreComponent } = withStore(<OfferScreenHOC/>, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
 
     render(withHistoryComponent);
 
-    expect(screen.getByText(expectedText)).toBeInTheDocument();
+    expect(screen.getByTestId(expectedText)).toBeInTheDocument();
   });
 
   it('should not render component when curren offer is empty', () => {
-    const expectedText = 'WrappedComponent';
-    const component = () => <div>{expectedText}</div>;
-    const PreparedComponent = OfferScreenHOC(component);
-    const { withStoreComponent } = withStore(<PreparedComponent/>, {...store,
+    const { withStoreComponent } = withStore(<OfferScreenHOC/>, {...store,
       CURRENT_OFFER: {
         currentOffer: '' as unknown as CurrentOffer,
         isCurrentOfferLoaded: false,
@@ -49,6 +65,6 @@ describe('Pages: OfferScreenHOC', () => {
 
     render(withHistoryComponent);
 
-    expect(screen.queryByText(expectedText)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(expectedText)).not.toBeInTheDocument();
   });
 });

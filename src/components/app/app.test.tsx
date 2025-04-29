@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryHistory, createMemoryHistory } from 'history';
-import { AppRoute, AuthorizationStatus, CITIES, SORT_TYPES } from '../../constants';
+import { AppRoute, AuthorizationStatus, SORT_TYPES } from '../../constants';
 import App from './app';
 import { withHistory, withStore } from '../../mock-component';
 import { UserData } from '../../types/models';
@@ -23,7 +23,7 @@ describe('Application routing', () => {
       isOffersLoaded: false,
     },
     TOWN: {
-      currentCity: CITIES[0],
+      currentCity: currentOffer.city,
     },
     SORTING: {
       sorting: SORT_TYPES[0],
@@ -50,15 +50,15 @@ describe('Application routing', () => {
     mockHistory = createMemoryHistory();
   });
 
-  // it('should render "MainScreen" when user navigate to "/"', () => {
-  //   const withHistoryComponent = withHistory(<App />, mockHistory);
-  //   const { withStoreComponent } = withStore(withHistoryComponent, store);
-  //   mockHistory.push(AppRoute.Main);
+  it('should render "MainScreen" when user navigate to "/"', () => {
+    const withHistoryComponent = withHistory(<App />, mockHistory);
+    const { withStoreComponent } = withStore(withHistoryComponent, store);
+    mockHistory.push(AppRoute.Main);
 
-  //   render(withStoreComponent);
+    render(withStoreComponent);
 
-  //   expect(screen.getByText('Places')).toBeInTheDocument();
-  // });
+    expect(screen.getByTestId('main-screen-container')).toBeInTheDocument();
+  });
 
   it('should render "LoginScreen" when user navigate to "/login"', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);

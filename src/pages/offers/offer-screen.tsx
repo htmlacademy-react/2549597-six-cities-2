@@ -4,7 +4,6 @@ import { CurrentOffer, Reviews } from '../../types/models';
 import OfferHost from '../../components/offers/offer-host';
 import OfferFeautures from '../../components/offers/offer-feautures';
 import OfferReviewList from '../../components/offers/offer-review-list';
-import { OfferScreenHOC } from './offer-screen-hoc';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NearOffers from '../../components/offers/near-offers';
 import Map from '../../components/map/map';
@@ -83,5 +82,3 @@ export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
     </div>
   );
 }
-
-export const OfferScreenWithHOC = OfferScreenHOC(OfferScreen);

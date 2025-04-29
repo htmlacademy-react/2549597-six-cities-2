@@ -6,11 +6,11 @@ import PrivateRoute from '../private-route/private-route.tsx';
 import PrivateOfferRoute from '../private-route/private-offer-route.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
-import { OfferScreenWithHOC } from '../../pages/offers/offer-screen.tsx';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
 import { getCurrentLoadingStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
 import { FavoritesItemListWithHOC } from '../favorites/favorites-item-list.tsx';
-import { MainScreenWithHOC } from '../../pages/main-screen/main-screen.tsx';
+import { OfferScreenHOC } from '../../pages/offers/offer-screen-hoc.tsx';
+import { MainScreenHOC } from '../main/main-screen-hoc.tsx';
 
 export default function App() {
   const authorizationStatus = useAppSelector(getCurrentAuth);
@@ -27,7 +27,7 @@ export default function App() {
       <Route
         path={AppRoute.Main}
         element={
-          <MainScreenWithHOC />
+          <MainScreenHOC />
         }
       />
       <Route
@@ -46,7 +46,7 @@ export default function App() {
         path={AppRoute.Offer}
         element={
           <PrivateOfferRoute>
-            <OfferScreenWithHOC />
+            <OfferScreenHOC />
           </PrivateOfferRoute>
         }
       />
