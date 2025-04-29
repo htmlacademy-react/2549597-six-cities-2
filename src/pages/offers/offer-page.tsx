@@ -17,7 +17,7 @@ type OfferScreenProps = {
   reviews: Reviews;
 }
 
-export function OfferScreen ({id, currentOffer, reviews}: OfferScreenProps) {
+export function OfferPage ({id, currentOffer, reviews}: OfferScreenProps) {
 
   if (currentOffer === null) {
     return <LoadingScreen />;

@@ -3,13 +3,13 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen.tsx';
 import { Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants.ts';
 import PrivateRoute from '../private-route/private-route.tsx';
-import PrivateOfferRoute from '../private-route/private-offer-route.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
 import { getCurrentLoadingStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
 import { FavoritesScreen } from '../favorites/favorites-item-list.tsx';
 import { MainScreen } from '../main/main-screen-hoc.tsx';
+import OfferScreen from '../offers/offer-screen.tsx';
 
 export default function App() {
   const authorizationStatus = useAppSelector(getCurrentAuth);
@@ -43,7 +43,7 @@ export default function App() {
       />
       <Route
         path={AppRoute.Offer}
-        element={<PrivateOfferRoute />}
+        element={<OfferScreen />}
       />
       <Route
         path= {AppRoute.Error}

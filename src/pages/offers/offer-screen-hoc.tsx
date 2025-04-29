@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react' ;
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getDataCurrentOffer, getReviews } from '../../store/api-actions';
-import { useParams } from 'react-router-dom';
 import { changeTown } from '../../store/slices/town-slice/town-slice';
 import { getReviewsData } from '../../store/slices/review-slice/review-reducer';
 import { getCurrentOffer } from '../../store/slices/current-offer/current-offer-reducer';
-import { OfferScreen } from './offer-screen';
+import { OfferPage } from './offer-page';
 
+type OfferScreenHOCProps = {
+  id?: string;
+}
 
-export const OfferScreenHOC = () => {
+export const OfferScreenHOC = ({id}: OfferScreenHOCProps) => {
   const dispatch = useAppDispatch();
-  const { id } = useParams<{id: string}>();
   const [loading, setLoading] = useState(true);
   const currentOffer = useAppSelector(getCurrentOffer);
   const reviews = useAppSelector(getReviewsData);
@@ -40,5 +41,5 @@ export const OfferScreenHOC = () => {
     return;
   }
 
-  return <OfferScreen id={id} currentOffer={currentOffer} reviews={reviews} />;
+  return <OfferPage id={id} currentOffer={currentOffer} reviews={reviews} />;
 };

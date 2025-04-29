@@ -7,9 +7,10 @@ import { render, screen } from '@testing-library/react';
 
 describe('Pages: OfferScreenHOC', () => {
   const store = fakeStore();
+  const id = store.CURRENT_OFFER.currentOffer.id;
 
   it('should render OfferScreen', () => {
-    const { withStoreComponent } = withStore(<OfferScreenHOC/>, store);
+    const { withStoreComponent } = withStore(<OfferScreenHOC id={id}/>, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
