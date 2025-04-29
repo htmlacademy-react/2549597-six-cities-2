@@ -1,46 +1,23 @@
 import { render, screen } from '@testing-library/react';
-import { fakeOffers } from '../../mock';
-import { withHistory, withStore } from '../../mock-component';
-import { MainScreenHOC } from './main-screen-hoc';
-import { AuthorizationStatus, SORT_TYPES } from '../../constants';
-import { UserData } from '../../types/models';
+import { fakeStore } from '../../test/mock';
+import { withHistory, withStore } from '../../test/mock-component';
+import { MainScreen } from './main-screen-hoc';
+import { TestIdMarkups } from '../../test/testid-markup';
 
-describe('Component: MainScreenHOC', () => {
-  const offers = fakeOffers;
-  const expectedText = 'main-screen-container';
-  const store = {
-    OFFERS: {
-      offers: offers,
-      isOffersLoaded: false,
-    },
-    TOWN: {
-      currentCity: offers[0].city,
-    },
-    SORTING: {
-      sorting: SORT_TYPES[0],
-    },
-    AUTH: {
-      authStatus: AuthorizationStatus.NoAuth,
-    },
-    USER: {
-      user: {} as UserData,
-    },
-    CURRENT_CARD: {
-      currentCard: offers[0].id,
-    }
-  };
+describe('Component: MainScreen', () => {
+  const store = fakeStore();
 
-  it('should render correct', () => {
-    const { withStoreComponent } = withStore(<MainScreenHOC />, store);
+  it('should render MainScreen when offers is not empty', () => {
+    const { withStoreComponent } = withStore(<MainScreen />, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
 
-    expect(screen.getByTestId(expectedText)).toBeInTheDocument();
+    expect(screen.getByTestId(TestIdMarkups.MainScreenTestId)).toBeInTheDocument();
   });
 
-  it('should render incorrect', () => {
-    const { withStoreComponent } = withStore(<MainScreenHOC />, {...store,
+  it('should not render MainScreen when offers is empty', () => {
+    const { withStoreComponent } = withStore(<MainScreen />, {...store,
       OFFERS: {
         offers: [],
         isOffersLoaded: false,
@@ -49,6 +26,6 @@ describe('Component: MainScreenHOC', () => {
 
     render(withHistoryComponent);
 
-    expect(screen.queryByTestId(expectedText)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(TestIdMarkups.MainScreenTestId)).not.toBeInTheDocument();
   });
 });

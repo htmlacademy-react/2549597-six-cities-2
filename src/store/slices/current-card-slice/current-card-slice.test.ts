@@ -1,5 +1,5 @@
 import { currentCardSlice, setCurrentCardId } from './current-card-slice';
-import { cardId } from '../../../mock';
+import { cardId } from '../../../test/mock';
 
 describe('Current card slice', () => {
   const state = {

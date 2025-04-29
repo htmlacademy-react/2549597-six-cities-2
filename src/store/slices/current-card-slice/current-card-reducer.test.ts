@@ -1,5 +1,5 @@
 import { NameSpace } from '../../../constants';
-import { cardId } from '../../../mock';
+import { cardId } from '../../../test/mock';
 import { getCurrentCardId } from './current-card-reducer';
 
 describe('Current card reducer', () => {

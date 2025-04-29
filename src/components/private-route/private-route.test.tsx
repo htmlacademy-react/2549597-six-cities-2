@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from './private-route';
 import { render, screen } from '@testing-library/react';
 import { AppRoute, AuthorizationStatus } from '../../constants';
-import { withHistory } from '../../mock-component';
+import { withHistory } from '../../test/mock-component';
 
 describe('Component: PrivateRoute', () => {
   let mockHistory: MemoryHistory;
@@ -16,7 +16,7 @@ describe('Component: PrivateRoute', () => {
     mockHistory.push(AppRoute.Favorites);
   });
 
-  it('should render component for public route, when user not authorized', () => {
+  it('should render component for public route, when the user is not authorized', () => {
     const expectedText = 'public route';
     const notExpectedText = 'private route';
     const preparedComponent = withHistory(
@@ -38,7 +38,7 @@ describe('Component: PrivateRoute', () => {
     expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
   });
 
-  it('should render component for private route, when user authorized', () => {
+  it('should render component for private route, when the user is authorized', () => {
     const expectedText = 'private route';
     const notExpectedText = 'public route';
     const preparedComponent = withHistory(

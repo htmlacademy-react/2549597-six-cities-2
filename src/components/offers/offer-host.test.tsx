@@ -1,17 +1,17 @@
 import { render, screen} from '@testing-library/react';
-import { fakeDescription, fakeHost } from '../../mock';
+import { fakeDescription, fakeHost } from '../../test/mock';
 import OfferHost from './offer-host';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: OfferHost', () => {
-  it('should render correct', () => {
+  it('should render OfferHost', () => {
     const expectedHost = fakeHost;
     const expectedDescription = fakeDescription;
-    const hostContainerTestId = 'host-container';
 
     render(<OfferHost host={expectedHost} description={expectedDescription}/>);
     const name = screen.getByText(fakeHost.name);
     const description = screen.getByText(fakeDescription);
-    const hostContainer = screen.getByTestId(hostContainerTestId);
+    const hostContainer = screen.getByTestId(TestIdMarkups.HostTestId);
 
     expect(name).toBeInTheDocument();
     expect(description).toBeInTheDocument();

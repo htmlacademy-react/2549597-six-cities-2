@@ -1,39 +1,28 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { AuthorizationStatus } from '../../constants';
-import { extractActionsTypes, fakeCurrentOffer, fakeOffers } from '../../mock';
-import { withHistory, withStore } from '../../mock-component';
+import { extractActionsTypes, fakeStore } from '../../test/mock';
+import { withHistory, withStore } from '../../test/mock-component';
 import OfferFavoriteButton from './offer-favorite-button';
 import { setCurrentOfferFavorite } from '../../store/slices/current-offer/current-offer-action';
 import { CurrentOffer } from '../../types/models';
 import { addFavoriteOffer } from '../../store/api-actions';
 import { replaceOffer } from '../../store/slices/offers-slice/offers-action';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: OfferFavoriteButton', () => {
-  const offers = fakeOffers;
-  const currentOffer = {...fakeCurrentOffer, id: fakeOffers[0].id};
-  const expectedText = 'offer-favorite-button-contaner';
-  const store = {
+  const store = {...fakeStore(),
     AUTH: {
       authStatus: AuthorizationStatus.Auth,
     },
-    CURRENT_OFFER: {
-      currentOffer: currentOffer,
-      isCurrentOfferLoaded: false,
-      hasCurrentOfferError: false,
-    },
-    OFFERS: {
-      offers: offers,
-      isOffersLoaded: false,
-    }
   };
 
-  it('should render correct', () => {
+  it('should render OfferFavoriteButton', () => {
 
     const { withStoreComponent } = withStore(<OfferFavoriteButton />, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const container = screen.getByTestId(expectedText);
+    const container = screen.getByTestId(TestIdMarkups.FavoriteButtonTestId);
 
     expect(container).toBeInTheDocument();
   });
@@ -43,7 +32,7 @@ describe('Component: OfferFavoriteButton', () => {
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const button = screen.getByTestId(expectedText);
+    const button = screen.getByTestId(TestIdMarkups.FavoriteButtonTestId);
     fireEvent.click(button);
 
     const actions = extractActionsTypes(mockStore.getActions());
@@ -55,12 +44,12 @@ describe('Component: OfferFavoriteButton', () => {
     ]);
   });
 
-  it('should not dispatch when user not authorized', () => {
-    const { withStoreComponent } = withStore(<OfferFavoriteButton />, {...store, AUTH: {authStatus: AuthorizationStatus.NoAuth}});
+  it('should not dispatch when the user is not authorized', () => {
+    const { withStoreComponent } = withStore(<OfferFavoriteButton />, fakeStore());
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const container = screen.queryByText(expectedText);
+    const container = screen.queryByText(TestIdMarkups.FavoriteButtonTestId);
 
     expect(container).not.toBeInTheDocument();
   });
@@ -76,7 +65,7 @@ describe('Component: OfferFavoriteButton', () => {
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const container = screen.queryByText(expectedText);
+    const container = screen.queryByText(TestIdMarkups.FavoriteButtonTestId);
 
     expect(container).not.toBeInTheDocument();
   });

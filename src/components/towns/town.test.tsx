@@ -1,36 +1,33 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { withStore } from '../../mock-component';
+import { withStore } from '../../test/mock-component';
 import { CITIES } from '../../constants';
 import Town from './town';
-import { extractActionsTypes } from '../../mock';
+import { extractActionsTypes } from '../../test/mock';
 import { changeTown } from '../../store/slices/town-slice/town-slice';
+import { TestIdMarkups, townActiveClass } from '../../test/testid-markup';
 
 describe('Component: Town', () => {
   const currentCity = CITIES[0];
-  it('should render correct', () => {
-    const townContainerTestId = 'town-container';
-    const { withStoreComponent } = withStore(<Town town={currentCity} />, {
-      TOWN: {
-        currentCity: currentCity,
-      }
-    });
+  const store = {
+    TOWN: {
+      currentCity: currentCity,
+    }
+  };
+
+  it('should render Town', () => {
+    const { withStoreComponent } = withStore(<Town town={currentCity} />, store);
 
     render(withStoreComponent);
-    const townContainer = screen.getByTestId(townContainerTestId);
+    const townContainer = screen.getByTestId(TestIdMarkups.TownTestId);
 
     expect(townContainer).toBeInTheDocument();
   });
 
   it('should dispatch "changeTown" when user clicked on town', () => {
-    const townContainerTestId = 'town-container';
-    const { withStoreComponent, mockStore } = withStore(<Town town={currentCity} />, {
-      TOWN: {
-        currentCity: currentCity,
-      }
-    });
+    const { withStoreComponent, mockStore } = withStore(<Town town={currentCity} />, store);
 
     render(withStoreComponent);
-    const townContainer = screen.getByTestId(townContainerTestId);
+    const townContainer = screen.getByTestId(TestIdMarkups.TownTestId);
     fireEvent.click(townContainer);
     const actions = extractActionsTypes(mockStore.getActions());
 
@@ -38,20 +35,13 @@ describe('Component: Town', () => {
   });
 
   it('should set class "tabs__item--active" when user clicked on town', () => {
-    const townContainerTestId = 'town-container';
-    const expectedClass = 'tabs__item--active';
-    const hrefContainerTestId = 'href-container';
-    const { withStoreComponent } = withStore(<Town town={currentCity} />, {
-      TOWN: {
-        currentCity: currentCity,
-      }
-    });
+    const { withStoreComponent } = withStore(<Town town={currentCity} />, store);
 
     render(withStoreComponent);
-    const townContainer = screen.getByTestId(townContainerTestId);
-    const hrefContainer = screen.getByTestId(hrefContainerTestId);
+    const townContainer = screen.getByTestId(TestIdMarkups.TownTestId);
+    const hrefContainer = screen.getByTestId(TestIdMarkups.TownHrefTestId);
     fireEvent.click(townContainer);
 
-    expect(hrefContainer).toHaveClass(expectedClass);
+    expect(hrefContainer).toHaveClass(townActiveClass);
   });
 });

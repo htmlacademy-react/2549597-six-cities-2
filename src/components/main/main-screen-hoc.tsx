@@ -1,15 +1,15 @@
 import { useAppSelector } from '../../hooks';
 import { changeOffers } from '../../store/reducer';
 import MainEmptyScreen from '../../pages/main-screen/main-empty-screen';
-import { MainScreen } from '../../pages/main-screen/main-screen';
+import { MainPage } from '../../pages/main-screen/main-page';
 
 
-export const MainScreenHOC = () => {
+export const MainScreen = () => {
   const offers = useAppSelector(changeOffers);
 
   if (offers.length === 0) {
     return <MainEmptyScreen />;
   }
 
-  return <MainScreen/>;
+  return <MainPage/>;
 };

@@ -1,58 +1,38 @@
 import { render, screen } from '@testing-library/react';
 import LoginMarkup from './login -markup';
-import { withHistory, withStore } from '../../mock-component';
+import { withHistory, withStore } from '../../test/mock-component';
 import { AuthorizationStatus } from '../../constants';
-import { fakeOffers, fakeUser } from '../../mock';
+import { fakeStore, fakeUser } from '../../test/mock';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: LoginMarkup', () => {
-  it('should render correct when user not authirized', () => {
-    const loginMarkupContainerTestId = 'login-markup-container';
-    const { withStoreComponent } = withStore(<LoginMarkup />, {
-      AUTH: {
-        authStatus: AuthorizationStatus.NoAuth,
-      },
-      FAVORITE_OFFERS: {
-        favoriteOffers: fakeOffers,
-      },
-      USER: {
-        user: fakeUser,
-      },
-      OFFERS: {
-        offers: fakeOffers,
-        isOffersLoaded: false,
-      }
-    });
+  const store = {...fakeStore(),
+    USER: {
+      user: fakeUser,
+    },
+    AUTH: {
+      authStatus: AuthorizationStatus.Auth
+    }
+  };
+
+  it('should render LoginMarkup when the user is not authorized', () => {
+    const { withStoreComponent } = withStore(<LoginMarkup />, fakeStore());
 
     render(withStoreComponent);
-    const LoginMarkupContainer = screen.queryByText(loginMarkupContainerTestId);
+    const loginMarkupContainer = screen.queryByText(TestIdMarkups.LoginMarkupTestId);
 
-    expect(LoginMarkupContainer).not.toBeInTheDocument();
+    expect(loginMarkupContainer).not.toBeInTheDocument();
   });
 
-  it('should render correct when user authorized', () => {
-    const loginMarkupContainerTestId = 'login-markup-container';
-    const { withStoreComponent } = withStore(<LoginMarkup />, {
-      AUTH: {
-        authStatus: AuthorizationStatus.Auth,
-      },
-      FAVORITE_OFFERS: {
-        favoriteOffers: fakeOffers,
-      },
-      USER: {
-        user: fakeUser,
-      },
-      OFFERS: {
-        offers: fakeOffers,
-        isOffersLoaded: false,
-      }
-    });
+  it('should render LoginMarkup when the user is authorized', () => {
+    const { withStoreComponent } = withStore(<LoginMarkup />, store);
 
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const LoginMarkupContainer = screen.getByTestId(loginMarkupContainerTestId);
+    const loginMarkupContainer = screen.getByTestId(TestIdMarkups.LoginMarkupTestId);
 
-    expect(LoginMarkupContainer).toBeInTheDocument();
+    expect(loginMarkupContainer).toBeInTheDocument();
   });
 
 });

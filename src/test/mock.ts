@@ -1,7 +1,9 @@
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import { datatype, name, address, lorem, image, internet } from 'faker';
-import { State } from './types/state';
-import { createAPI } from './services/api';
+import { State } from '../types/state';
+import { createAPI } from '../services/api';
+import { AuthorizationStatus, SORT_TYPES } from '../constants';
+import { UserData } from '../types/models';
 
 export const cardId = datatype.uuid();
 
@@ -107,4 +109,39 @@ export const fakeFeautures = {
   type: datatype.string(),
   maxAdults: datatype.number(),
 };
+
+export const fakeStore = () => ({
+  OFFERS: {
+    offers: fakeOffers,
+    isOffersLoaded: false,
+  },
+  CURRENT_OFFER: {
+    currentOffer: {...fakeCurrentOffer, id: fakeOffers[0].id},
+    isCurrentOfferLoaded: false,
+    hasCurrentOfferError: false,
+  },
+  REVIEW: {
+    reviews: fakeReviews,
+    isReviewLoaded: false,
+    hasReviewError: false,
+  },
+  AUTH: {
+    authStatus: AuthorizationStatus.NoAuth,
+  },
+  USER: {
+    user: {} as UserData,
+  },
+  TOWN: {
+    currentCity: fakeCurrentOffer.city,
+  },
+  SORTING: {
+    sorting: SORT_TYPES[0],
+  },
+  CURRENT_CARD: {
+    currentCard: fakeCurrentOffer.id,
+  },
+  FAVORITE_OFFERS: {
+    favoriteOffers: fakeOffers,
+  }
+});
 

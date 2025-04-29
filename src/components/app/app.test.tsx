@@ -1,77 +1,43 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryHistory, createMemoryHistory } from 'history';
-import { AppRoute, AuthorizationStatus, SORT_TYPES } from '../../constants';
+import { AppRoute, AuthorizationStatus } from '../../constants';
 import App from './app';
-import { withHistory, withStore } from '../../mock-component';
-import { UserData } from '../../types/models';
-import { fakeCurrentOffer, fakeOffers, fakeReviews } from '../../mock';
+import { withHistory, withStore } from '../../test/mock-component';
+import { fakeOffers, fakeStore } from '../../test/mock';
+import { ComponentMarkups, TestIdMarkups } from '../../test/testid-markup';
 
 describe('Application routing', () => {
   let mockHistory: MemoryHistory;
   const offers = fakeOffers;
   const currentOfferId = offers[0].id;
-  const currentOffer = {...fakeCurrentOffer, id:currentOfferId};
-  const store = {
-    AUTH: {
-      authStatus: AuthorizationStatus.NoAuth,
-    },
-    USER: {
-      user: {} as UserData,
-    },
-    OFFERS: {
-      offers: offers,
-      isOffersLoaded: false,
-    },
-    TOWN: {
-      currentCity: currentOffer.city,
-    },
-    SORTING: {
-      sorting: SORT_TYPES[0],
-    },
-    CURRENT_CARD: {
-      currentCard: currentOfferId,
-    },
-    FAVORITE_OFFERS: {
-      favoriteOffers: [offers[0]],
-    },
-    CURRENT_OFFER: {
-      currentOffer: currentOffer,
-      isCurrentOfferLoaded: false,
-      hasCurrentOfferError: false,
-    },
-    REVIEW: {
-      reviews: fakeReviews,
-      isReviewLoaded: false,
-      hasReviewError: false,
-    }
-  };
+  const store = fakeStore();
 
   beforeEach(() => {
     mockHistory = createMemoryHistory();
   });
 
-  it('should render "MainScreen" when user navigate to "/"', () => {
+  it('renders MainScreen on "/" route', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, store);
     mockHistory.push(AppRoute.Main);
 
     render(withStoreComponent);
 
-    expect(screen.getByTestId('main-screen-container')).toBeInTheDocument();
+    expect(screen.getByTestId(TestIdMarkups.MainScreenTestId)).toBeInTheDocument();
   });
 
-  it('should render "LoginScreen" when user navigate to "/login"', () => {
+  it('renders LoginScreen on "/login" route', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, store);
     mockHistory.push(AppRoute.Login);
 
     render(withStoreComponent);
 
-    expect(screen.getByText('Password')).toBeInTheDocument();
-    expect(screen.getByText('E-mail')).toBeInTheDocument();
+    expect(screen.getByText(ComponentMarkups.Password)).toBeInTheDocument();
+    expect(screen.getByText(ComponentMarkups.Email)).toBeInTheDocument();
   });
 
-  it('should render "FavoritesScreen" when user navigate to "/favorites" and user authorized', () => {
+  it('renders FavoritesScreen on "/favorites" route and the user is authorized', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, {...store,
       AUTH: {
@@ -81,26 +47,26 @@ describe('Application routing', () => {
 
     render(withStoreComponent);
 
-    expect(screen.getByText('Saved listing')).toBeInTheDocument();
+    expect(screen.getByText(ComponentMarkups.SavedListing)).toBeInTheDocument();
   });
 
-  it('should render "ErrorScreen" when user navigate to "/*"', () => {
+  it('renders ErrorScreen on "/*" route', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, store);
     mockHistory.push(AppRoute.Error);
 
     render(withStoreComponent);
 
-    expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
+    expect(screen.getByText(ComponentMarkups.BackToMain)).toBeInTheDocument();
   });
 
-  it('should render "OfferScreen" when user navigate to "/offer/:id"', () => {
+  it('renders OfferScreen on "/offer/:id" route', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, store);
     mockHistory.push(`/offer/${currentOfferId}`);
 
     render(withStoreComponent);
 
-    expect(screen.getByText('Other places in the neighbourhood')).toBeInTheDocument();
+    expect(screen.getByText(ComponentMarkups.OtherPlaces)).toBeInTheDocument();
   });
 });

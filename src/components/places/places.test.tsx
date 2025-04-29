@@ -1,29 +1,18 @@
 import { render, screen } from '@testing-library/react';
-import { SORT_TYPES } from '../../constants';
-import { fakeOffers } from '../../mock';
-import { withHistory, withStore } from '../../mock-component';
+import { fakeStore } from '../../test/mock';
+import { withHistory, withStore } from '../../test/mock-component';
 import Places from './places';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: Places', () => {
-  const offers = fakeOffers;
-  it('should render correct', () => {
-    const placesContainerTestId = 'places-contaner';
-    const { withStoreComponent } = withStore(<Places />, {
-      TOWN: {
-        currentCity: offers[0].city,
-      },
-      OFFERS: {
-        offers: offers,
-        isOffersLoaded: false,
-      },
-      SORTING: {
-        sorting: SORT_TYPES[0],
-      }
-    });
+  const store = fakeStore();
+
+  it('should render Places', () => {
+    const { withStoreComponent } = withStore(<Places />, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const placesContainer = screen.getByTestId(placesContainerTestId);
+    const placesContainer = screen.getByTestId(TestIdMarkups.PlacesTestId);
 
     expect(placesContainer).toBeInTheDocument();
   });

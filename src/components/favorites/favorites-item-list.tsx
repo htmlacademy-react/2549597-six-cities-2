@@ -36,4 +36,4 @@ export function FavoritesItemList ({offers}: FavoriteItemListProps) {
   );
 }
 
-export const FavoritesItemListWithHOC = FavoriteItemListHOC(FavoritesItemList);
+export const FavoritesScreen = FavoriteItemListHOC(FavoritesItemList);

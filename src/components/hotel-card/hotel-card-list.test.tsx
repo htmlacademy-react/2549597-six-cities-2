@@ -1,57 +1,29 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { withHistory, withStore } from '../../mock-component';
+import { withHistory, withStore } from '../../test/mock-component';
 import HotelCardList from './hotel-card-list';
-import { extractActionsTypes, fakeOffers } from '../../mock';
-import { AuthorizationStatus, SORT_TYPES } from '../../constants';
+import { extractActionsTypes, fakeStore } from '../../test/mock';
 import { setCurrentCardId } from '../../store/slices/current-card-slice/current-card-slice';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: HotelCardList', () => {
-  it('should render correct', () => {
-    const hotelCrdListContainerTestId = 'hotel-card-list-container';
-    const { withStoreComponent } = withStore(<HotelCardList />, {
-      OFFERS: {
-        offers: fakeOffers,
-        isOffersLoaded: false,
-      },
-      TOWN: {
-        currentCity: fakeOffers[0].city,
-      },
-      SORTING: {
-        sorting: SORT_TYPES[0],
-      },
-      AUTH: {
-        authStatus: AuthorizationStatus.NoAuth,
-      }
-    });
+  const store = fakeStore();
+
+  it('should render HotelCardList', () => {
+    const { withStoreComponent } = withStore(<HotelCardList />, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const hotelCardListContainer = screen.getByTestId(hotelCrdListContainerTestId);
+    const hotelCardListContainer = screen.getByTestId(TestIdMarkups.HotelCardListTestId);
 
     expect(hotelCardListContainer).toBeInTheDocument();
   });
 
-  it('should dispatch "setCurrentCardId" when the user hovered the mouse over the hotel card', () => {
-    const articleContainer = 'hotel-card-list-article';
-    const { withStoreComponent, mockStore } = withStore(<HotelCardList />, {
-      OFFERS: {
-        offers: fakeOffers,
-        isOffersLoaded: false,
-      },
-      TOWN: {
-        currentCity: fakeOffers[0].city,
-      },
-      SORTING: {
-        sorting: SORT_TYPES[0],
-      },
-      AUTH: {
-        authStatus: AuthorizationStatus.NoAuth,
-      }
-    });
+  it('should dispatch "setCurrentCardId" when the user hovers over the hotel card', () => {
+    const { withStoreComponent, mockStore } = withStore(<HotelCardList />, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const article = screen.getAllByTestId(articleContainer);
+    const article = screen.getAllByTestId(TestIdMarkups.HotelCardListArticleTestId);
 
     fireEvent.mouseOver(article[0]);
     const actions = extractActionsTypes(mockStore.getActions());
@@ -60,26 +32,11 @@ describe('Component: HotelCardList', () => {
   });
 
   it('should dispatch "setCurrentCardId" when the user removed the mouse from the hotel card', () => {
-    const articleContainer = 'hotel-card-list-article';
-    const { withStoreComponent, mockStore } = withStore(<HotelCardList />, {
-      OFFERS: {
-        offers: fakeOffers,
-        isOffersLoaded: false,
-      },
-      TOWN: {
-        currentCity: fakeOffers[0].city,
-      },
-      SORTING: {
-        sorting: SORT_TYPES[0],
-      },
-      AUTH: {
-        authStatus: AuthorizationStatus.NoAuth,
-      }
-    });
+    const { withStoreComponent, mockStore } = withStore(<HotelCardList />, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const article = screen.getAllByTestId(articleContainer);
+    const article = screen.getAllByTestId(TestIdMarkups.HotelCardListArticleTestId);
 
     fireEvent.mouseLeave(article[0]);
     const actions = extractActionsTypes(mockStore.getActions());

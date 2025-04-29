@@ -1,31 +1,29 @@
 import { render, screen } from '@testing-library/react';
-import { withHistory, withStore } from '../../mock-component';
+import { withHistory, withStore } from '../../test/mock-component';
 import LoginScreen from './login-screen';
 import userEvent from '@testing-library/user-event';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: LoginScreen', () => {
-  it('should render correct', () => {
-    const loginContainerTestId = 'login-container';
+  it('should render LoginScreen', () => {
     const { withStoreComponent } = withStore(<LoginScreen />, {});
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const loginContainer = screen.getByTestId(loginContainerTestId);
+    const loginContainer = screen.getByTestId(TestIdMarkups.LoginTestId);
 
     expect(loginContainer).toBeInTheDocument();
   });
 
-  it('should render correctly when user enter login and password', async() => {
-    const emailContainerTestId = 'email-container';
-    const passwordContainer = 'password-container';
+  it('should render correctly when the user enter login and password', async() => {
     const loginValue = 'Valentin';
     const passwordValue = '12345';
     const { withStoreComponent } = withStore(<LoginScreen />, {});
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    await userEvent.type(screen.getByTestId(emailContainerTestId),loginValue);
-    await userEvent.type(screen.getByTestId(passwordContainer),passwordValue);
+    await userEvent.type(screen.getByTestId(TestIdMarkups.EmailTestId), loginValue);
+    await userEvent.type(screen.getByTestId(TestIdMarkups.PasswordTestId), passwordValue);
 
     expect(screen.getByDisplayValue(loginValue)).toBeInTheDocument();
     expect(screen.getByDisplayValue(passwordValue)).toBeInTheDocument();

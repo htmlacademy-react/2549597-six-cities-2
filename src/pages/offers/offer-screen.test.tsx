@@ -1,56 +1,27 @@
 import { render, screen } from '@testing-library/react';
-import { AuthorizationStatus, CITIES, SORT_TYPES } from '../../constants';
-import { fakeCurrentOffer, fakeOffers, fakeReviews } from '../../mock';
-import { withHistory, withStore } from '../../mock-component';
-import { CurrentOffer, UserData } from '../../types/models';
+import { fakeCurrentOffer, fakeReviews, fakeStore } from '../../test/mock';
+import { withHistory, withStore } from '../../test/mock-component';
+import { CurrentOffer } from '../../types/models';
 import { OfferScreen } from './offer-screen';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: OfferScreen', () => {
   const currentOffer = fakeCurrentOffer;
-  const store = {
-    AUTH: {
-      authStatus: AuthorizationStatus.Auth,
-    },
-    USER: {
-      user: {} as UserData,
-    },
-    OFFERS: {
-      offers: fakeOffers,
-      isOffersLoaded: false,
-    },
-    TOWN: {
-      currentCity: CITIES[0],
-    },
-    CURRENT_OFFER: {
-      currentOffer: currentOffer,
-      isCurrentOfferLoaded: false,
-      hasCurrentOfferError: false,
-    },
-    SORTING: {
-      sorting: SORT_TYPES[0],
-    },
-    CURRENT_CARD: {
-      currentCard: '',
-    }
-  };
+  const reviews = fakeReviews;
+  const id = currentOffer.id;
+  const store = fakeStore();
 
-  it('should render correct', () => {
-    const reviews = fakeReviews;
-    const id = currentOffer.id;
-    const offerScreenContainerTestId = 'offer-screen-container';
+  it('should render OfferScreen', () => {
     const { withStoreComponent } = withStore(<OfferScreen id={id} reviews={reviews} currentOffer={currentOffer}/>, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const offerScreenContainer = screen.getByTestId(offerScreenContainerTestId);
+    const offerScreenContainer = screen.getByTestId(TestIdMarkups.OfferScreenTestId);
 
     expect(offerScreenContainer).toBeInTheDocument();
   });
 
-  it('should render incorrect when currentOffer is null', () => {
-    const reviews = fakeReviews;
-    const id = currentOffer.id;
-    const offerScreenContainerTestId = 'offer-screen-container';
+  it('should not render OfferScreen when currentOffer is null', () => {
     const { withStoreComponent } = withStore(<OfferScreen id={id} reviews={reviews} currentOffer={null as unknown as CurrentOffer}/>, {...store,
       CURRENT_OFFER: {
         currentOffer: null as unknown as CurrentOffer,
@@ -61,24 +32,17 @@ describe('Component: OfferScreen', () => {
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const offerScreenContainer = screen.queryByTestId(offerScreenContainerTestId);
+    const offerScreenContainer = screen.queryByTestId(TestIdMarkups.OfferScreenTestId);
 
     expect(offerScreenContainer).not.toBeInTheDocument();
   });
 
-  it('should not render OfferFormReview when use is not authorized', () => {
-    const reviews = fakeReviews;
-    const id = currentOffer.id;
-    const formReviewContainerTestId = 'form-review-container';
-    const { withStoreComponent } = withStore(<OfferScreen id={id} reviews={reviews} currentOffer={currentOffer}/>, {...store,
-      AUTH: {
-        authStatus: AuthorizationStatus.NoAuth,
-      },
-    });
+  it('should not render OfferFormReview when the user is not authorized', () => {
+    const { withStoreComponent } = withStore(<OfferScreen id={id} reviews={reviews} currentOffer={currentOffer}/>, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const formReviewContainer = screen.queryByTestId(formReviewContainerTestId);
+    const formReviewContainer = screen.queryByTestId(TestIdMarkups.FormReviewTestId);
 
     expect(formReviewContainer).not.toBeInTheDocument();
   });

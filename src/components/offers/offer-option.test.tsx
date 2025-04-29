@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { fakeGoods } from '../../mock';
+import { fakeGoods } from '../../test/mock';
 import OfferOption from './offer-option';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: OfferOption', () => {
-  it('should render correct', () => {
+  it('should render OfferOption', () => {
     const expectedOption = fakeGoods[0];
-    const offerOptionContainerTestId = 'option-container';
 
     render(<OfferOption option={expectedOption}/>);
-    const offerOptionContainer = screen.getByTestId(offerOptionContainerTestId);
+    const offerOptionContainer = screen.getByTestId(TestIdMarkups.OptionTestId);
     const offerOption = screen.getByText(expectedOption);
 
     expect(offerOptionContainer).toBeInTheDocument();

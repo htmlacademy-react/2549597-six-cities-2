@@ -1,9 +1,9 @@
 import { MemoryHistory, createMemoryHistory } from 'history';
-import HistoryRouter from './components/history-route/history-route';
+import HistoryRouter from '../components/history-route/history-route';
 import { MockStore, configureMockStore } from '@jedmao/redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
-import { State } from './types/state';
-import { createAPI } from './services/api';
+import { State } from '../types/state';
+import { createAPI } from '../services/api';
 import thunk from 'redux-thunk';
 import { Action } from '@reduxjs/toolkit';
 import { AppThunkDispatch } from './mock';

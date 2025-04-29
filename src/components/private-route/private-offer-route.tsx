@@ -2,14 +2,9 @@ import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute } from '../../constants';
 import { useAppSelector } from '../../hooks';
 import { getAllOffers } from '../../store/slices/offers-slice/offers-reducer';
+import { OfferScreenHOC } from '../../pages/offers/offer-screen-hoc';
 
-
-type PrivateOfferRouteProps = {
-  children: JSX.Element;
-}
-
-export default function PrivateOfferRoute(props: PrivateOfferRouteProps) {
-  const {children} = props;
+export default function PrivateOfferRoute() {
   const {id} = useParams<{id: string}>();
   const offers = useAppSelector(getAllOffers);
 
@@ -19,5 +14,5 @@ export default function PrivateOfferRoute(props: PrivateOfferRouteProps) {
     return <Navigate to={AppRoute.Error} />;
   }
 
-  return children;
+  return <OfferScreenHOC />;
 }

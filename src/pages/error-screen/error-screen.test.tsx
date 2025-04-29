@@ -1,33 +1,30 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { withStore } from '../../mock-component';
+import { withStore } from '../../test/mock-component';
 import { Offers } from '../../types/models';
 import ErrorScreen from './error-screen';
-import { extractActionsTypes } from '../../mock';
+import { extractActionsTypes } from '../../test/mock';
 import { fetchOfferAction } from '../../store/api-actions';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: ErrorScreen', () => {
-  it('should render correct', () => {
-    const errorContainerTestId = 'error-container';
-    const { withStoreComponent } = withStore(<ErrorScreen />, {
-      OFFERS: {
-        offers: [] as Offers,
-        isOffersLoaded: false,
-      }
-    });
+  const store = {
+    OFFERS: {
+      offers: [] as Offers,
+      isOffersLoaded: false,
+    }
+  };
+
+  it('should render ErrorScreen', () => {
+    const { withStoreComponent } = withStore(<ErrorScreen />, store);
 
     render(withStoreComponent);
-    const errorContainer = screen.getByTestId(errorContainerTestId);
+    const errorContainer = screen.getByTestId(TestIdMarkups.ErrorTestId);
 
     expect(errorContainer).toBeInTheDocument();
   });
 
-  it('should dispatch "fetchOfferAction.pending" when user click on button', () => {
-    const { withStoreComponent, mockStore } = withStore(<ErrorScreen />, {
-      OFFERS: {
-        offers: [] as Offers,
-        isOffersLoaded: false,
-      }
-    });
+  it('should dispatch "fetchOfferAction.pending" when the user click on button', () => {
+    const { withStoreComponent, mockStore } = withStore(<ErrorScreen />, store);
 
     render(withStoreComponent);
     const button = screen.getByRole('button');

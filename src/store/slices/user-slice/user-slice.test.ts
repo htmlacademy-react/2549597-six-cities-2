@@ -1,6 +1,6 @@
 import { UserData } from '../../../types/models';
 import { userSlice } from './user-slice';
-import { fakeUser } from '../../../mock';
+import { fakeUser } from '../../../test/mock';
 import { dropUserData, setUserData } from './user-action';
 
 describe('Review slice', () => {

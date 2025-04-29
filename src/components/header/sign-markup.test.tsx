@@ -1,43 +1,40 @@
 import { render, screen } from '@testing-library/react';
-import { withHistory, withStore } from '../../mock-component';
+import { withHistory, withStore } from '../../test/mock-component';
 import { AuthorizationStatus } from '../../constants';
 import SignMarkup from './sign-markup';
+import { fakeStore } from '../../test/mock';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: SignMarkup', () => {
-  const signMarkupContainerTestId = 'auth-markup-container';
-  const unsignMarkupContainerTestId = 'no-auth-markup-container';
+  const store = {...fakeStore(),
+    AUTH: {
+      authStatus: AuthorizationStatus.Auth,
+    }
+  };
 
-  it('should render correct when user not authorized', () => {
-    const { withStoreComponent } = withStore(<SignMarkup />, {
-      AUTH: {
-        authStatus: AuthorizationStatus.NoAuth,
-      }
-    });
+  it('should render SignMarkup when the user is not authorized', () => {
+    const { withStoreComponent } = withStore(<SignMarkup />, fakeStore());
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const SignMarkupContainer = screen.queryByText(signMarkupContainerTestId);
-    const UnsignMarkupContainer = screen.getByTestId(unsignMarkupContainerTestId);
+    const signMarkupContainer = screen.queryByText(TestIdMarkups.SignMarkupTestId);
+    const unsignMarkupContainer = screen.getByTestId(TestIdMarkups.UnsignMarkupTestId);
 
-    expect(SignMarkupContainer).not.toBeInTheDocument();
-    expect(UnsignMarkupContainer).toBeInTheDocument();
+    expect(signMarkupContainer).not.toBeInTheDocument();
+    expect(unsignMarkupContainer).toBeInTheDocument();
   });
 
-  it('should render correct when user authorized', () => {
-    const { withStoreComponent } = withStore(<SignMarkup />, {
-      AUTH: {
-        authStatus: AuthorizationStatus.Auth,
-      }
-    });
+  it('should render SignMarkup when the user is authorized', () => {
+    const { withStoreComponent } = withStore(<SignMarkup />, store);
 
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const SignMarkupContainer = screen.getByTestId(signMarkupContainerTestId);
-    const UnsignMarkupContainer = screen.queryByText(unsignMarkupContainerTestId);
+    const signMarkupContainer = screen.getByTestId(TestIdMarkups.SignMarkupTestId);
+    const unsignMarkupContainer = screen.queryByText(TestIdMarkups.UnsignMarkupTestId);
 
-    expect(SignMarkupContainer).toBeInTheDocument();
-    expect(UnsignMarkupContainer).not.toBeInTheDocument();
+    expect(signMarkupContainer).toBeInTheDocument();
+    expect(unsignMarkupContainer).not.toBeInTheDocument();
   });
 
 });

@@ -8,9 +8,8 @@ import { useAppSelector } from '../../hooks/index.ts';
 import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
 import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
 import { getCurrentLoadingStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
-import { FavoritesItemListWithHOC } from '../favorites/favorites-item-list.tsx';
-import { OfferScreenHOC } from '../../pages/offers/offer-screen-hoc.tsx';
-import { MainScreenHOC } from '../main/main-screen-hoc.tsx';
+import { FavoritesScreen } from '../favorites/favorites-item-list.tsx';
+import { MainScreen } from '../main/main-screen-hoc.tsx';
 
 export default function App() {
   const authorizationStatus = useAppSelector(getCurrentAuth);
@@ -27,7 +26,7 @@ export default function App() {
       <Route
         path={AppRoute.Main}
         element={
-          <MainScreenHOC />
+          <MainScreen />
         }
       />
       <Route
@@ -38,21 +37,17 @@ export default function App() {
         path={AppRoute.Favorites}
         element={
           <PrivateRoute authorizationStatus={authorizationStatus}>
-            <FavoritesItemListWithHOC/>
+            <FavoritesScreen/>
           </PrivateRoute>
         }
       />
       <Route
         path={AppRoute.Offer}
-        element={
-          <PrivateOfferRoute>
-            <OfferScreenHOC />
-          </PrivateOfferRoute>
-        }
+        element={<PrivateOfferRoute />}
       />
       <Route
         path= {AppRoute.Error}
-        element={<NotFoundScreen/>}
+        element={<NotFoundScreen />}
       />
     </Routes>
   );

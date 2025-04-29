@@ -1,34 +1,24 @@
 import { render, screen } from '@testing-library/react';
-import { withHistory, withStore } from '../../mock-component';
+import { withHistory, withStore } from '../../test/mock-component';
 import Header from './header';
-import { AuthorizationStatus } from '../../constants';
-import { fakeOffers, fakeUser } from '../../mock';
+import { fakeStore, fakeUser } from '../../test/mock';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: Header', () => {
-  it('should render correct', () => {
-    const headerComponentTestId = 'header-component';
-    const { withStoreComponent } = withStore(<Header />, {
-      AUTH: {
-        authStatus: AuthorizationStatus.NoAuth,
-      },
-      FAVORITE_OFFERS: {
-        favoriteOffers: fakeOffers,
-      },
-      USER: {
-        user: fakeUser,
-      },
-      OFFERS: {
-        offers: fakeOffers,
-        isOffersLoaded: false,
-      }
-    });
+  const store = {...fakeStore(),
+    USER: {
+      user: fakeUser,
+    },
+  };
+
+  it('should render Header', () => {
+    const { withStoreComponent } = withStore(<Header />, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
+    const headerContainer = screen.getByTestId(TestIdMarkups.HeaderTestId);
 
-    const HeaderContainer = screen.getByTestId(headerComponentTestId);
-
-    expect(HeaderContainer).toBeInTheDocument();
+    expect(headerContainer).toBeInTheDocument();
   });
 
 });

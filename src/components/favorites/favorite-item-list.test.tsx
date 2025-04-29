@@ -1,48 +1,35 @@
 import { render, screen } from '@testing-library/react';
-import { withHistory, withStore } from '../../mock-component';
-import { fakeOffers } from '../../mock';
-import { Offers, UserData } from '../../types/models';
+import { withHistory, withStore } from '../../test/mock-component';
+import { fakeOffers, fakeStore } from '../../test/mock';
+import { Offers } from '../../types/models';
 import { FavoritesItemList } from './favorites-item-list';
-import { AuthorizationStatus } from '../../constants';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: FavoritesItemList', () => {
-
   const offers = fakeOffers;
-  const store = {
-    AUTH: {
-      authStatus: AuthorizationStatus.NoAuth,
-    },
-    USER: {
-      user: {} as UserData,
-    },
-    OFFERS: {
-      offers: offers,
-      isOffersLoaded: false,
-    },
+  const store = {...fakeStore(),
     FAVORITE_OFFERS: {
       favoriteOffers: [] as Offers,
     }
   };
 
-  it('should render correct with offers', () => {
-    const favoritesItemListTestId = 'favorites-item-list-container';
+  it('should render FavoritesItemList when offers is not empty', () => {
     const { withStoreComponent } = withStore(<FavoritesItemList offers={offers}/>, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const FavoritesItemContainer = screen.getByTestId(favoritesItemListTestId);
+    const favoritesItemContainer = screen.getByTestId(TestIdMarkups.FavoritesItemListTestId);
 
-    expect(FavoritesItemContainer).toBeInTheDocument();
+    expect(favoritesItemContainer).toBeInTheDocument();
   });
 
-  it('should render correct without offers', () => {
-    const favoritesItemListTestId = 'favorites-item-list-container';
+  it('should not render FavoritesItemList when offers is empty', () => {
     const { withStoreComponent } = withStore(<FavoritesItemList offers={[]}/>, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const FavoritesItemContainer = screen.queryByText(favoritesItemListTestId);
+    const favoritesItemContainer = screen.queryByText(TestIdMarkups.FavoritesItemListTestId);
 
-    expect(FavoritesItemContainer).not.toBeInTheDocument();
+    expect(favoritesItemContainer).not.toBeInTheDocument();
   });
 });

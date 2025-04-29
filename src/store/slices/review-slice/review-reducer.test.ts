@@ -1,7 +1,7 @@
 import { NameSpace } from '../../../constants';
 import { Reviews } from '../../../types/models';
 import { getReviewsData } from './review-reducer';
-import { fakeReviews } from '../../../mock';
+import { fakeReviews } from '../../../test/mock';
 
 describe('Review reducer', () => {
   it('should return reviews as null', () => {

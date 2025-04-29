@@ -1,37 +1,28 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { withHistory, withStore } from '../../mock-component';
+import { withHistory, withStore } from '../../test/mock-component';
 import FavoritesItem from './favorites-item';
-import { extractActionsTypes, fakeOffer, fakeOffers } from '../../mock';
-import { Offers } from '../../types/models';
+import { extractActionsTypes, fakeOffer, fakeStore } from '../../test/mock';
 import { addFavoriteOffer } from '../../store/api-actions';
 import { replaceOffer } from '../../store/slices/offers-slice/offers-action';
 import { setFavoriteOffer } from '../../store/slices/favorite-offers-slice/favorites-offers-action';
+import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: FavoritesItem', () => {
-
   const offer = fakeOffer();
+  const store = fakeStore();
 
-  it('should render correct', () => {
-    const favoritesItemTestId = 'favorites-item-container';
+  it('should render FavoritesItem when offer is not empty', () => {
     const { withStoreComponent } = withStore(<FavoritesItem offer={offer}/>, {});
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);
-    const FavoritesItemContainer = screen.getByTestId(favoritesItemTestId);
+    const favoritesItemContainer = screen.getByTestId(TestIdMarkups.FavoritesItemTestId);
 
-    expect(FavoritesItemContainer).toBeInTheDocument();
+    expect(favoritesItemContainer).toBeInTheDocument();
   });
 
   it ('should dispatch "favoriteOffer", "replaceOffer", "setFavoriteOffer" when user clicked on favorite button' , () => {
-    const { withStoreComponent, mockStore } = withStore(<FavoritesItem offer={offer}/>, {
-      OFFERS: {
-        offers: fakeOffers,
-        isOffersLoaded: false,
-      },
-      FAVORITE_OFFERS: {
-        favoriteOffers: [] as Offers,
-      }
-    });
+    const { withStoreComponent, mockStore } = withStore(<FavoritesItem offer={offer}/>, store);
     const withHistoryComponent = withHistory(withStoreComponent);
 
     render(withHistoryComponent);

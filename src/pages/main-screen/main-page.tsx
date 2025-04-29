@@ -5,7 +5,7 @@ import TownList from '../../components/towns/town-list.tsx';
 import Header from '../../components/header/header.tsx';
 import Places from '../../components/places/places.tsx';
 
-export function MainScreen () {
+export function MainPage () {
   return (
     <div className="page page--gray page--main" data-testid='main-screen-container'>
       <Header />
