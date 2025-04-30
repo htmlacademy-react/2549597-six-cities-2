@@ -1,13 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import LoadingScreen from './loading-screen';
-import { describe, it, expect } from 'vitest';
+import { TestIdMarkups } from '../../test/testid-markup';
 
-describe('Component: Loading screen', () => {
-  it('should render correct', () => {
-    const loadingScreenContainerTestId = 'loading-container';
-
+describe('Component: LoadingScreen', () => {
+  it('should render LoadingScreen', () => {
     render(<LoadingScreen />);
-    const loadingScreenContainer = screen.getByTestId(loadingScreenContainerTestId);
+    const loadingScreenContainer = screen.getByTestId(TestIdMarkups.LoadingTestId);
 
     expect(loadingScreenContainer).toBeInTheDocument();
   });

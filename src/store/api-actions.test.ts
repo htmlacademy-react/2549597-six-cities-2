@@ -1,11 +1,10 @@
-import { beforeEach, describe, it, expect, vi } from 'vitest';
 import { createAPI } from '../services/api';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { State } from '../types/state';
 import { Action } from '@reduxjs/toolkit';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { AppThunkDispatch, extractActionsTypes, fakeCurrentOffer, fakeOffer, fakeOffers, fakeReview, fakeReviews, fakeServerAnswer, fakeUser, fakeUserLogin, fakeUserReview } from '../mock';
+import { AppThunkDispatch, extractActionsTypes, fakeCurrentOffer, fakeOffer, fakeOffers, fakeReview, fakeReviews, fakeServerAnswer, fakeUser, fakeUserLogin, fakeUserReview } from '../test/mock';
 import { ApiRoute, AuthorizationStatus, CITIES, SORT_TYPES } from '../constants';
 import { CurrentOffer, Offers, Reviews, UserData } from '../types/models';
 import { addFavoriteOffer, checkAuthAction, fetchOfferAction, getDataCurrentOffer, getFavoriteOffers, getReviews, getUserData, loginAction, logoutAction, sendUserReview } from './api-actions';
