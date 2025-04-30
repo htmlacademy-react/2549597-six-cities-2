@@ -138,7 +138,7 @@ export const fakeStore = () => ({
     sorting: SORT_TYPES[0],
   },
   CURRENT_CARD: {
-    currentCard: fakeCurrentOffer.id,
+    currentCard: {...fakeCurrentOffer, id: fakeOffers[0].id}.id,
   },
   FAVORITE_OFFERS: {
     favoriteOffers: fakeOffers,

@@ -4,7 +4,7 @@ import { getDataCurrentOffer, getReviews } from '../../store/api-actions';
 import { changeTown } from '../../store/slices/town-slice/town-slice';
 import { getReviewsData } from '../../store/slices/review-slice/review-reducer';
 import { getCurrentOffer } from '../../store/slices/current-offer/current-offer-reducer';
-import { OfferPage } from './offer-page';
+import { OfferPage } from '../../pages/offers/offer-page';
 
 type OfferScreenHOCProps = {
   id?: string;

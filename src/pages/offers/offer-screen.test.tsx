@@ -2,9 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../test/mock-component';
 import { CurrentOffer } from '../../types/models';
 import { fakeStore } from '../../test/mock';
-import OfferScreen from './offer-screen';
 import { MemoryHistory, createMemoryHistory } from 'history';
 import { TestIdMarkups } from '../../test/testid-markup';
+import { Route, Routes } from 'react-router-dom';
+import OfferScreen from './offer-screen';
 
 
 describe('Component: OfferScreen', () => {
@@ -20,15 +21,22 @@ describe('Component: OfferScreen', () => {
     mockHistory.push(`/offer/${id}`);
   });
 
-  // it('should render OfferPage when the current offer is found among all offers ', () => {
-  //   const withHistoryComponent = withHistory(<OfferScreen />, mockHistory);
-  //   const { withStoreComponent } = withStore(withHistoryComponent, store);
+  it('should render OfferPage when the current offer is found among all offers ', () => {
+    const { withStoreComponent } = withStore(
+      <Routes>
+        <Route path='/offer/:id' element={<OfferScreen />} />
+      </Routes>,
+      store
+    );
+    const withHistoryComponent = withHistory(withStoreComponent, mockHistory);
 
-  //   render(withStoreComponent);
-  //   const expectedContainer = screen.getByTestId(TestIdMarkups.OfferScreenTestId);
+    render(withHistoryComponent);
 
-  //   expect(expectedContainer).toBeInTheDocument();
-  // });
+    const expectedContainer = screen.getByTestId(TestIdMarkups.OfferScreenTestId);
+
+    expect(expectedContainer).toBeInTheDocument();
+  });
+
 
   it('should not render OfferPage when the current offer is empty ', () => {
     const { withStoreComponent } = withStore(<OfferScreen />, {...store,

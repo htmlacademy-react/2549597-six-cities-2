@@ -9,7 +9,7 @@ import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer.ts';
 import { getCurrentLoadingStatus } from '../../store/slices/offers-slice/offers-reducer.ts';
 import { FavoritesScreen } from '../favorites/favorites-item-list.tsx';
 import { MainScreen } from '../main/main-screen-hoc.tsx';
-import OfferScreen from '../offers/offer-screen.tsx';
+import OfferScreen from '../../pages/offers/offer-screen.tsx';
 
 export default function App() {
   const authorizationStatus = useAppSelector(getCurrentAuth);
