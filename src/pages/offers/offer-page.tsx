@@ -19,7 +19,7 @@ type OfferScreenProps = {
 
 export function OfferPage ({id, currentOffer, reviews}: OfferScreenProps) {
 
-  if (currentOffer === null) {
+  if (!('id' in currentOffer)) {
     return <LoadingScreen />;
   }
 
