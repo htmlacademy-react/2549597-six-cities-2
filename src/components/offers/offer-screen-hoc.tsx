@@ -5,6 +5,7 @@ import { changeTown } from '../../store/slices/town-slice/town-slice';
 import { getReviewsData } from '../../store/slices/review-slice/review-reducer';
 import { getCurrentOffer } from '../../store/slices/current-offer/current-offer-reducer';
 import { OfferPage } from '../../pages/offers/offer-page';
+import { sortingReview } from '../../utils';
 
 type OfferScreenHOCProps = {
   id?: string;
@@ -37,9 +38,13 @@ export const OfferScreenHOC = ({id}: OfferScreenHOCProps) => {
     }
   }, [dispatch, town]);
 
+  if (!reviews) {
+    return;
+  }
+
   if (loading) {
     return;
   }
 
-  return <OfferPage id={id} currentOffer={currentOffer} reviews={reviews} />;
+  return <OfferPage id={id} currentOffer={currentOffer} reviews={sortingReview(reviews)} />;
 };

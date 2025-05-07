@@ -50,7 +50,7 @@ describe('Application routing', () => {
     expect(screen.getByText(ComponentMarkups.SavedListing)).toBeInTheDocument();
   });
 
-  it('renders ErrorScreen on "/*" route', () => {
+  it('renders NotFoundScreen on "/*" route', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, store);
     mockHistory.push(AppRoute.Error);

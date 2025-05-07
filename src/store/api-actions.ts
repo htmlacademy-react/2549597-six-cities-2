@@ -8,6 +8,7 @@ import { dropToken, saveToken } from '../services/token';
 import { addUserReview } from './slices/review-slice/review-action';
 import { dropUserData, setUserData } from './slices/user-slice/user-action';
 import { setFavoriteOffers } from './slices/favorite-offers-slice/favorites-offers-action';
+import { removeFavoriteOffers } from './slices/offers-slice/offers-action';
 
 export const fetchOfferAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -104,6 +105,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     saveToken(data.token);
     dispatch(setUserData(data));
     dispatch(redirectToRoute(AppRoute.Main));
+    dispatch(fetchOfferAction());
   },
 );
 
@@ -166,5 +168,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(ApiRoute.Logout);
     dropToken();
     dispatch(dropUserData());
+    dispatch(setFavoriteOffers([]));
+    dispatch(removeFavoriteOffers());
   },
 );

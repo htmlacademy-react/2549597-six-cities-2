@@ -37,6 +37,7 @@ export enum TestIdMarkups {
   PasswordTestId = 'password-container',
   MainEmptyTestId = 'main-empty-container',
   NotFoundTestId = 'not-found-container',
+  OfferFormReviewInputTestId = 'rating-input-container',
 }
 
 export enum ComponentMarkups {
