@@ -13,6 +13,7 @@ import { dropUserData, setUserData } from './slices/user-slice/user-action';
 import * as tokenStorage from '../services/token';
 import { setFavoriteOffers } from './slices/favorite-offers-slice/favorites-offers-action';
 import { addUserReview } from './slices/review-slice/review-action';
+import { removeFavoriteOffers } from './slices/offers-slice/offers-action';
 
 describe('Async actions', () => {
   const axios = createAPI();
@@ -116,6 +117,7 @@ describe('Async actions', () => {
         loginAction.pending.type,
         setUserData.type,
         redirectToRoute.type,
+        fetchOfferAction.pending.type,
         loginAction.fulfilled.type,
       ]);
     });
@@ -143,6 +145,8 @@ describe('Async actions', () => {
       expect(actions).toEqual([
         logoutAction.pending.type,
         dropUserData.type,
+        setFavoriteOffers.type,
+        removeFavoriteOffers.type,
         logoutAction.fulfilled.type,
       ]);
     });

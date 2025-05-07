@@ -2,6 +2,8 @@ import { City, SortTypes } from './types/models';
 
 export const HEADER_FAVORITE_COUNT = 3;
 
+export const LETTER_LENGTH = 50;
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getAllOffers } from '../../store/slices/offers-slice/offers-reducer';
 import { OfferScreenHOC } from '../../components/offers/offer-screen-hoc';
-import ErrorScreen from '../error-screen/error-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 export default function OfferScreen() {
   const {id} = useParams<{id: string}>();
@@ -11,7 +11,7 @@ export default function OfferScreen() {
   const currentOffer = offers.find((offer) => offer.id === id);
 
   if (!currentOffer) {
-    return <ErrorScreen />;
+    return <NotFoundScreen />;
   }
 
   return <OfferScreenHOC id={id}/>;

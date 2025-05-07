@@ -112,6 +112,7 @@ export const fakeFeautures = {
 
 export const fakeStore = () => ({
   OFFERS: {
+    hasError: false,
     offers: fakeOffers,
     isOffersLoaded: false,
   },

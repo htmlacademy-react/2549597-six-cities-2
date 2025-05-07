@@ -1,15 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../test/mock-component';
 import { FavoriteItemListHOC } from './favorites-item-list-hoc';
-import { fakeOffers } from '../../test/mock';
+import { fakeOffers, fakeStore } from '../../test/mock';
+import { FavoritesItemList } from './favorites-item-list';
 
 describe('HOC: FavoriteItemListHOC', () => {
-  const expectedText = 'Wrapped Component';
-  const component = () => <div>{expectedText}</div>;
-  const ComponentWithHOC = FavoriteItemListHOC(component);
+  const expectedText = 'favorites-item-list-container';
+  const ComponentWithHOC = FavoriteItemListHOC(FavoritesItemList);
+  const store = fakeStore();
 
   it('should render the wrapped component when favorite offers are present', () => {
-    const { withStoreComponent } = withStore(<ComponentWithHOC />, {
+    const { withStoreComponent } = withStore(<ComponentWithHOC />, {...store,
       FAVORITE_OFFERS: {
         favoriteOffers: fakeOffers,
       }
@@ -18,11 +19,11 @@ describe('HOC: FavoriteItemListHOC', () => {
 
     render(withHistoryComponent);
 
-    expect(screen.getByText(expectedText)).toBeInTheDocument();
+    expect(screen.getByTestId(expectedText)).toBeInTheDocument();
   });
 
   it('should not display the wrapped component when the list of favorite offers is empty', () => {
-    const { withStoreComponent } = withStore(<ComponentWithHOC />, {
+    const { withStoreComponent } = withStore(<ComponentWithHOC />, {...store,
       FAVORITE_OFFERS: {
         favoriteOffers: [],
       }
@@ -31,6 +32,6 @@ describe('HOC: FavoriteItemListHOC', () => {
 
     render(withHistoryComponent);
 
-    expect(screen.queryByText(expectedText)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(expectedText)).not.toBeInTheDocument();
   });
 });

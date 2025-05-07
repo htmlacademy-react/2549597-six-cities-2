@@ -6,6 +6,7 @@ import { replaceOffer } from './offers-action';
 
 describe('Offers slice', () => {
   const state = {
+    hasError: false,
     offers: [] as Offers,
     isOffersLoaded: false,
   };
@@ -36,10 +37,12 @@ describe('Offers slice', () => {
 
   it ('should set key isOffersLoaded is true and set key offers is Offers[]', () => {
     const initialState = {
+      hasError: false,
       offers: [] as Offers,
       isOffersLoaded: true,
     };
     const expectedState = {
+      hasError: false,
       offers: fakeOffers,
       isOffersLoaded: false,
     };
@@ -51,10 +54,12 @@ describe('Offers slice', () => {
 
   it ('should set key isOffersLoaded is false', () => {
     const initialState = {
+      hasError: false,
       offers: [] as Offers,
       isOffersLoaded: true,
     };
     const expectedState = {
+      hasError: true,
       offers: [] as Offers,
       isOffersLoaded: false,
     };
@@ -66,11 +71,13 @@ describe('Offers slice', () => {
 
   it ('should replace offer key isFavorite', () => {
     const initialState = {
+      hasError: false,
       offers: fakeOffers,
       isOffersLoaded: false,
     };
     const expectedOffers = [{...fakeOffers[0], isFavorite: !fakeOffers[0].isFavorite}, ...fakeOffers.slice(1)];
     const expectedState = {
+      hasError: false,
       offers: expectedOffers,
       isOffersLoaded: false,
     };

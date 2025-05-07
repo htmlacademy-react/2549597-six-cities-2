@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 import { Reviews } from '../../../types/models';
 import { getReviews } from '../../api-actions';
 import { NameSpace } from '../../../constants';

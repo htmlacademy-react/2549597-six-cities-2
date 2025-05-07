@@ -1,7 +1,11 @@
 import Header from '../../components/header/header';
 import TownList from '../../components/towns/town-list';
+import { useAppSelector } from '../../hooks';
+import { getCityName } from '../../store/slices/town-slice/town-reducer';
 
 export default function MainEmptyScreen () {
+  const currentTown = useAppSelector(getCityName);
+
   return (
     <div className="page page--gray page--main" data-testid='main-empty-container'>
       <Header />
@@ -18,7 +22,7 @@ export default function MainEmptyScreen () {
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">No places to stay available</b>
-                <p className="cities__status-description">We could not find any property available at the moment in Dusseldorf</p>
+                <p className="cities__status-description">{`We could not find any property available at the moment in ${currentTown}`}</p>
               </div>
             </section>
             <div className="cities__right-section"></div>

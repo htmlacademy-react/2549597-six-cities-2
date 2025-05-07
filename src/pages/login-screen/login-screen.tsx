@@ -2,11 +2,15 @@ import { FormEvent, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { changeTown } from '../../store/slices/town-slice/town-slice';
+import { getRandomTown } from '../../utils';
 
 export default function LoginScreen () {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
+  const randomCity = getRandomTown();
+  const handleClick = () => dispatch(changeTown(randomCity));
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -51,8 +55,8 @@ export default function LoginScreen () {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to='/'>
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to='/' onClick={handleClick}>
+                <span>{randomCity.name}</span>
               </Link>
             </div>
           </section>

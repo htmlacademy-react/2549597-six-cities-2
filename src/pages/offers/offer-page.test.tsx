@@ -22,9 +22,9 @@ describe('Component: OfferPage', () => {
   });
 
   it('should not render OfferScreen when currentOffer is null', () => {
-    const { withStoreComponent } = withStore(<OfferPage id={id} reviews={reviews} currentOffer={null as unknown as CurrentOffer}/>, {...store,
+    const { withStoreComponent } = withStore(<OfferPage id={id} reviews={reviews} currentOffer={{} as CurrentOffer}/>, {...store,
       CURRENT_OFFER: {
-        currentOffer: null as unknown as CurrentOffer,
+        currentOffer: {} as CurrentOffer,
         isCurrentOfferLoaded: false,
         hasCurrentOfferError: false,
       },
