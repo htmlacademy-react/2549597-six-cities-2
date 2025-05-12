@@ -3,8 +3,8 @@ import { withHistory, withStore } from '../../test/mock-component';
 import FavoritesItem from './favorites-item';
 import { extractActionsTypes, fakeOffer, fakeStore } from '../../test/mock';
 import { addFavoriteOffer } from '../../store/api-actions';
-import { replaceOffer } from '../../store/slices/offers-slice/offers-action';
-import { setFavoriteOffer } from '../../store/slices/favorite-offers-slice/favorites-offers-action';
+import { replaceOffer } from '../../store/slices/offers/actions';
+import { setFavoriteOffer } from '../../store/slices/favorite-offers/actions';
 import { TestIdMarkups } from '../../test/testid-markup';
 
 describe('Component: FavoritesItem', () => {

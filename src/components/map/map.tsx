@@ -5,9 +5,9 @@ import L from 'leaflet';
 import PinActive from'/img/pin-active.svg';
 import Pin from '/img/pin.svg';
 import { useAppSelector } from '../../hooks';
-import { getCity } from '../../store/slices/town-slice/town-reducer';
-import { changeOffers } from '../../store/reducer';
-import { getCurrentCardId } from '../../store/slices/current-card-slice/current-card-reducer';
+import { getCity } from '../../store/slices/town/selectors';
+import { getSortedOffers } from '../../store/reducer';
+import { getCurrentCardId } from '../../store/slices/current-card/selectors';
 
 const ICON_PROPERTIES: IconProperties = {
   iconAnchor: [20, 40],
@@ -19,7 +19,7 @@ export default function Map () {
   const city = useAppSelector(getCity);
   const map = useMap({mapRef, city});
   const markersRef = useRef<L.Marker[]>([]);
-  const offers = useAppSelector(changeOffers);
+  const offers = useAppSelector(getSortedOffers);
   const selectedCard = useAppSelector(getCurrentCardId);
 
   const defaultCustomIcon = L.icon({

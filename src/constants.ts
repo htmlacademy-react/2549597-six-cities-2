@@ -2,6 +2,10 @@ import { City, SortTypes } from './types/models';
 
 export const HEADER_FAVORITE_COUNT = 3;
 
+export const LETTER_LENGTH = 50;
+
+export const REVIEW_LENGTH = 10;
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -97,3 +101,16 @@ export enum NameSpace {
 }
 
 export const RATING_MULTIPLIER = 20;
+
+export enum ErrorMessages {
+  NoID = 'ID не передан',
+  FailLoadData = 'Не удалось загрузить данные',
+  FailAddFavorite = 'Не удалось добавить/удалить избранное',
+}
+
+export enum SORTING_TYPES {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
+}

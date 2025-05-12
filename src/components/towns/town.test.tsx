@@ -3,7 +3,7 @@ import { withStore } from '../../test/mock-component';
 import { CITIES } from '../../constants';
 import Town from './town';
 import { extractActionsTypes } from '../../test/mock';
-import { changeTown } from '../../store/slices/town-slice/town-slice';
+import { changeTown } from '../../store/slices/town/town';
 import { TestIdMarkups, townActiveClass } from '../../test/testid-markup';
 
 describe('Component: Town', () => {

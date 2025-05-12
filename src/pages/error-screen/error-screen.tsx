@@ -1,6 +1,6 @@
 import {useAppDispatch} from '../../hooks';
 import { fetchOfferAction } from '../../store/api-actions';
-import '../../css/error-screen.css';
+import '../error-screen/error-screen.css';
 import Image from '../../img/lost_connection.png';
 
 export default function ErrorScreen(): JSX.Element {

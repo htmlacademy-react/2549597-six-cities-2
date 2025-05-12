@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store';
@@ -6,31 +5,24 @@ import { checkAuthAction, fetchOfferAction, getUserData } from './store/api-acti
 import { getToken } from './services/token';
 import App from './components/app/app';
 import {ToastContainer} from 'react-toastify';
-import HistoryRouter from './components/history-route/history-route';
+import HistoryRouter from './components/history-router/history-router';
 import browserHistory from './browser-history';
+import React from 'react';
 
-export const AppWithStore = () => {
-  useEffect(() => {
-    store.dispatch(fetchOfferAction());
-    store.dispatch(checkAuthAction());
+store.dispatch(fetchOfferAction());
+store.dispatch(checkAuthAction());
 
-    if (getToken()) {
-      store.dispatch(getUserData());
-    }
-  }, []);
+if (getToken()) {
+  store.dispatch(getUserData());
+}
 
-  return (
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
     <Provider store={store}>
       <HistoryRouter history={browserHistory}>
         <ToastContainer />
         <App />
       </HistoryRouter>
     </Provider>
-  );
-};
-
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <AppWithStore />
   </React.StrictMode>
 );

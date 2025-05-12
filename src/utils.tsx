@@ -1,8 +1,9 @@
-import { Offer, Offers } from './types/models';
+import { CITIES, REVIEW_LENGTH } from './constants';
+import { Offer, Offers, Review, Reviews } from './types/models';
 
 export const getCurrentDate = (convertData: Date) => `${convertData.getFullYear()}-${convertData.getMonth() + 1}-${convertData.getDate()}`;
 
-export const getMonthAndYear = (convertData: Date) => `${convertData.toLocaleString('default', {month: 'long'})}-${convertData.getFullYear()}`;
+export const getMonthAndYear = (convertData: Date) => `${convertData.toLocaleString('default', {month: 'long'})} ${convertData.getFullYear()}`;
 
 const sortingMethods = {
   lowToHighPriceSorting: (first: Offer, second: Offer) => first.price - second.price,
@@ -25,3 +26,49 @@ export const replaceOffersArray = (offers: Offers, id: string) => {
 };
 
 export const removeFavoriteOffer = (offers: Offers, currentOffer: Offer) => offers.filter((offer) => offer.id !== currentOffer.id);
+
+const sortMethod = (first: Review, second: Review) => new Date(second.date).getTime() - new Date(first.date).getTime();
+
+export const sortingReview = (reviews: Reviews) => [...reviews].sort(sortMethod).slice(0, REVIEW_LENGTH);
+
+const townSort = (first: Offer, second: Offer) => {
+  const firstElem = first.city.name;
+  const secondElem = second.city.name;
+
+  if (firstElem > secondElem) {
+    return 1;
+  }
+
+  if (firstElem === secondElem) {
+    return 0;
+  }
+
+  return -1;
+};
+
+export const deletingDuplicateCities = (offers: Offers) => {
+  let town = null;
+  const modifiedOffers = structuredClone(offers);
+
+  for (let i = 0; i < modifiedOffers.length; i++) {
+    if (modifiedOffers[i].city.name === town) {
+      modifiedOffers[i].city.name = '';
+    } else {
+      town = modifiedOffers[i].city.name;
+    }
+  }
+
+  return modifiedOffers;
+};
+
+export const sortingFavoriteOffers = (offers: Offers) => deletingDuplicateCities([...offers].sort(townSort));
+
+export const removeFavoriteOffersData = (offers: Offers) => offers.map((offer) => ({
+  ...offer,
+  isFavorite: offer.isFavorite ? false : offer.isFavorite,
+}));
+
+export const getRandomTown = () => {
+  const randomIndex = Math.floor(Math.random() * (CITIES.length - 1));
+  return CITIES[randomIndex];
+};

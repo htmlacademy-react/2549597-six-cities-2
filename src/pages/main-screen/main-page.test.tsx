@@ -13,9 +13,10 @@ describe('Component: MainPage', () => {
     OFFERS: {
       offers: [],
       isOffersLoaded: false,
+      hasError: false,
     },
     CURRENT_CARD: {
-      currentCard: '',
+      currentCardId: '',
     }
   };
 
