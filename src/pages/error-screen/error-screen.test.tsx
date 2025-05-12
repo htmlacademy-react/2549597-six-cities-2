@@ -11,6 +11,7 @@ describe('Component: ErrorScreen', () => {
     OFFERS: {
       offers: [] as Offers,
       isOffersLoaded: false,
+      hasError: false,
     }
   };
 

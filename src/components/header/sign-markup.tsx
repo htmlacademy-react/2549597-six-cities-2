@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AuthorizationStatus } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
-import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer';
+import { getCurrentAuth } from '../../store/slices/auth/selectors';
 
 export default function SignMarkup () {
   const dispatch = useAppDispatch();

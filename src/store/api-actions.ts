@@ -2,13 +2,13 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AuthData, CurrentOffer, CurrentOfferId, Offer, Offers, Review, Reviews, SendReview, UserData } from '../types/models';
-import { ApiRoute, AppRoute } from '../constants';
+import { ApiRoute, AppRoute, ErrorMessages } from '../constants';
 import { redirectToRoute } from './action';
 import { dropToken, saveToken } from '../services/token';
-import { addUserReview } from './slices/review-slice/review-action';
-import { dropUserData, setUserData } from './slices/user-slice/user-action';
-import { setFavoriteOffers } from './slices/favorite-offers-slice/favorites-offers-action';
-import { removeFavoriteOffers } from './slices/offers-slice/offers-action';
+import { addUserReview } from './slices/review/actions';
+import { dropUserData, setUserData } from './slices/user/actions';
+import { setFavoriteOffers } from './slices/favorite-offers/actions';
+import { removeFavoriteOffers } from './slices/offers/actions';
 
 export const fetchOfferAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -33,7 +33,7 @@ export const getDataCurrentOffer = createAsyncThunk<CurrentOffer, CurrentOfferId
   'data/getDataCurrentOffer',
   async (id, {extra: api, rejectWithValue}) => {
     if (!id) {
-      return rejectWithValue('ID не передан');
+      return rejectWithValue(ErrorMessages.NoID);
     }
 
     try {
@@ -41,7 +41,7 @@ export const getDataCurrentOffer = createAsyncThunk<CurrentOffer, CurrentOfferId
 
       return data;
     } catch (error : unknown) {
-      return rejectWithValue(error || 'Не удалось загрузить данные');
+      return rejectWithValue(error || ErrorMessages.FailLoadData);
     }
   },
 );
@@ -55,7 +55,7 @@ export const getReviews = createAsyncThunk<Reviews, CurrentOfferId, {
   'data/getReviews',
   async (id, { extra: api, rejectWithValue }) => {
     if (!id) {
-      return rejectWithValue('ID не передан');
+      return rejectWithValue(ErrorMessages.NoID);
     }
 
     try {
@@ -63,7 +63,7 @@ export const getReviews = createAsyncThunk<Reviews, CurrentOfferId, {
 
       return data;
     } catch (error: unknown) {
-      return rejectWithValue(error || 'Не удалось загрузить данные');
+      return rejectWithValue(error || ErrorMessages.FailLoadData);
     }
   }
 );
@@ -122,7 +122,7 @@ export const addFavoriteOffer = createAsyncThunk<CurrentOffer, Offer, {
 
       return data;
     } catch (error : unknown) {
-      return rejectWithValue(error || 'Не удалось добавить/удалить избранное');
+      return rejectWithValue(error || ErrorMessages.FailAddFavorite);
     }
   },
 );

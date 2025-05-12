@@ -2,7 +2,7 @@ import { FormEvent, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { changeTown } from '../../store/slices/town-slice/town-slice';
+import { changeTown } from '../../store/slices/town/town';
 import { getRandomTown } from '../../utils';
 
 export default function LoginScreen () {

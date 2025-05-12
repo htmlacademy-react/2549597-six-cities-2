@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { City } from '../../types/models';
-import { getCityName } from '../../store/slices/town-slice/town-reducer';
-import { changeTown } from '../../store/slices/town-slice/town-slice';
+import { getCityName } from '../../store/slices/town/selectors';
+import { changeTown } from '../../store/slices/town/town';
 
 type TownProps = {
   town: City;

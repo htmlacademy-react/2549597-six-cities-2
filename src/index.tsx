@@ -5,7 +5,7 @@ import { checkAuthAction, fetchOfferAction, getUserData } from './store/api-acti
 import { getToken } from './services/token';
 import App from './components/app/app';
 import {ToastContainer} from 'react-toastify';
-import HistoryRouter from './components/history-route/history-route';
+import HistoryRouter from './components/history-router/history-router';
 import browserHistory from './browser-history';
 import React from 'react';
 

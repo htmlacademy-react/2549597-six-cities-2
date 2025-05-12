@@ -3,8 +3,8 @@ import { Offer } from '../../types/models';
 import { RATING_MULTIPLIER } from '../../constants';
 import { useAppDispatch } from '../../hooks';
 import { addFavoriteOffer } from '../../store/api-actions';
-import { replaceOffer } from '../../store/slices/offers-slice/offers-action';
-import { setFavoriteOffer } from '../../store/slices/favorite-offers-slice/favorites-offers-action';
+import { replaceOffer } from '../../store/slices/offers/actions';
+import { setFavoriteOffer } from '../../store/slices/favorite-offers/actions';
 
 type FavoritesItemProps = {
   offer: Offer;
@@ -22,13 +22,19 @@ export default function FavoritesItem ({offer}: FavoritesItemProps) {
     dispatch(setFavoriteOffer(offer));
   };
 
+  const cityMarkup = name ?
+    (
+      <a className="locations__item-link" href="#">
+        <span>{name}</span>
+      </a>
+    )
+    : '';
+
   return (
     <li className="favorites__locations-items" data-testid='favorites-item-container'>
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
-            <span>{name}</span>
-          </a>
+          {cityMarkup}
         </div>
       </div>
       <div className="favorites__places">

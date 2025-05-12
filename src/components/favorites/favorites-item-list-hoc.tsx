@@ -1,6 +1,6 @@
 import { ComponentType, useEffect, useState } from 'react' ;
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAllFavoriteOffers } from '../../store/slices/favorite-offers-slice/favorite-offers-reducer';
+import { getAllFavoriteOffers } from '../../store/slices/favorite-offers/selectors';
 import { Offers } from '../../types/models';
 import { getFavoriteOffers } from '../../store/api-actions';
 import { sortingFavoriteOffers } from '../../utils';

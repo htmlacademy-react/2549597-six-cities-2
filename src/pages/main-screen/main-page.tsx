@@ -1,7 +1,7 @@
-import Sorting from '../../components/sort/sorting.tsx';
-import HotelCardList from '../../components/hotel-card/hotel-card-list.tsx';
+import Sorting from '../../components/sorting/sorting.tsx';
+import HotelCardList from '../../components/hotel-cards/hotel-cards.tsx';
 import Map from '../../components/map/map.tsx';
-import TownList from '../../components/towns/town-list.tsx';
+import TownList from '../../components/towns/towns.tsx';
 import Header from '../../components/header/header.tsx';
 import Places from '../../components/places/places.tsx';
 

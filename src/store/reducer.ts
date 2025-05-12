@@ -1,26 +1,27 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { CurrentOffer, Offers, SortTypes } from '../types/models';
 import { sortingTypes } from '../utils';
-import { currentCityName } from './slices/town-slice/town-reducer';
-import { currentSort } from './slices/sorting-slice/sorting-reducer';
-import { allOffers } from './slices/offers-slice/offers-reducer';
-import { currentOffer } from './slices/current-offer/current-offer-reducer';
+import { takeCurrentCityName } from './slices/town/selectors';
+import { takeCurrentSort } from './slices/sorting/selectors';
+import { takeAllOffers } from './slices/offers/selectors';
+import { takeCurrentOffer } from './slices/current-offer/selectors';
+import { SORTING_TYPES } from '../constants';
 
-export const changeOffers = createSelector([currentCityName, allOffers, currentSort], (name: string, offersData: Offers, sort: SortTypes) => {
+export const getSortedOffers = createSelector([takeCurrentCityName, takeAllOffers, takeCurrentSort], (name: string, offersData: Offers, sort: SortTypes) => {
   const popularOffers = sortingTypes.popularOffers(offersData, name);
 
   switch (sort) {
-    case 'Popular':
+    case SORTING_TYPES.Popular:
       return popularOffers;
-    case 'Price: low to high':
+    case SORTING_TYPES.PriceLowToHigh:
       return sortingTypes.priceLowToHighOffers(popularOffers);
-    case 'Price: high to low':
+    case SORTING_TYPES.PriceHighToLow:
       return sortingTypes.priceHighToLowOffers(popularOffers);
-    case 'Top rated first':
+    case SORTING_TYPES.TopRatedFirst:
       return sortingTypes.topRatingOffers(popularOffers);
     default:
       return popularOffers;
   }
 });
 
-export const getOffer = createSelector([allOffers, currentOffer], (offers: Offers, offerCurrent: CurrentOffer) => offers.find((offer) => offer.id === offerCurrent.id));
+export const getOffer = createSelector([takeAllOffers, takeCurrentOffer], (offers: Offers, offerCurrent: CurrentOffer) => offers.find((offer) => offer.id === offerCurrent.id));

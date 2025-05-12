@@ -1,14 +1,14 @@
 import { useAppSelector } from '../../hooks';
-import { getCurrentAuth } from '../../store/slices/auth-slice/auth-reducer';
+import { getCurrentAuth } from '../../store/slices/auth/selectors';
 import { AuthorizationStatus } from '../../constants';
-import { getUserData } from '../../store/slices/user-slice/user-reducer';
+import { getUserData } from '../../store/slices/user/selectors';
 import { Link } from 'react-router-dom';
-import { favoriteOffers } from '../../store/slices/offers-slice/offers-reducer';
+import { getFavoriteOffers } from '../../store/slices/offers/selectors';
 
 export default function LoginMarkup () {
   const loggedStatus = useAppSelector(getCurrentAuth);
   const user = useAppSelector(getUserData);
-  const currentFavoriteOffers = useAppSelector(favoriteOffers);
+  const currentFavoriteOffers = useAppSelector(getFavoriteOffers);
 
   return loggedStatus === AuthorizationStatus.Auth ?
     (

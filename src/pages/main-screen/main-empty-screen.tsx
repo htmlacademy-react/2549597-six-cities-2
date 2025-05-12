@@ -1,7 +1,7 @@
 import Header from '../../components/header/header';
-import TownList from '../../components/towns/town-list';
+import TownList from '../../components/towns/towns';
 import { useAppSelector } from '../../hooks';
-import { getCityName } from '../../store/slices/town-slice/town-reducer';
+import { getCityName } from '../../store/slices/town/selectors';
 
 export default function MainEmptyScreen () {
   const currentTown = useAppSelector(getCityName);
