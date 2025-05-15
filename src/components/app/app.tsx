@@ -38,7 +38,7 @@ export default function App() {
       />
       <Route
         path={AppRoute.Login}
-        element={<LoginScreen/>}
+        element={<LoginScreen authorizationStatus={authorizationStatus}/>}
       />
       <Route
         path={AppRoute.Favorites}

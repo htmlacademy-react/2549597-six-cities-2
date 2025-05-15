@@ -1,11 +1,16 @@
 import { FormEvent, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { changeTown } from '../../store/slices/town/town';
 import { getRandomTown } from '../../utils';
+import { AuthStatus } from '../../types/models';
+import { AppRoute } from '../../constants';
 
-export default function LoginScreen () {
+type LoginScreenProps = {
+  authorizationStatus: AuthStatus;
+}
+export default function LoginScreen ({authorizationStatus}: LoginScreenProps) {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
@@ -22,6 +27,10 @@ export default function LoginScreen () {
       }));
     }
   };
+
+  if (authorizationStatus === 'AUTH') {
+    return <Navigate to={AppRoute.Main} />;
+  }
 
   return (
     <div className="page page--gray page--login" data-testid='login-container'>
